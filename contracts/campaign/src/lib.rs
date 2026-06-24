@@ -147,3 +147,5 @@ impl Campaign {
         env.storage().instance().get(&DataKey::State).unwrap()
     }
 }
+
+mod test;
