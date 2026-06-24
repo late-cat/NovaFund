@@ -12,7 +12,8 @@ export default function Home() {
       goal: 50000,
       raised: 35000,
       deadline: "2026-08-01",
-      image: "https://images.unsplash.com/photo-1639762681485-074b7f4f40e6?auto=format&fit=crop&q=80",
+      image:
+        "https://images.unsplash.com/photo-1639762681485-074b7f4f40e6?auto=format&fit=crop&q=80",
     },
     {
       id: "2",
@@ -30,7 +31,8 @@ export default function Home() {
       goal: 100000,
       raised: 89000,
       deadline: "2026-09-30",
-      image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80",
+      image:
+        "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80",
     },
   ];
 
@@ -42,19 +44,19 @@ export default function Home() {
           <Sparkles size={16} />
           <span>Powered by Soroban Smart Contracts</span>
         </div>
-        
+
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1]">
           Fund the future on <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500">
             Stellar Network
           </span>
         </h1>
-        
+
         <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl leading-relaxed">
-          Launch your visionary projects with trustless, decentralized crowdfunding. 
-          Create campaigns, pledge securely, and claim funds automatically when goals are met.
+          Launch your visionary projects with trustless, decentralized crowdfunding. Create
+          campaigns, pledge securely, and claim funds automatically when goals are met.
         </p>
-        
+
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
           <Link
             href="/create"
@@ -94,13 +96,15 @@ export default function Home() {
         <div className="flex justify-between items-end mb-10">
           <div>
             <h2 className="text-3xl font-bold mb-3">Trending Campaigns</h2>
-            <p className="text-gray-400">Discover the most innovative projects building on Stellar.</p>
+            <p className="text-gray-400">
+              Discover the most innovative projects building on Stellar.
+            </p>
           </div>
           <button className="text-purple-400 hover:text-purple-300 font-medium flex items-center gap-2 transition-colors">
             View All <ArrowRight size={16} />
           </button>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {campaigns.map((campaign) => (
             <CampaignCard key={campaign.id} {...campaign} />

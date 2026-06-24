@@ -16,10 +16,16 @@ export default function Navbar() {
             </span>
           </Link>
           <div className="flex items-center gap-6">
-            <Link href="/" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
+            <Link
+              href="/"
+              className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
+            >
               Explore
             </Link>
-            <Link href="/create" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
+            <Link
+              href="/create"
+              className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
+            >
               Start Campaign
             </Link>
             <WalletConnect />

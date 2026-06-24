@@ -46,7 +46,9 @@ export default function CampaignCard({
         <div className="mt-auto">
           <div className="flex justify-between text-sm mb-2 font-medium">
             <span className="text-purple-400">{progress.toFixed(1)}% Raised</span>
-            <span className="text-gray-300">{raised} / {goal} XLM</span>
+            <span className="text-gray-300">
+              {raised} / {goal} XLM
+            </span>
           </div>
           <div className="w-full h-2.5 bg-white/5 rounded-full overflow-hidden mb-6 border border-white/5">
             <div
@@ -62,7 +64,7 @@ export default function CampaignCard({
               <Clock size={14} className="text-blue-400" />
               <span>{deadline}</span>
             </div>
-            
+
             <Link
               href={`/campaign/${id}`}
               className="p-2.5 rounded-xl bg-purple-500/10 text-purple-400 hover:bg-purple-500 hover:text-white transition-colors duration-300 border border-purple-500/20"

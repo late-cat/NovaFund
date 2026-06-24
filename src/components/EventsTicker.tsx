@@ -9,7 +9,7 @@ export default function EventsTicker() {
   useEffect(() => {
     // In a production environment, this would use Stellar SDK's server.events().stream()
     // to listen for "pledge" and "campaign_created" events from our deployed contracts.
-    
+
     // For demo purposes, we simulate real-time network events
     const mockEvents = [
       "New Campaign Launched: Soroban Auditing Tool",
@@ -35,7 +35,7 @@ export default function EventsTicker() {
   return (
     <div className="fixed bottom-6 left-6 z-50 flex flex-col gap-3">
       {events.map((event) => (
-        <div 
+        <div
           key={event.id}
           className="flex items-center gap-3 bg-[#0f111a]/80 backdrop-blur-xl border border-white/10 px-4 py-3 rounded-2xl shadow-2xl animate-slide-up"
         >
