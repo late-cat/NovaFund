@@ -3,6 +3,7 @@
   <p align="center">
     <strong>Decentralized Crowdfunding Powered by Stellar Soroban Smart Contracts</strong>
   </p>
+  <h3><a href="https://stellar-live-poll-six.vercel.app/">VIEW LIVE DEMO</a></h3>
 </div>
 
 ## Overview
