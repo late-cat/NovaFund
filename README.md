@@ -20,3 +20,7 @@ NovaFund is a next-generation decentralized crowdfunding platform built on the S
 - **Frontend (Next.js & React):** A modern UI using App Router, Tailwind CSS, and `lucide-react` for iconography.
 - **Wallet Integration:** Connects seamlessly with the Freighter browser extension for signing transactions.
 - **TypeScript Bindings:** Auto-generated TypeScript bindings link the React app to the deployed Soroban contracts.
+
+## Smart Contracts
+- **Factory Contract:** Responsible for maintaining a registry of campaigns and acting as an deployer (`create_campaign`) using `soroban_sdk::contractimport!`.
+- **Campaign Contract:** Handles user pledges (`pledge`), fund claiming by the creator (`claim`), and refund claims by backers (`refund`). Each campaign operates autonomously with its own isolated state.
