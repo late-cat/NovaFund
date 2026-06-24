@@ -24,3 +24,31 @@ NovaFund is a next-generation decentralized crowdfunding platform built on the S
 ## Smart Contracts
 - **Factory Contract:** Responsible for maintaining a registry of campaigns and acting as an deployer (`create_campaign`) using `soroban_sdk::contractimport!`.
 - **Campaign Contract:** Handles user pledges (`pledge`), fund claiming by the creator (`claim`), and refund claims by backers (`refund`). Each campaign operates autonomously with its own isolated state.
+
+## Getting Started
+
+### Prerequisites
+- Node.js v20+
+- Rust (target `wasm32-unknown-unknown`)
+- Stellar Soroban CLI
+- Freighter Wallet Browser Extension
+
+### Local Setup
+1. Clone the repository and navigate into it:
+   ```bash
+   git clone <repo-url>
+   cd stellar-crowdfund
+   ```
+2. Install frontend dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+4. Build smart contracts:
+   ```bash
+   cd contracts
+   soroban contract build
+   ```
