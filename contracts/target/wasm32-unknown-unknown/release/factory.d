@@ -1,0 +1,1 @@
+/Users/bapi/stellar/stellar-crowdfund/contracts/target/wasm32-unknown-unknown/release/factory.wasm: /Users/bapi/stellar/stellar-crowdfund/contracts/campaign/src/lib.rs /Users/bapi/stellar/stellar-crowdfund/contracts/factory/src/lib.rs
