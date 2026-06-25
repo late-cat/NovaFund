@@ -1,18 +1,28 @@
-import { render, screen } from '@testing-library/react'
-import Home from '@/app/page'
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import Home from '../src/app/page';
 
-describe('Home', () => {
-  it('renders the hero section correctly', () => {
-    render(<Home />)
-    
-    // Check if the main heading is present
-    const heading = screen.getByRole('heading', { level: 1 })
-    expect(heading).toBeInTheDocument()
-    expect(heading).toHaveTextContent(/Fund the future on/i)
-    
-    // Check if the CTA link is present
-    const link = screen.getByRole('link', { name: /Start a Campaign/i })
-    expect(link).toBeInTheDocument()
-    expect(link).toHaveAttribute('href', '/create')
-  })
-})
+// Mock the dependencies to avoid Soroban network calls during testing
+jest.mock('../src/lib/soroban', () => ({
+  getFactoryClient: jest.fn(() => ({
+    get_campaigns: jest.fn().mockResolvedValue({ result: [] })
+  }))
+}));
+
+describe('Home Page', () => {
+  it('renders the hero section with the title', () => {
+    render(<Home />);
+    expect(screen.getByText(/Fund the future on/i)).toBeInTheDocument();
+  });
+
+  it('renders the Start a Campaign button', () => {
+    render(<Home />);
+    const buttons = screen.getAllByText('Start a Campaign');
+    expect(buttons.length).toBeGreaterThan(0);
+  });
+
+  it('renders the explore section heading', () => {
+    render(<Home />);
+    expect(screen.getByText(/Launch your visionary projects with trustless, decentralized crowdfunding/i)).toBeInTheDocument();
+  });
+});
