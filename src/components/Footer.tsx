@@ -1,4 +1,4 @@
-import Link from "next/link";
+
 import { Github, Twitter, Globe, Heart } from "lucide-react";
 
 export default function Footer() {
