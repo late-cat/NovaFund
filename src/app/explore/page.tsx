@@ -149,7 +149,7 @@ export default function Explore() {
             </Link>
           </div>
         )}
-      </motion.section>
+      </section>
     </motion.div>
   );
 }
