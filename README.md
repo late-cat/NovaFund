@@ -6,6 +6,8 @@
     <strong>A next-generation trustless crowdfunding platform powered by Soroban Smart Contracts on Stellar.</strong>
   </p>
 
+  <h3>🚀 Live Demo: <a href="https://nova-fund.vercel.app/">https://nova-fund.vercel.app/</a></h3>
+
   <p align="center">
     <a href="#challenge-requirements-fulfilled">Belt Challenge Submission</a> •
     <a href="#smart-contract-information">View Contracts</a> •
