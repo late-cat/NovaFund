@@ -100,3 +100,4 @@ The application has been engineered to handle critical edge cases gracefully:
 ## Deployment Information
 
 This project is optimized for deployment on Vercel. Since it operates entirely as a decentralized application interacting directly with the Stellar Testnet, the Next.js frontend can be deployed statically with zero backend infrastructure required.
+
