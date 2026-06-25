@@ -34,9 +34,26 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
           ];
           const charCode = id.charCodeAt(0) || 0;
           const image = mockImages[charCode % mockImages.length];
-          let metaTitle = `Campaign ${id.slice(0, 6)}`;
+          const professionalTitles = [
+            "Eco-Friendly Urban Farming",
+            "Next-Gen VR Education App",
+            "Community Solar Grid Project",
+            "Open Source AI Research",
+            "Decentralized Finance Protocol",
+            "Clean Water Initiative"
+          ];
+          const professionalDescriptions = [
+            "Help us build sustainable, vertical farming solutions for dense urban environments to reduce carbon footprints and provide fresh produce.",
+            "We are developing a cutting-edge virtual reality application that makes complex subjects like physics and chemistry intuitive for students.",
+            "A community-driven initiative to install solar panels on neighborhood rooftops, drastically reducing energy costs and reliance on fossil fuels.",
+            "Funding independent researchers to build transparent, accessible, and open-source artificial intelligence models for the public good.",
+            "A next-generation DeFi protocol built entirely on Soroban, enabling trustless, low-fee lending and borrowing across the Stellar network.",
+            "Providing advanced water filtration systems to remote communities, ensuring access to clean and safe drinking water for everyone."
+          ];
+
+          let metaTitle = professionalTitles[charCode % professionalTitles.length];
           let metaImage = mockImages[charCode % mockImages.length];
-          let metaDesc = "";
+          let metaDesc = professionalDescriptions[charCode % professionalDescriptions.length];
           
           try {
             const stored = localStorage.getItem(`campaign_meta_${id}`);
