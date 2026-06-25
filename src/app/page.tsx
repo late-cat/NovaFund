@@ -144,9 +144,6 @@ export default function Home() {
               <span className="text-sm font-bold tracking-wide">Latest Projects</span>
             </div>
           </div>
-          <button className="text-gray-500 hover:text-orange-500 font-medium flex items-center gap-1 transition-colors text-xs">
-            View All <ArrowRight size={14} />
-          </button>
         </div>
 
         {loading ? (
