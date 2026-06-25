@@ -2,15 +2,13 @@ import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import EventsTicker from "@/components/EventsTicker";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
   title: "NovaFund | Decentralized Crowdfunding on Stellar",
-  description:
-    "Launch your visionary projects with trustless, decentralized crowdfunding powered by Soroban smart contracts on the Stellar network.",
+  description: "Launch your visionary projects with trustless, decentralized crowdfunding powered by Soroban.",
 };
 
 export default function RootLayout({
@@ -19,21 +17,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <body
-        className={`${inter.variable} ${outfit.variable} antialiased min-h-screen flex flex-col font-sans bg-[#0f111a] text-white selection:bg-purple-500/30`}
+        className={`${inter.variable} ${outfit.variable} antialiased min-h-screen flex flex-col font-sans text-gray-800 kami-bg relative`}
       >
-        {/* Animated background elements */}
-        <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/20 blur-[120px]" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/20 blur-[120px]" />
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-60">
+           <svg className="absolute top-[10%] left-[5%] w-32 h-32 text-yellow-100" viewBox="0 0 100 100" fill="currentColor">
+              <path d="M50 0 C60 0 70 10 70 20 C85 20 100 35 100 50 C100 65 85 80 70 80 C70 90 60 100 50 100 C40 100 30 90 30 80 C15 80 0 65 0 50 C0 35 15 20 30 20 C30 10 40 0 50 0 Z" />
+           </svg>
+           <svg className="absolute top-[30%] right-[10%] w-24 h-24 text-blue-100" viewBox="0 0 100 100" fill="currentColor">
+              <path d="M50 0 C60 0 70 10 70 20 C85 20 100 35 100 50 C100 65 85 80 70 80 C70 90 60 100 50 100 C40 100 30 90 30 80 C15 80 0 65 0 50 C0 35 15 20 30 20 C30 10 40 0 50 0 Z" />
+           </svg>
+           <svg className="absolute bottom-[20%] left-[20%] w-40 h-40 text-pink-100" viewBox="0 0 100 100" fill="currentColor">
+              <path d="M50 0 C60 0 70 10 70 20 C85 20 100 35 100 50 C100 65 85 80 70 80 C70 90 60 100 50 100 C40 100 30 90 30 80 C15 80 0 65 0 50 C0 35 15 20 30 20 C30 10 40 0 50 0 Z" />
+           </svg>
+           <svg className="absolute top-[60%] right-[25%] w-20 h-20 text-yellow-100" viewBox="0 0 100 100" fill="currentColor">
+              <path d="M50 0 C60 0 70 10 70 20 C85 20 100 35 100 50 C100 65 85 80 70 80 C70 90 60 100 50 100 C40 100 30 90 30 80 C15 80 0 65 0 50 C0 35 15 20 30 20 C30 10 40 0 50 0 Z" />
+           </svg>
         </div>
-
-        <Navbar />
-        <main className="flex-1 relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {children}
-        </main>
-        <EventsTicker />
+        
+        <div className="relative z-10 flex flex-col min-h-screen">
+          <Navbar />
+          <main className="flex-1 w-full max-w-5xl mx-auto py-12 px-6">
+            {children}
+          </main>
+        </div>
       </body>
     </html>
   );

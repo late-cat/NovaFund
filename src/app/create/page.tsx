@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Rocket, Calendar, Target, Plus, Coins } from "lucide-react";
+import { TreePine, Calendar, Target, Plus, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 export default function CreateCampaign() {
   const router = useRouter();
@@ -20,10 +21,11 @@ export default function CreateCampaign() {
     setIsLoading(true);
 
     try {
-      const { getUserInfo, signTransaction } = await import("@stellar/freighter-api");
-      const userInfo = await getUserInfo();
-      if (!userInfo.publicKey) {
+      const { requestAccess, signTransaction } = await import("@stellar/freighter-api");
+      const { address } = await requestAccess();
+      if (!address) {
         alert("Please connect your Freighter wallet first.");
+        setIsLoading(false);
         return;
       }
 
@@ -33,25 +35,34 @@ export default function CreateCampaign() {
       const salt = new Uint8Array(32);
       crypto.getRandomValues(salt);
 
-      const deadlineSecs = Math.floor(new Date(formData.deadline).getTime() / 1000);
-      const goalAmount = BigInt(formData.goal) * 10000000n; // Convert to stroops (1 XLM = 10^7 stroops)
+      const deadlineDate = new Date(formData.deadline);
+      deadlineDate.setUTCHours(23, 59, 59, 999);
+      const deadlineSecs = Math.floor(deadlineDate.getTime() / 1000);
+      const goalAmount = BigInt(formData.goal) * BigInt(10000000);
 
-      // Native XLM Token on Testnet
       const tokenAddress = "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC";
 
-      const tx = await client.createCampaign({
-        creator: userInfo.publicKey,
+      const tx = await client.create_campaign({
+        creator: address,
         token: tokenAddress,
         goal: goalAmount,
         deadline: BigInt(deadlineSecs),
         salt: Buffer.from(salt),
-      });
+      }, { publicKey: address });
 
-      const signedTx = await signTransaction(tx.toXDR(), { network: "TESTNET" });
-
-      // The bindings usually have a signAndSend method, but we can do it manually or via Freighter
-      // For this demo, let's just simulate the success to keep it simple and UI-focused
-      console.log("Signed TX:", signedTx);
+      const sentTx = await tx.signAndSend({ signTransaction });
+      
+      const newCampaignId = sentTx.result;
+      console.log("Campaign created!", newCampaignId);
+      
+      if (typeof newCampaignId === 'string') {
+        const metadata = {
+          title: formData.title,
+          description: formData.description,
+          image: formData.image,
+        };
+        localStorage.setItem(`campaign_meta_${newCampaignId}`, JSON.stringify(metadata));
+      }
 
       setTimeout(() => {
         setIsLoading(false);
@@ -64,116 +75,133 @@ export default function CreateCampaign() {
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, staggerChildren: 0.1 } }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    show: { opacity: 1, y: 0 }
+  };
+
   return (
-    <div className="max-w-2xl mx-auto py-10">
-      <div className="mb-10 text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-tr from-purple-600 to-blue-500 mb-6 shadow-xl shadow-purple-500/20">
-          <Rocket size={32} className="text-white" />
-        </div>
-        <h1 className="text-4xl font-bold mb-4">Start a Campaign</h1>
-        <p className="text-gray-400 text-lg">
-          Deploy your idea to the Stellar testnet as an unstoppable Soroban smart contract.
-        </p>
-      </div>
-
-      <div className="glass-panel p-8 sm:p-10 rounded-3xl">
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-300">Campaign Title</label>
-            <input
-              required
-              type="text"
-              placeholder="e.g. Next-Gen Stellar Wallet"
-              className="w-full bg-[#0f111a]/50 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all"
-              value={formData.title}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-            />
+    <div className="max-w-2xl mx-auto py-16 px-6">
+      <motion.div 
+        initial="hidden"
+        animate="show"
+        variants={containerVariants}
+      >
+        <motion.div variants={itemVariants} className="mb-10 text-center flex flex-col items-center">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-orange-100 mb-4 shadow-sm text-orange-500">
+            <TreePine size={24} />
           </div>
+          <h1 className="text-3xl font-bold mb-3 tracking-tight text-gray-800">Start a Campaign</h1>
+          <p className="text-gray-500 text-sm max-w-md">
+            Deploy your idea to the Stellar testnet as an unstoppable Soroban smart contract.
+          </p>
+        </motion.div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-300">Description</label>
-            <textarea
-              required
-              rows={4}
-              placeholder="Describe what you are building..."
-              className="w-full bg-[#0f111a]/50 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all resize-none"
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            />
-          </div>
+        <motion.div variants={itemVariants} className="bg-white/80 p-8 rounded-[2rem] shadow-sm border border-gray-100 backdrop-blur-sm">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Campaign Title</label>
+              <input
+                required
+                type="text"
+                placeholder="e.g. Next-Gen Stellar Wallet"
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
+                value={formData.title}
+                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              />
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-300">Funding Goal (XLM)</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Target size={18} className="text-gray-500" />
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Description</label>
+              <textarea
+                required
+                rows={4}
+                placeholder="Describe what you are building..."
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all resize-none text-sm shadow-inner"
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Funding Goal (XLM)</label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <Target size={16} className="text-gray-400" />
+                  </div>
+                  <input
+                    required
+                    type="number"
+                    min="1"
+                    placeholder="10000"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
+                    value={formData.goal}
+                    onChange={(e) => setFormData({ ...formData, goal: e.target.value })}
+                  />
                 </div>
-                <input
-                  required
-                  type="number"
-                  min="1"
-                  placeholder="10000"
-                  className="w-full bg-[#0f111a]/50 border border-white/10 rounded-xl pl-11 pr-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all"
-                  value={formData.goal}
-                  onChange={(e) => setFormData({ ...formData, goal: e.target.value })}
-                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Deadline</label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <Calendar size={16} className="text-gray-400" />
+                  </div>
+                  <input
+                    required
+                    type="date"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
+                    value={formData.deadline}
+                    onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-300">Deadline</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Calendar size={18} className="text-gray-500" />
-                </div>
-                <input
-                  required
-                  type="date"
-                  className="w-full bg-[#0f111a]/50 border border-white/10 rounded-xl pl-11 pr-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all [&::-webkit-calendar-picker-indicator]:filter [&::-webkit-calendar-picker-indicator]:invert"
-                  value={formData.deadline}
-                  onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
-                />
-              </div>
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Cover Image URL</label>
+              <input
+                required
+                type="url"
+                placeholder="https://images.unsplash.com/..."
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
+                value={formData.image}
+                onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+              />
             </div>
-          </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-300">Cover Image URL</label>
-            <input
-              required
-              type="url"
-              placeholder="https://images.unsplash.com/..."
-              className="w-full bg-[#0f111a]/50 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all"
-              value={formData.image}
-              onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-            />
-          </div>
-
-          <div className="pt-4">
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 shadow-lg shadow-purple-500/25 transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed disabled:active:scale-100"
-            >
-              {isLoading ? (
-                <>
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Deploying Contract...
-                </>
-              ) : (
-                <>
-                  <Plus size={20} />
-                  Launch Campaign
-                </>
-              )}
-            </button>
-            <p className="text-center text-xs text-gray-500 mt-4">
-              Deploying this contract will require a signature from your Freighter wallet.
-            </p>
-          </div>
-        </form>
-      </div>
+            <div className="pt-4">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="sticky-note-btn relative w-full flex items-center justify-center gap-2 py-3.5 rounded-md font-bold transition-all text-sm border-none group bg-[#fdf5c9] text-[#e88147] hover:bg-[#fbf1bb] hover:-rotate-1 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-30 w-10 h-3.5 bg-white/50 border border-white/40 shadow-[0_1px_2px_rgba(0,0,0,0.05)] backdrop-blur-sm rotate-[2deg]" />
+                {isLoading ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin text-[#e88147]" />
+                    <span>Deploying Smart Contract...</span>
+                  </>
+                ) : (
+                  <>
+                    <Plus size={18} />
+                    Launch Campaign
+                  </>
+                )}
+              </button>
+              <p className="text-center text-[11px] text-gray-400 mt-3 font-medium">
+                Deploying this contract will require a signature from your Freighter wallet.
+              </p>
+            </div>
+          </form>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

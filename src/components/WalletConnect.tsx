@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { isAllowed, setAllowed, getUserInfo } from "@stellar/freighter-api";
-import { Wallet } from "lucide-react";
+import { isAllowed, setAllowed, requestAccess, getAddress } from "@stellar/freighter-api";
+import { Wallet, Loader2 } from "lucide-react";
 
 export default function WalletConnect() {
   const [pubKey, setPubKey] = useState<string>("");
@@ -14,19 +14,24 @@ export default function WalletConnect() {
 
   const checkConnection = async () => {
     if (await isAllowed()) {
-      const userInfo = await getUserInfo();
-      if (userInfo.publicKey) {
-        setPubKey(userInfo.publicKey);
+      const { address } = await getAddress();
+      if (address) {
+        setPubKey(address);
       }
     }
   };
 
-  const connect = async () => {
+  const handleConnectClick = async () => {
+    if (pubKey) {
+      setPubKey("");
+      return;
+    }
+
     setIsConnecting(true);
     try {
       await setAllowed();
-      const userInfo = await getUserInfo();
-      if (userInfo.publicKey) setPubKey(userInfo.publicKey);
+      const { address } = await requestAccess();
+      if (address) setPubKey(address);
     } catch (e) {
       console.error(e);
     } finally {
@@ -41,16 +46,25 @@ export default function WalletConnect() {
 
   return (
     <button
-      onClick={connect}
-      disabled={isConnecting || !!pubKey}
-      className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-medium transition-all duration-300 ${
+      onClick={handleConnectClick}
+      disabled={isConnecting}
+      className={`flex items-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 ${
         pubKey
-          ? "bg-purple-500/10 text-purple-400 border border-purple-500/20"
-          : "bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white shadow-lg hover:shadow-purple-500/25"
+          ? "bg-gray-100 text-gray-700 hover:bg-red-50 hover:text-red-600 group shadow-sm border border-gray-200"
+          : "bg-[#e88147] hover:bg-[#d6723b] text-white shadow-md"
       }`}
     >
-      <Wallet size={18} />
-      {isConnecting ? "Connecting..." : pubKey ? formatKey(pubKey) : "Connect Wallet"}
+      {isConnecting ? (
+        <Loader2 size={16} className="animate-spin" />
+      ) : (
+        <Wallet size={16} />
+      )}
+      <span className="text-sm">
+        {isConnecting ? "Connecting..." : pubKey ? (
+          <span className="group-hover:hidden">{formatKey(pubKey)}</span>
+        ) : "Connect"}
+        {pubKey && <span className="hidden group-hover:inline">Disconnect</span>}
+      </span>
     </button>
   );
 }

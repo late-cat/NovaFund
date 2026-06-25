@@ -1,35 +1,45 @@
+"use client";
+
 import WalletConnect from "./WalletConnect";
-import { Rocket } from "lucide-react";
+import { TreePine } from "lucide-react";
 import Link from "next/link";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Navbar() {
+  const { scrollY } = useScroll();
+  const opacity = useTransform(scrollY, [0, 50], [0, 1]);
+  const blur = useTransform(scrollY, [0, 50], ["blur(0px)", "blur(12px)"]);
+  const borderOpacity = useTransform(scrollY, [0, 50], [0, 0.1]);
+
   return (
-    <nav className="sticky top-0 z-50 w-full glass-panel border-b-0 border-b border-white/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="bg-gradient-to-tr from-purple-600 to-blue-500 p-2.5 rounded-xl group-hover:scale-105 transition-transform">
-              <Rocket size={24} className="text-white" />
-            </div>
-            <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400 tracking-tight">
-              NovaFund
-            </span>
-          </Link>
-          <div className="flex items-center gap-6">
+    <nav className="sticky top-0 z-50 w-full h-16">
+      <motion.div 
+        className="absolute inset-0 bg-white/70" 
+        style={{ opacity, filter: blur, borderBottom: "1px solid rgba(0,0,0,var(--border-opacity))" }}
+      />
+      <div className="relative h-full max-w-5xl mx-auto px-6 flex justify-between items-center">
+        <Link href="/" className="flex items-center gap-2 group">
+          <TreePine size={24} className="text-gray-800" />
+          <span className="text-lg font-bold text-gray-800 tracking-tight">
+            NovaFund
+          </span>
+        </Link>
+        <div className="flex items-center gap-6">
+          <div className="hidden sm:flex items-center gap-6">
             <Link
               href="/"
-              className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
+              className="text-sm font-medium text-gray-600 hover:text-orange-500 transition-colors"
             >
               Explore
             </Link>
             <Link
               href="/create"
-              className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
+              className="text-sm font-medium text-gray-600 hover:text-orange-500 transition-colors"
             >
               Start Campaign
             </Link>
-            <WalletConnect />
           </div>
+          <WalletConnect />
         </div>
       </div>
     </nav>
