@@ -1,4 +1,5 @@
 <div align="center">
+  <img src="demo-img/hero.png" alt="NovaFund Hero" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
   <h1 align="center">NovaFund: Decentralized Crowdfunding</h1>
   
   <p align="center">
@@ -37,6 +38,21 @@ This project serves as a comprehensive submission for the Stellar developer chal
 - [x] **Meaningful Commit History:** Over 20+ professional, semantic commits showcasing steady, iterative progress.
 - [x] **Comprehensive Error Handling:** Captures edge cases, specifically mapping `Error(Contract, #10)` to readable "Insufficient Funds" warnings instead of crashing the UI.
 - [x] **Mobile Responsiveness:** Deeply optimized UI architecture utilizing `md:` media queries for flawless phone and tablet layout.
+
+## Visual Walkthrough
+
+### Exploring Ongoing Campaigns
+<img src="demo-img/all-ongoing-campaign.png" alt="Explore Campaigns" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
+
+### Starting a New Campaign
+<img src="demo-img/start a campagin.png" alt="Start Campaign" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
+
+### Pledging and Confirming Transaction
+<img src="demo-img/confirm-transaction from user.png" alt="Confirm Transaction" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
+<img src="demo-img/funding.png" alt="Funding Progress" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
+
+### On-Chain Transaction Success
+<img src="demo-img/successfull-transac.png" alt="Transaction Success Explorer" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
 
 ## Architecture Overview
 
