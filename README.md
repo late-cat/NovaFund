@@ -43,6 +43,13 @@ This project serves as a comprehensive submission for the Stellar developer chal
 
 ## Visual Walkthrough
 
+### CI/CD Pipeline & Automated Testing
+<img src="demo-img/pipeline.png" alt="CI/CD Pipeline" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
+<img src="demo-img/test-outp.png" alt="Passing Tests" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
+
+### Mobile Responsive UI
+<img src="demo-img/mobile-respons.png" alt="Mobile Responsive Design" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
+
 ### Exploring Ongoing Campaigns
 <img src="demo-img/all-ongoing-campaign.png" alt="Explore Campaigns" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
 
