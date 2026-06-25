@@ -7,6 +7,7 @@
   </p>
 
   <h3>🚀 Live Demo: <a href="https://nova-fund.vercel.app/">https://nova-fund.vercel.app/</a></h3>
+  <h3>🎥 Demo Video: <a href="https://youtu.be/S9shZimBqp4">Watch on YouTube</a></h3>
 
   <p align="center">
     <a href="#challenge-requirements-fulfilled">Belt Challenge Submission</a> •
