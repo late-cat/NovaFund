@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import CampaignCard from "@/components/CampaignCard";
-import { Sparkles, ArrowRight, Loader2, Link2 } from "lucide-react";
+import { Sparkles, ArrowRight, ArrowLeft, Loader2, Link2 } from "lucide-react";
 import Link from "next/link";
 import { getFactoryClient, getCampaignClient } from "@/lib/soroban";
 import { motion, Variants } from "framer-motion";
 
-export default function Home() {
+export default function Explore() {
   const [campaigns, setCampaigns] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -110,44 +110,17 @@ export default function Home() {
       variants={containerVariants}
       className="flex flex-col gap-12 pb-20 font-sans"
     >
-      <section className="relative pt-16 pb-8 text-center max-w-3xl mx-auto flex flex-col items-center">
-        <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-orange-600 font-medium text-xs tracking-wider mb-6">
-          <Sparkles size={14} />
-          <span>Soroban Smart Contracts</span>
-        </motion.div>
-
-        <motion.h1 variants={itemVariants} className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-gray-800">
-          Fund the future on <br /> Stellar
-        </motion.h1>
-
-        <motion.p variants={itemVariants} className="text-gray-600 mb-8 max-w-lg leading-relaxed text-sm md:text-base">
-          Launch your visionary projects with trustless, decentralized crowdfunding. Create campaigns, pledge securely, and claim funds automatically.
-        </motion.p>
-
-        <motion.div variants={itemVariants} className="flex gap-4">
-          <Link
-            href="/create"
-            className="sticky-note-btn relative px-8 py-3 bg-[#fdf5c9] text-[#e88147] hover:bg-[#fbf1bb] font-bold transition-all flex items-center gap-2 text-sm hover:-rotate-2 group"
-          >
-            <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-30 w-8 h-3 bg-white/50 border border-white/40 shadow-[0_1px_2px_rgba(0,0,0,0.05)] backdrop-blur-sm rotate-[-4deg]" />
-            Start a Campaign
-            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </motion.div>
-      </section>
-
-      {/* Featured Campaigns */}
-      <motion.section variants={itemVariants} className="mt-8 w-full">
+      <section className="mt-8 w-full">
+        <Link href="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-orange-500 mb-8 transition-colors font-medium text-sm">
+          <ArrowLeft size={16} /> Back to Home
+        </Link>
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-3">
             <div className="bg-[#e88147] text-white px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
               <Link2 size={14} />
-              <span className="text-sm font-bold tracking-wide">Latest Projects</span>
+              <span className="text-sm font-bold tracking-wide">All Campaigns</span>
             </div>
           </div>
-          <Link href="/explore" className="text-gray-500 hover:text-orange-500 font-medium flex items-center gap-1 transition-colors text-xs">
-            View All <ArrowRight size={14} />
-          </Link>
         </div>
 
         {loading ? (
@@ -159,7 +132,7 @@ export default function Home() {
             variants={containerVariants}
             className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5"
           >
-            {campaigns.slice(0, 6).map((campaign) => (
+            {campaigns.map((campaign) => (
               <motion.div key={campaign.id} variants={itemVariants}>
                 <CampaignCard {...campaign} />
               </motion.div>
