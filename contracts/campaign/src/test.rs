@@ -24,3 +24,33 @@ fn test_init() {
     assert_eq!(state.current_amount, 0);
     assert!(!state.is_claimed);
 }
+
+#[test]
+fn test_data_key_equality() {
+    let env = Env::default();
+    let addr = Address::generate(&env);
+    let key1 = DataKey::Pledge(addr.clone());
+    let key2 = DataKey::Pledge(addr);
+    
+    assert_eq!(key1, key2);
+}
+
+#[test]
+fn test_campaign_state_creation() {
+    let env = Env::default();
+    let addr = Address::generate(&env);
+    let token = Address::generate(&env);
+    
+    let state = CampaignState {
+        creator: addr.clone(),
+        token: token.clone(),
+        goal: 100,
+        deadline: 50,
+        current_amount: 10,
+        is_claimed: true,
+    };
+    
+    assert_eq!(state.goal, 100);
+    assert_eq!(state.current_amount, 10);
+    assert!(state.is_claimed);
+}
