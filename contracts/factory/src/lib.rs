@@ -1,4 +1,5 @@
 #![no_std]
+#![allow(unexpected_cfgs)]
 
 use soroban_sdk::{contract, contractimpl, contracttype, Address, BytesN, Env, Vec};
 
