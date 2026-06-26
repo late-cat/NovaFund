@@ -12,18 +12,6 @@ export default function WalletConnect() {
   const [balance, setBalance] = useState<string | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
 
-  useEffect(() => {
-    checkConnection();
-  }, []);
-
-  useEffect(() => {
-    if (pubKey) {
-      fetchBalance(pubKey);
-    } else {
-      setBalance(null);
-    }
-  }, [pubKey]);
-
   const fetchBalance = async (address: string) => {
     try {
       const account = await server.loadAccount(address);
@@ -35,6 +23,18 @@ export default function WalletConnect() {
       console.error("Failed to fetch balance:", e);
     }
   };
+
+  useEffect(() => {
+    checkConnection();
+  }, []);
+
+  useEffect(() => {
+    if (pubKey) {
+      fetchBalance(pubKey);
+    } else {
+      setBalance(null);
+    }
+  }, [pubKey]);
 
   const checkConnection = async () => {
     if (await isAllowed()) {

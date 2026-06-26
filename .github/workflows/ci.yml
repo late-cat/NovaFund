@@ -54,7 +54,7 @@ jobs:
 
       - name: Fix Arbitrary Crate Issue
         working-directory: ./contracts
-        run: cargo update -p arbitrary --precise 1.3.2
+        run: cargo update -p arbitrary --precise 1.3.2 && cargo update -p derive_arbitrary --precise 1.3.2
 
       - name: Run Tests
         working-directory: ./contracts
