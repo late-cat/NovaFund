@@ -5,6 +5,12 @@
   <p align="center">
     <strong>A next-generation trustless crowdfunding platform powered by Soroban Smart Contracts on Stellar.</strong>
   </p>
+  
+  <p align="center">
+    <a href="https://github.com/late-cat/NovaFund/actions/workflows/ci.yml">
+      <img src="https://github.com/late-cat/NovaFund/actions/workflows/ci.yml/badge.svg" alt="CI/CD Pipeline Status">
+    </a>
+  </p>
 
   <h3>🚀 Live Demo: <a href="https://nova-fund.vercel.app/">https://nova-fund.vercel.app/</a></h3>
   <h3>🎥 Demo Video: <a href="https://youtu.be/S9shZimBqp4">Watch on YouTube</a></h3>
