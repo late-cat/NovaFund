@@ -22,5 +22,5 @@ fn test_init() {
     assert_eq!(state.goal, goal);
     assert_eq!(state.deadline, deadline);
     assert_eq!(state.current_amount, 0);
-    assert_eq!(state.is_claimed, false);
+    assert!(!state.is_claimed);
 }
