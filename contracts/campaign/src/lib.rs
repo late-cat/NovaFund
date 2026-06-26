@@ -1,8 +1,6 @@
 #![no_std]
 
-use soroban_sdk::{
-    contract, contractimpl, contracttype, token, Address, Env, String
-};
+use soroban_sdk::{contract, contractimpl, contracttype, token, Address, Env, String};
 
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -28,17 +26,11 @@ pub struct Campaign;
 #[contractimpl]
 impl Campaign {
     /// Initializes the campaign. Can only be called once.
-    pub fn init(
-        env: Env,
-        creator: Address,
-        token: Address,
-        goal: i128,
-        deadline: u64,
-    ) {
+    pub fn init(env: Env, creator: Address, token: Address, goal: i128, deadline: u64) {
         if env.storage().instance().has(&DataKey::State) {
             panic!("already initialized");
         }
-        
+
         let state = CampaignState {
             creator,
             token,
@@ -47,16 +39,16 @@ impl Campaign {
             current_amount: 0,
             is_claimed: false,
         };
-        
+
         env.storage().instance().set(&DataKey::State, &state);
     }
 
     /// Backers call this to pledge tokens to the campaign.
     pub fn pledge(env: Env, backer: Address, amount: i128) {
         backer.require_auth();
-        
+
         let mut state: CampaignState = env.storage().instance().get(&DataKey::State).unwrap();
-        
+
         if env.ledger().timestamp() > state.deadline {
             panic!("campaign deadline has passed");
         }
@@ -77,7 +69,7 @@ impl Campaign {
         let mut current_pledge: i128 = env.storage().persistent().get(&pledge_key).unwrap_or(0);
         current_pledge += amount;
         env.storage().persistent().set(&pledge_key, &current_pledge);
-        
+
         // Publish event
         env.events().publish(("pledge", backer), amount);
     }
@@ -85,9 +77,9 @@ impl Campaign {
     /// If the campaign succeeds, the creator calls this to claim funds.
     pub fn claim(env: Env) {
         let mut state: CampaignState = env.storage().instance().get(&DataKey::State).unwrap();
-        
+
         state.creator.require_auth();
-        
+
         if env.ledger().timestamp() <= state.deadline {
             panic!("campaign still active");
         }
@@ -107,14 +99,15 @@ impl Campaign {
             &state.creator,
             &state.current_amount,
         );
-        
-        env.events().publish(("claim", state.creator.clone()), state.current_amount);
+
+        env.events()
+            .publish(("claim", state.creator.clone()), state.current_amount);
     }
 
     /// If the campaign fails, backers call this to refund their pledges.
     pub fn refund(env: Env, backer: Address) {
         let state: CampaignState = env.storage().instance().get(&DataKey::State).unwrap();
-        
+
         if env.ledger().timestamp() <= state.deadline {
             panic!("campaign still active");
         }
@@ -124,7 +117,7 @@ impl Campaign {
 
         let pledge_key = DataKey::Pledge(backer.clone());
         let amount: i128 = env.storage().persistent().get(&pledge_key).unwrap_or(0);
-        
+
         if amount == 0 {
             panic!("no pledge found or already refunded");
         }
@@ -133,12 +126,8 @@ impl Campaign {
         env.storage().persistent().set(&pledge_key, &0i128);
 
         let token_client = token::Client::new(&env, &state.token);
-        token_client.transfer(
-            &env.current_contract_address(),
-            &backer,
-            &amount,
-        );
-        
+        token_client.transfer(&env.current_contract_address(), &backer, &amount);
+
         env.events().publish(("refund", backer), amount);
     }
 
