@@ -141,63 +141,63 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-4xl mx-auto py-8 px-6"
+      className="max-w-4xl mx-auto py-4 md:py-8 px-4 md:px-6"
     >
-      <Link href="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-orange-500 mb-8 transition-colors font-medium text-sm">
+      <Link href="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-orange-500 mb-6 md:mb-8 transition-colors font-medium text-sm">
         <ArrowLeft size={16} /> Back to Projects
       </Link>
       
       <div className="bg-white/90 rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden backdrop-blur-sm">
-        <div className="w-full h-64 md:h-80 relative">
+        <div className="w-full h-48 md:h-80 relative">
           <img src={campaign.image} alt={campaign.title} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent" />
         </div>
 
-        <div className="px-8 pb-10 relative -mt-16">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2 tracking-tight">{campaign.title}</h1>
+        <div className="px-5 md:px-8 pb-8 md:pb-10 relative -mt-12 md:-mt-16">
+          <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2 tracking-tight">{campaign.title}</h1>
           {campaign.description && (
-            <p className="text-gray-600 mb-4 max-w-2xl">{campaign.description}</p>
+            <p className="text-gray-600 mb-4 max-w-2xl text-sm md:text-base">{campaign.description}</p>
           )}
           
-          <div className="flex items-center gap-2 text-gray-500 text-sm mb-8 bg-gray-50 inline-flex px-4 py-2 rounded-full border border-gray-100">
-            <User size={16} className="text-orange-400" />
+          <div className="flex items-center gap-2 text-gray-500 text-xs md:text-sm mb-6 md:mb-8 bg-gray-50 inline-flex px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-gray-100">
+            <User size={14} className="text-orange-400" />
             <span>By <span className="font-medium text-gray-700">{campaign.creator.slice(0, 8)}...{campaign.creator.slice(-8)}</span></span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="space-y-6">
-              <div className="bg-gray-50 p-6 rounded-3xl border border-gray-100">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
+            <div className="space-y-4 md:space-y-6">
+              <div className="bg-gray-50 p-5 md:p-6 rounded-[2rem] border border-gray-100">
                 <div className="flex justify-between items-end mb-2">
-                  <div className="text-3xl font-bold text-gray-900">{campaign.raised} <span className="text-lg text-gray-500 font-medium">XLM</span></div>
+                  <div className="text-2xl md:text-3xl font-bold text-gray-900">{campaign.raised} <span className="text-base md:text-lg text-gray-500 font-medium">XLM</span></div>
                   <div className="text-orange-500 font-bold">{progress.toFixed(1)}%</div>
                 </div>
                 
-                <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden my-4">
+                <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden my-3 md:my-4">
                   <div
                     className="h-full bg-orange-400 rounded-full transition-all duration-1000 ease-out"
                     style={{ width: `${progress}%` }}
                   />
                 </div>
 
-                <div className="flex items-center gap-2 text-gray-500 text-sm font-medium">
+                <div className="flex items-center gap-2 text-gray-500 text-xs md:text-sm font-medium">
                   <Target size={16} />
                   <span>Goal: {campaign.goal} XLM</span>
                 </div>
               </div>
 
-              <div className="bg-orange-50/50 p-6 rounded-3xl border border-orange-100/50 flex items-center gap-4">
+              <div className="bg-orange-50/50 p-4 md:p-6 rounded-3xl border border-orange-100/50 flex items-center gap-4">
                 <div className="bg-white p-3 rounded-2xl shadow-sm text-orange-500">
-                  <Clock size={24} />
+                  <Clock size={20} className="md:w-6 md:h-6" />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Deadline</p>
-                  <p className="text-gray-900 font-medium">{campaign.deadline}</p>
+                  <p className="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-wider">Deadline</p>
+                  <p className="text-sm md:text-base text-gray-900 font-medium">{campaign.deadline}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gray-50 p-8 rounded-[2rem] border border-gray-100 flex flex-col justify-center">
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Support this project</h3>
+            <div className="bg-gray-50 p-5 md:p-8 rounded-[2rem] border border-gray-100 flex flex-col justify-center">
+              <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Support this project</h3>
               <p className="text-sm text-gray-500 mb-6">Enter an amount in XLM to pledge towards the campaign goal.</p>
               
               <div className="space-y-4">
