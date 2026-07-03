@@ -12,7 +12,8 @@ mod campaign_contract {
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum DataKey {
     WasmHash,
-    Campaigns,
+    CampaignCount,
+    Campaign(u32),
 }
 
 #[contract]
@@ -26,11 +27,7 @@ impl CampaignFactory {
             panic!("already initialized");
         }
         env.storage().instance().set(&DataKey::WasmHash, &wasm_hash);
-
-        let empty_campaigns: Vec<Address> = Vec::new(&env);
-        env.storage()
-            .instance()
-            .set(&DataKey::Campaigns, &empty_campaigns);
+        env.storage().instance().set(&DataKey::CampaignCount, &0u32);
     }
 
     /// Deploys a new Campaign contract and initializes it.
@@ -61,12 +58,9 @@ impl CampaignFactory {
         campaign_client.init(&creator, &token, &goal, &deadline);
 
         // Store the new campaign address in our list
-        let mut campaigns: Vec<Address> =
-            env.storage().instance().get(&DataKey::Campaigns).unwrap();
-        campaigns.push_back(deployed_address.clone());
-        env.storage()
-            .instance()
-            .set(&DataKey::Campaigns, &campaigns);
+        let count: u32 = env.storage().instance().get(&DataKey::CampaignCount).unwrap_or(0);
+        env.storage().instance().set(&DataKey::Campaign(count), &deployed_address);
+        env.storage().instance().set(&DataKey::CampaignCount, &(count + 1));
 
         // Publish event
         env.events()
@@ -75,11 +69,17 @@ impl CampaignFactory {
         deployed_address
     }
 
-    /// Returns the list of all deployed campaigns.
-    pub fn get_campaigns(env: Env) -> Vec<Address> {
-        env.storage()
-            .instance()
-            .get(&DataKey::Campaigns)
-            .unwrap_or(Vec::new(&env))
+    /// Returns a paginated list of deployed campaigns.
+    pub fn get_campaigns(env: Env, start: u32, limit: u32) -> Vec<Address> {
+        let count: u32 = env.storage().instance().get(&DataKey::CampaignCount).unwrap_or(0);
+        let mut campaigns: Vec<Address> = Vec::new(&env);
+        
+        let end = (start + limit).min(count);
+        for i in start..end {
+            if let Some(addr) = env.storage().instance().get(&DataKey::Campaign(i)) {
+                campaigns.push_back(addr);
+            }
+        }
+        campaigns
     }
 }

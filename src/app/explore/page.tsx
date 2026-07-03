@@ -15,7 +15,7 @@ export default function Explore() {
     const fetchCampaigns = async () => {
       try {
         const factory = getFactoryClient();
-        const { result } = await factory.get_campaigns();
+        const { result } = await factory.get_campaigns({ start: 0, limit: 100 });
         
         if (result) {
           const campaignIds = result;

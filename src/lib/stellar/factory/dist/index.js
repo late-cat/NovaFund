@@ -7,12 +7,6 @@ if (typeof window !== "undefined") {
     //@ts-ignore Buffer exists
     window.Buffer = window.Buffer || Buffer;
 }
-export const networks = {
-    testnet: {
-        networkPassphrase: "Test SDF Network ; September 2015",
-        contractId: "CBGNLTWENII3LYUUVFU7DKCXV4HQTEKJQEUWXJKVIMVNMQL7E2DP2MEM",
-    }
-};
 export class Client extends ContractClient {
     options;
     static async deploy(
