@@ -59,7 +59,7 @@ jobs:
 
       - name: Build Contracts
         working-directory: ./contracts
-        run: cargo build --target wasm32-unknown-unknown --release
+        run: cargo build -p campaign --target wasm32-unknown-unknown --release && cargo build --target wasm32-unknown-unknown --release
 
       - name: Run Tests
         working-directory: ./contracts
@@ -87,4 +87,3 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: '--prod'
-        continue-on-error: true
