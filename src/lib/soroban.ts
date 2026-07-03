@@ -19,6 +19,7 @@ export const getFactoryClient = () => {
   return new FactoryClient({
     networkPassphrase,
     rpcUrl,
+    allowHttp: rpcUrl?.startsWith("http://"),
     contractId: factoryContractId,
   });
 };
@@ -28,6 +29,7 @@ export const getCampaignClient = (campaignId: string) => {
   return new CampaignClient({
     networkPassphrase,
     rpcUrl,
+    allowHttp: rpcUrl?.startsWith("http://"),
     contractId: campaignId,
   });
 };
