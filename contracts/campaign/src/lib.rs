@@ -31,6 +31,12 @@ impl Campaign {
         if env.storage().instance().has(&DataKey::State) {
             panic!("already initialized");
         }
+        if goal <= 0 {
+            panic!("goal must be positive");
+        }
+        if deadline <= env.ledger().timestamp() {
+            panic!("deadline must be in the future");
+        }
 
         let state = CampaignState {
             creator,

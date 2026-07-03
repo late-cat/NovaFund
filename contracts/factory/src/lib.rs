@@ -46,6 +46,13 @@ impl CampaignFactory {
 
         let wasm_hash: BytesN<32> = env.storage().instance().get(&DataKey::WasmHash).unwrap();
 
+        if goal <= 0 {
+            panic!("goal must be positive");
+        }
+        if deadline <= env.ledger().timestamp() {
+            panic!("deadline must be in the future");
+        }
+
         // Deploy the new campaign contract
         let deployed_address = env.deployer().with_current_contract(salt).deploy(wasm_hash);
 
