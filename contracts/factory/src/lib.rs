@@ -58,9 +58,17 @@ impl CampaignFactory {
         campaign_client.init(&creator, &token, &goal, &deadline);
 
         // Store the new campaign address in our list
-        let count: u32 = env.storage().instance().get(&DataKey::CampaignCount).unwrap_or(0);
-        env.storage().instance().set(&DataKey::Campaign(count), &deployed_address);
-        env.storage().instance().set(&DataKey::CampaignCount, &(count + 1));
+        let count: u32 = env
+            .storage()
+            .instance()
+            .get(&DataKey::CampaignCount)
+            .unwrap_or(0);
+        env.storage()
+            .instance()
+            .set(&DataKey::Campaign(count), &deployed_address);
+        env.storage()
+            .instance()
+            .set(&DataKey::CampaignCount, &(count + 1));
 
         // Publish event
         env.events()
@@ -71,9 +79,13 @@ impl CampaignFactory {
 
     /// Returns a paginated list of deployed campaigns.
     pub fn get_campaigns(env: Env, start: u32, limit: u32) -> Vec<Address> {
-        let count: u32 = env.storage().instance().get(&DataKey::CampaignCount).unwrap_or(0);
+        let count: u32 = env
+            .storage()
+            .instance()
+            .get(&DataKey::CampaignCount)
+            .unwrap_or(0);
         let mut campaigns: Vec<Address> = Vec::new(&env);
-        
+
         let end = (start + limit).min(count);
         for i in start..end {
             if let Some(addr) = env.storage().instance().get(&DataKey::Campaign(i)) {
