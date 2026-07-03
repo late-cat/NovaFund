@@ -55,7 +55,7 @@ export default function CampaignCard({
           </div>
           
           <div className="flex items-center gap-1.5 mt-4 pt-3 border-t border-dashed border-[#d4c6a0] text-xs font-medium text-gray-600">
-             <Clock size={12} className="text-gray-400" />
+             <Clock size={12} className="text-gray-500" />
              <span>{deadline}</span>
           </div>
         </div>

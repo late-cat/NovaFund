@@ -136,7 +136,7 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
                   <Clock size={20} className="md:w-6 md:h-6" />
                 </div>
                 <div>
-                  <p className="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-wider">Deadline</p>
+                  <p className="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-wider">Deadline</p>
                   <p className="text-sm md:text-base text-gray-900 font-medium">{campaign.deadline}</p>
                 </div>
               </div>
@@ -149,13 +149,14 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
               <div className="space-y-4">
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <Coins size={18} className="text-gray-400" />
+                    <Coins size={18} className="text-gray-500" />
                   </div>
                   <input
                     type="number"
                     min="1"
+                    aria-label="Pledge amount in XLM"
                     placeholder="Amount (XLM)"
-                    className="w-full bg-white border border-gray-200 rounded-xl pl-12 pr-4 py-3.5 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
+                    className="w-full bg-white border border-gray-200 rounded-xl pl-12 pr-4 py-3.5 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
                     value={pledgeAmount}
                     onChange={(e) => setPledgeAmount(e.target.value)}
                   />

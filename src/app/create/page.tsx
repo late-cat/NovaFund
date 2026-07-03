@@ -107,24 +107,26 @@ export default function CreateCampaign() {
         <motion.div variants={itemVariants} className="bg-white/80 p-8 rounded-[2rem] shadow-sm border border-gray-100 backdrop-blur-sm">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Campaign Title</label>
+              <label htmlFor="title" className="text-xs font-bold text-gray-600 uppercase tracking-wider ml-1">Campaign Title</label>
               <input
+                id="title"
                 required
                 type="text"
                 placeholder="e.g. Next-Gen Stellar Wallet"
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Description</label>
+              <label htmlFor="description" className="text-xs font-bold text-gray-600 uppercase tracking-wider ml-1">Description</label>
               <textarea
+                id="description"
                 required
                 rows={4}
                 placeholder="Describe what you are building..."
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all resize-none text-sm shadow-inner"
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all resize-none text-sm shadow-inner"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               />
@@ -132,17 +134,18 @@ export default function CreateCampaign() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Funding Goal (XLM)</label>
+                <label htmlFor="goal" className="text-xs font-bold text-gray-600 uppercase tracking-wider ml-1">Funding Goal (XLM)</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <Target size={16} className="text-gray-400" />
+                    <Target size={16} className="text-gray-500" />
                   </div>
                   <input
+                    id="goal"
                     required
                     type="number"
                     min="1"
                     placeholder="10000"
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
                     value={formData.goal}
                     onChange={(e) => setFormData({ ...formData, goal: e.target.value })}
                   />
@@ -150,15 +153,16 @@ export default function CreateCampaign() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Deadline</label>
+                <label htmlFor="deadline" className="text-xs font-bold text-gray-600 uppercase tracking-wider ml-1">Deadline</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <Calendar size={16} className="text-gray-400" />
+                    <Calendar size={16} className="text-gray-500" />
                   </div>
                   <input
+                    id="deadline"
                     required
                     type="date"
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
                     value={formData.deadline}
                     onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
                   />
@@ -167,12 +171,13 @@ export default function CreateCampaign() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Cover Image URL</label>
+              <label htmlFor="image" className="text-xs font-bold text-gray-600 uppercase tracking-wider ml-1">Cover Image URL</label>
               <input
+                id="image"
                 required
                 type="url"
                 placeholder="https://images.unsplash.com/..."
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
                 value={formData.image}
                 onChange={(e) => setFormData({ ...formData, image: e.target.value })}
               />
@@ -197,7 +202,7 @@ export default function CreateCampaign() {
                   </>
                 )}
               </button>
-              <p className="text-center text-[11px] text-gray-400 mt-3 font-medium">
+              <p className="text-center text-[11px] text-gray-500 mt-3 font-medium">
                 Deploying this contract will require a signature from your Freighter wallet.
               </p>
             </div>
