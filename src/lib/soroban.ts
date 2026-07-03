@@ -3,12 +3,17 @@ import { Client as CampaignClient } from "./stellar/campaign/src";
 
 const getNetworkDetails = () => {
   const networkPassphrase = process.env.NEXT_PUBLIC_STELLAR_NETWORK_PASSPHRASE;
-  const rpcUrl = process.env.NEXT_PUBLIC_STELLAR_RPC_URL;
+  let rpcUrl = process.env.NEXT_PUBLIC_STELLAR_RPC_URL;
   const factoryContractId = process.env.NEXT_PUBLIC_FACTORY_CONTRACT_ID;
 
   if (!networkPassphrase || !rpcUrl || !factoryContractId) {
     console.warn("Missing required environment variables for Soroban configuration.");
     return { networkPassphrase: "", rpcUrl: "", factoryContractId: "" };
+  }
+
+  // Sanitize the RPC URL in case the user forgot to add https:// in their Vercel config
+  if (!rpcUrl.startsWith("http://") && !rpcUrl.startsWith("https://")) {
+    rpcUrl = "https://" + rpcUrl;
   }
 
   return { networkPassphrase, rpcUrl, factoryContractId };
@@ -19,7 +24,7 @@ export const getFactoryClient = () => {
   return new FactoryClient({
     networkPassphrase,
     rpcUrl,
-    allowHttp: rpcUrl?.startsWith("http://"),
+    allowHttp: true,
     contractId: factoryContractId,
   });
 };
@@ -29,7 +34,7 @@ export const getCampaignClient = (campaignId: string) => {
   return new CampaignClient({
     networkPassphrase,
     rpcUrl,
-    allowHttp: rpcUrl?.startsWith("http://"),
+    allowHttp: true,
     contractId: campaignId,
   });
 };
