@@ -129,8 +129,8 @@ impl Campaign {
             panic!("no pledge found or already refunded");
         }
 
-        // Reset pledge first to prevent re-entrancy
-        env.storage().persistent().set(&pledge_key, &0i128);
+        // Remove pledge completely to free up storage
+        env.storage().persistent().remove(&pledge_key);
 
         let token_client = token::Client::new(&env, &state.token);
         token_client.transfer(&env.current_contract_address(), &backer, &amount);
@@ -141,6 +141,16 @@ impl Campaign {
     /// Get current state of the campaign
     pub fn get_state(env: Env) -> CampaignState {
         env.storage().instance().get(&DataKey::State).unwrap()
+    }
+
+    /// Allows backers to prune their pledge record to free up storage after a successful campaign.
+    pub fn prune(env: Env, backer: Address) {
+        let state: CampaignState = env.storage().instance().get(&DataKey::State).unwrap();
+        if !state.is_claimed {
+            panic!("campaign not yet claimed, cannot prune");
+        }
+        let pledge_key = DataKey::Pledge(backer.clone());
+        env.storage().persistent().remove(&pledge_key);
     }
 }
 
