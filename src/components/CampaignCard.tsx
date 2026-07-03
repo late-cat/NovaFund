@@ -24,7 +24,10 @@ export default function CampaignCard({
 
   return (
     <Link href={`/campaign/${id}`} className="block group h-full">
-      <div className="sticky-note relative h-full w-full p-4 transition-all duration-300 hover:-translate-y-1 flex flex-col group-hover:-rotate-1">
+      <div className="relative h-full w-full p-4 transition-all duration-300 hover:-translate-y-1 flex flex-col group-hover:-rotate-1 bg-[#fdf5c9] text-[#4c4e67] shadow-[0px_4px_10px_rgba(0,0,0,0.05)] rounded-t-[5px] rounded-bl-[5px] rounded-br-[5px]">
+        
+        {/* Sticky note folded corner */}
+        <div className="absolute top-0 right-0 w-0 h-0 border-solid border-t-0 border-r-[30px] border-b-[30px] border-l-0 border-t-transparent border-r-transparent border-b-[#e0d5a3] border-l-[#e0d5a3] shadow-[-2px_2px_5px_rgba(0,0,0,0.1)] block" />
         
         <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-30 w-12 h-3.5 bg-white/50 border border-white/40 shadow-[0_1px_2px_rgba(0,0,0,0.05)] backdrop-blur-sm rotate-[-3deg]" />
         

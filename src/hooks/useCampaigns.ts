@@ -121,7 +121,7 @@ function formatCampaignData(id: string, state: any): CampaignData {
     id,
     title: metaTitle,
     description: metaDesc,
-    creator: state.creator,
+    creator: `${state.creator.slice(0, 4)}...${state.creator.slice(-4)}`,
     goal: goalNum,
     raised: raisedNum,
     deadline: deadlineDate.toISOString().split("T")[0],

@@ -17,9 +17,8 @@ export default function Navbar() {
   return (
     <>
       <nav className="sticky top-0 z-50 w-full h-16">
-        <motion.div 
-          className="absolute inset-0 bg-white/70" 
-          style={{ opacity, filter: blur, borderBottom: "1px solid rgba(0,0,0,var(--border-opacity))" }}
+        <div 
+          className="absolute inset-0 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm" 
         />
         <div className="relative h-full max-w-5xl mx-auto px-4 sm:px-6 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2 group shrink-0">
