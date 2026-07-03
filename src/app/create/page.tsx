@@ -4,6 +4,7 @@ import { useState } from "react";
 import { TreePine, Calendar, Target, Plus, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { toStroops } from "@/lib/stellar/utils";
 
 export default function CreateCampaign() {
   const router = useRouter();
@@ -38,7 +39,7 @@ export default function CreateCampaign() {
       const deadlineDate = new Date(formData.deadline);
       deadlineDate.setUTCHours(23, 59, 59, 999);
       const deadlineSecs = Math.floor(deadlineDate.getTime() / 1000);
-      const goalAmount = BigInt(formData.goal) * BigInt(10000000);
+      const goalAmount = toStroops(formData.goal);
 
       const tokenAddress = "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC";
 

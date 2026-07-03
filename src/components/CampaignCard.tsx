@@ -5,8 +5,8 @@ interface CampaignProps {
   id: string;
   title: string;
   creator: string;
-  goal: number;
-  raised: number;
+  goal: string;
+  raised: string;
   deadline: string;
   image?: string;
 }
@@ -20,7 +20,7 @@ export default function CampaignCard({
   deadline,
   image = "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80",
 }: CampaignProps) {
-  const progress = Math.min((raised / goal) * 100, 100);
+  const progress = Math.min((Number(raised) / Number(goal)) * 100, 100);
 
   return (
     <Link href={`/campaign/${id}`} className="block group h-full">

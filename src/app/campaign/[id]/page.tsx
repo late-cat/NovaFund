@@ -2,6 +2,7 @@
 
 import { useEffect, useState, use } from "react";
 import { getCampaignClient } from "@/lib/soroban";
+import { fromStroops, toStroops } from "@/lib/stellar/utils";
 import { Loader2, ArrowLeft, ArrowRight, Target, Clock, User, Coins } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -22,8 +23,8 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
         
         if (stateResult) {
           const state = stateResult;
-          const goalNum = Number(state.goal) / 10000000;
-          const raisedNum = Number(state.current_amount) / 10000000;
+          const goalNum = fromStroops(state.goal);
+          const raisedNum = fromStroops(state.current_amount);
           const deadlineDate = new Date(Number(state.deadline) * 1000).toLocaleString();
           
           const mockImages = [
@@ -85,7 +86,7 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
       }
 
       const client = getCampaignClient(id);
-      const amountInStroops = BigInt(Number(pledgeAmount) * 10000000);
+      const amountInStroops = toStroops(pledgeAmount);
       
       const tx = await client.pledge({
         backer: address,

@@ -5,6 +5,7 @@ import CampaignCard from "@/components/CampaignCard";
 import { Sparkles, ArrowRight, Loader2, Link2 } from "lucide-react";
 import Link from "next/link";
 import { getFactoryClient, getCampaignClient } from "@/lib/soroban";
+import { fromStroops } from "@/lib/stellar/utils";
 import { motion, Variants } from "framer-motion";
 
 export default function Home() {
@@ -27,8 +28,8 @@ export default function Home() {
               if (stateResult) {
                 const state = stateResult;
                 
-                const goalNum = Number(state.goal) / 10000000;
-                const raisedNum = Number(state.current_amount) / 10000000;
+                const goalNum = fromStroops(state.goal);
+                const raisedNum = fromStroops(state.current_amount);
                 
                 const mockImages = [
                   "https://images.unsplash.com/photo-1639762681485-074b7f4f40e6?auto=format&fit=crop&q=80",
