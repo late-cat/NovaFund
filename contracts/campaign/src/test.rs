@@ -1,22 +1,31 @@
 #![cfg(test)]
 
 use super::*;
-use soroban_sdk::{testutils::{Address as _, Ledger}, token, Address, Env};
+use soroban_sdk::{
+    testutils::{Address as _, Ledger},
+    token, Address, Env,
+};
 
-fn setup_test() -> (Env, CampaignClient<'static>, Address, token::Client<'static>, token::StellarAssetClient<'static>) {
+fn setup_test() -> (
+    Env,
+    CampaignClient<'static>,
+    Address,
+    token::Client<'static>,
+    token::StellarAssetClient<'static>,
+) {
     let env = Env::default();
     env.mock_all_auths();
-    
+
     let contract_id = env.register_contract(None, Campaign);
     let client = CampaignClient::new(&env, &contract_id);
-    
+
     let admin = Address::generate(&env);
     let token_contract = env.register_stellar_asset_contract(admin.clone());
     let token = token::Client::new(&env, &token_contract);
     let token_admin = token::StellarAssetClient::new(&env, &token_contract);
-    
+
     let creator = Address::generate(&env);
-    
+
     (env, client, creator, token, token_admin)
 }
 
@@ -51,7 +60,7 @@ fn test_pledge_and_claim() {
 
     // Pledge
     client.pledge(&backer, &1000);
-    
+
     assert_eq!(token.balance(&backer), 1000);
     assert_eq!(token.balance(&client.address), 1000);
     assert_eq!(client.get_state().current_amount, 1000);
