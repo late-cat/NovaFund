@@ -44,6 +44,19 @@ This project serves as a comprehensive submission for the Stellar developer chal
 - [x] **Comprehensive Error Handling:** Captures edge cases, specifically mapping `Error(Contract, #10)` to readable "Insufficient Funds" warnings instead of crashing the UI.
 - [x] **Mobile Responsiveness:** Deeply optimized UI architecture utilizing `md:` media queries for flawless phone and tablet layout.
 
+## Architecture
+
+The project consists of three main components:
+1.  **Campaign Contract:** Manages individual crowdfunding campaigns, handling pledges, state updates (Active, Successful, Failed), and refunds/claims.
+2.  **Factory Contract:** An indexed registry that deploys and tracks all campaign contracts for scalable O(1) lookups and pagination.
+3.  **Next.js Frontend:** A responsive interface utilizing the Soroban TS SDK to interact with the factory and campaign contracts directly. Features BigInt math for precise XLM conversion, robust WalletConnect session caching, and dynamic transaction states.
+
+## Testing
+
+The project includes comprehensive test coverage:
+*   **Unit Tests:** Validates contract invariants and core logic using Rust's standard testing framework.
+*   **Integration Tests:** End-to-end tests for the complete lifecycle (pledge, claim, refund) within the Soroban VM environment.
+
 ## Visual Walkthrough
 
 ### CI/CD Pipeline & Automated Testing
