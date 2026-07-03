@@ -1,6 +1,6 @@
 import { Buffer } from "buffer";
 import { AssembledTransaction, Client as ContractClient, ClientOptions as ContractClientOptions, MethodOptions } from "@stellar/stellar-sdk/contract";
-import type { u64, i128 } from "@stellar/stellar-sdk/contract";
+import type { u32, u64, i128 } from "@stellar/stellar-sdk/contract";
 export * from "@stellar/stellar-sdk";
 export * as contract from "@stellar/stellar-sdk/contract";
 export * as rpc from "@stellar/stellar-sdk/rpc";
@@ -8,8 +8,11 @@ export type DataKey = {
     tag: "WasmHash";
     values: void;
 } | {
-    tag: "Campaigns";
+    tag: "CampaignCount";
     values: void;
+} | {
+    tag: "Campaign";
+    values: readonly [u32];
 };
 export interface Client {
     /**
@@ -21,9 +24,12 @@ export interface Client {
     }, options?: MethodOptions) => Promise<AssembledTransaction<null>>;
     /**
      * Construct and simulate a get_campaigns transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
-     * Returns the list of all deployed campaigns.
+     * Returns a paginated list of deployed campaigns.
      */
-    get_campaigns: (options?: MethodOptions) => Promise<AssembledTransaction<Array<string>>>;
+    get_campaigns: ({ start, limit }: {
+        start: u32;
+        limit: u32;
+    }, options?: MethodOptions) => Promise<AssembledTransaction<Array<string>>>;
     /**
      * Construct and simulate a create_campaign transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
      * Deploys a new Campaign contract and initializes it.

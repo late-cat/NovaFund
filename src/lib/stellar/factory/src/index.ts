@@ -33,7 +33,7 @@ if (typeof window !== "undefined") {
 
 
 
-export type DataKey = {tag: "WasmHash", values: void} | {tag: "Campaigns", values: void};
+export type DataKey = {tag: "WasmHash", values: void} | {tag: "CampaignCount", values: void} | {tag: "Campaign", values: readonly [u32]};
 
 export interface Client {
   /**
@@ -44,9 +44,9 @@ export interface Client {
 
   /**
    * Construct and simulate a get_campaigns transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
-   * Returns the list of all deployed campaigns.
+   * Returns a paginated list of deployed campaigns.
    */
-  get_campaigns: (options?: MethodOptions) => Promise<AssembledTransaction<Array<string>>>
+  get_campaigns: ({start, limit}: {start: u32, limit: u32}, options?: MethodOptions) => Promise<AssembledTransaction<Array<string>>>
 
   /**
    * Construct and simulate a create_campaign transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
@@ -73,8 +73,8 @@ export class Client extends ContractClient {
   constructor(public readonly options: ContractClientOptions) {
     super(
       new ContractSpec([ "AAAAAAAAAENJbml0aWFsaXplIHRoZSBmYWN0b3J5IHdpdGggdGhlIFdBU00gaGFzaCBvZiB0aGUgQ2FtcGFpZ24gY29udHJhY3QuAAAAAARpbml0AAAAAQAAAAAAAAAJd2FzbV9oYXNoAAAAAAAD7gAAACAAAAAA",
-        "AAAAAgAAAAAAAAAAAAAAB0RhdGFLZXkAAAAAAgAAAAAAAAAAAAAACFdhc21IYXNoAAAAAAAAAAAAAAAJQ2FtcGFpZ25zAAAA",
-        "AAAAAAAAACtSZXR1cm5zIHRoZSBsaXN0IG9mIGFsbCBkZXBsb3llZCBjYW1wYWlnbnMuAAAAAA1nZXRfY2FtcGFpZ25zAAAAAAAAAAAAAAEAAAPqAAAAEw==",
+        "AAAAAgAAAAAAAAAAAAAAB0RhdGFLZXkAAAAAAwAAAAAAAAAAAAAACFdhc21IYXNoAAAAAAAAAAAAAAANQ2FtcGFpZ25Db3VudAAAAAAAAAEAAAAAAAAACENhbXBhaWduAAAAAQAAAAQ=",
+        "AAAAAAAAAC9SZXR1cm5zIGEgcGFnaW5hdGVkIGxpc3Qgb2YgZGVwbG95ZWQgY2FtcGFpZ25zLgAAAAANZ2V0X2NhbXBhaWducwAAAAAAAAIAAAAAAAAABXN0YXJ0AAAAAAAABAAAAAAAAAAFbGltaXQAAAAAAAAEAAAAAQAAA+oAAAAT",
         "AAAAAAAAADNEZXBsb3lzIGEgbmV3IENhbXBhaWduIGNvbnRyYWN0IGFuZCBpbml0aWFsaXplcyBpdC4AAAAAD2NyZWF0ZV9jYW1wYWlnbgAAAAAFAAAAAAAAAAdjcmVhdG9yAAAAABMAAAAAAAAABXRva2VuAAAAAAAAEwAAAAAAAAAEZ29hbAAAAAsAAAAAAAAACGRlYWRsaW5lAAAABgAAAAAAAAAEc2FsdAAAA+4AAAAgAAAAAQAAABM=" ]),
       options
     )

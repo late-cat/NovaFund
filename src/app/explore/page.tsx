@@ -8,86 +8,10 @@ import { getFactoryClient, getCampaignClient } from "@/lib/soroban";
 import { fromStroops } from "@/lib/stellar/utils";
 import { motion, Variants } from "framer-motion";
 
+import { useCampaigns } from "@/hooks/useCampaigns";
+
 export default function Explore() {
-  const [campaigns, setCampaigns] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchCampaigns = async () => {
-      try {
-        const factory = getFactoryClient();
-        const { result } = await factory.get_campaigns({ start: 0, limit: 100 });
-        
-        if (result) {
-          const campaignIds = result;
-          
-          const campaignPromises = campaignIds.map(async (id: string) => {
-            const campaign = getCampaignClient(id);
-            try {
-              const { result: stateResult } = await campaign.get_state();
-              if (stateResult) {
-                const state = stateResult;
-                
-                const goalNum = fromStroops(state.goal);
-                const raisedNum = fromStroops(state.current_amount);
-                
-                const mockImages = [
-                  "https://images.unsplash.com/photo-1639762681485-074b7f4f40e6?auto=format&fit=crop&q=80",
-                  "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80",
-                  "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80",
-                  "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80"
-                ];
-                const charCode = id.charCodeAt(0) || 0;
-                const image = mockImages[charCode % mockImages.length];
-                
-                const deadlineDate = new Date(Number(state.deadline) * 1000).toISOString().split("T")[0];
-
-                let metaTitle = `Campaign ${id.slice(0, 6)}`;
-                let metaImage = mockImages[charCode % mockImages.length];
-                let metaDesc = "";
-                
-                try {
-                  const stored = localStorage.getItem(`campaign_meta_${id}`);
-                  if (stored) {
-                    const parsed = JSON.parse(stored);
-                    if (parsed.title) metaTitle = parsed.title;
-                    if (parsed.image) metaImage = parsed.image;
-                    if (parsed.description) metaDesc = parsed.description;
-                  }
-                } catch (e) {
-                  console.error("Failed to parse metadata", e);
-                }
-
-                return {
-                  id,
-                  title: metaTitle,
-                  description: metaDesc,
-                  creator: `${state.creator.slice(0, 4)}...${state.creator.slice(-4)}`,
-                  goal: goalNum,
-                  raised: raisedNum,
-                  deadline: deadlineDate,
-                  image: metaImage,
-                };
-              }
-            } catch (err) {
-              console.error("Error fetching state for campaign", id, err);
-            }
-            return null;
-          });
-
-          const resolved = await Promise.all(campaignPromises);
-          const validCampaigns = resolved.filter((c: any) => c !== null);
-          setCampaigns(validCampaigns.reverse());
-        }
-      } catch (err) {
-        console.error("Failed to fetch campaigns", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCampaigns();
-  }, []);
+  const { campaigns, loading } = useCampaigns(100);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },

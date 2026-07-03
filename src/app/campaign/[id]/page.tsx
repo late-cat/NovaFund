@@ -7,70 +7,14 @@ import { Loader2, ArrowLeft, ArrowRight, Target, Clock, User, Coins } from "luci
 import Link from "next/link";
 import { motion } from "framer-motion";
 
+import { useCampaign } from "@/hooks/useCampaigns";
+
 export default function CampaignDetails({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const [campaign, setCampaign] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const { campaign, loading } = useCampaign(id);
   const [pledgeAmount, setPledgeAmount] = useState("");
   const [isPledging, setIsPledging] = useState(false);
   const [successTxHash, setSuccessTxHash] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchCampaign = async () => {
-      try {
-        const client = getCampaignClient(id);
-        const { result: stateResult } = await client.get_state();
-        
-        if (stateResult) {
-          const state = stateResult;
-          const goalNum = fromStroops(state.goal);
-          const raisedNum = fromStroops(state.current_amount);
-          const deadlineDate = new Date(Number(state.deadline) * 1000).toLocaleString();
-          
-          const mockImages = [
-            "https://images.unsplash.com/photo-1639762681485-074b7f4f40e6?auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80"
-          ];
-          const charCode = id.charCodeAt(0) || 0;
-          const image = mockImages[charCode % mockImages.length];
-          let metaTitle = `Campaign ${id.slice(0, 6)}`;
-          let metaImage = mockImages[charCode % mockImages.length];
-          let metaDesc = "";
-          
-          try {
-            const stored = localStorage.getItem(`campaign_meta_${id}`);
-            if (stored) {
-              const parsed = JSON.parse(stored);
-              if (parsed.title) metaTitle = parsed.title;
-              if (parsed.image) metaImage = parsed.image;
-              if (parsed.description) metaDesc = parsed.description;
-            }
-          } catch (e) {
-            console.error("Failed to parse metadata", e);
-          }
-
-          setCampaign({
-            id,
-            title: metaTitle,
-            description: metaDesc,
-            creator: state.creator,
-            goal: goalNum,
-            raised: raisedNum,
-            deadline: deadlineDate,
-            deadlineSecs: Number(state.deadline),
-            image: metaImage,
-          });
-        }
-      } catch (err) {
-        console.error("Failed to fetch campaign details", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCampaign();
-  }, [id]);
 
   const handlePledge = async () => {
     if (!pledgeAmount || isNaN(Number(pledgeAmount))) return;
@@ -135,7 +79,7 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
     );
   }
 
-  const progress = Math.min((campaign.raised / campaign.goal) * 100, 100);
+  const progress = Math.min((Number(campaign.raised) / Number(campaign.goal)) * 100, 100);
   const isEnded = Math.floor(Date.now() / 1000) > campaign.deadlineSecs;
 
   return (
