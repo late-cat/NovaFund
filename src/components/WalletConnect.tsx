@@ -25,23 +25,31 @@ export default function WalletConnect() {
   };
 
   useEffect(() => {
+    const saved = localStorage.getItem("connected_pubkey");
+    if (saved) setPubKey(saved);
     checkConnection();
   }, []);
 
   useEffect(() => {
     if (pubKey) {
+      localStorage.setItem("connected_pubkey", pubKey);
       fetchBalance(pubKey);
     } else {
+      localStorage.removeItem("connected_pubkey");
       setBalance(null);
     }
   }, [pubKey]);
 
   const checkConnection = async () => {
-    if (await isAllowed()) {
-      const { address } = await getAddress();
-      if (address) {
-        setPubKey(address);
+    try {
+      if (await isAllowed()) {
+        const { address } = await getAddress();
+        if (address) {
+          setPubKey(address);
+        }
       }
+    } catch (e) {
+      console.error("Error checking Freighter connection", e);
     }
   };
 
