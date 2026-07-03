@@ -8,7 +8,7 @@ import { toStroops } from "@/lib/stellar/utils";
 
 export default function CreateCampaign() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [txStatus, setTxStatus] = useState<"idle" | "signing" | "submitting" | "success" | "error">("idle");
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -19,14 +19,14 @@ export default function CreateCampaign() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    setTxStatus("signing");
 
     try {
       const { requestAccess, signTransaction } = await import("@stellar/freighter-api");
       const { address } = await requestAccess();
       if (!address) {
         alert("Please connect your Freighter wallet first.");
-        setIsLoading(false);
+        setTxStatus("idle");
         return;
       }
 
@@ -51,6 +51,7 @@ export default function CreateCampaign() {
         salt: Buffer.from(salt),
       }, { publicKey: address });
 
+      setTxStatus("submitting");
       const sentTx = await tx.signAndSend({ signTransaction });
       
       const newCampaignId = sentTx.result;
@@ -66,13 +67,13 @@ export default function CreateCampaign() {
       }
 
       setTimeout(() => {
-        setIsLoading(false);
+        setTxStatus("success");
         router.push("/");
       }, 1500);
     } catch (e) {
       console.error(e);
       alert("Error deploying campaign: " + e);
-      setIsLoading(false);
+      setTxStatus("error");
     }
   };
 
@@ -180,14 +181,14 @@ export default function CreateCampaign() {
             <div className="pt-4">
               <button
                 type="submit"
-                disabled={isLoading}
+                disabled={txStatus === "signing" || txStatus === "submitting"}
                 className="sticky-note-btn relative w-full flex items-center justify-center gap-2 py-3.5 rounded-md font-bold transition-all text-sm border-none group bg-[#fdf5c9] text-[#e88147] hover:bg-[#fbf1bb] hover:-rotate-1 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-30 w-10 h-3.5 bg-white/50 border border-white/40 shadow-[0_1px_2px_rgba(0,0,0,0.05)] backdrop-blur-sm rotate-[2deg]" />
-                {isLoading ? (
+                {txStatus === "signing" || txStatus === "submitting" ? (
                   <>
                     <Loader2 size={18} className="animate-spin text-[#e88147]" />
-                    <span>Deploying Smart Contract...</span>
+                    <span>{txStatus === "signing" ? "Please Sign in Wallet..." : "Deploying Smart Contract..."}</span>
                   </>
                 ) : (
                   <>

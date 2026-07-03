@@ -13,19 +13,19 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
   const { id } = use(params);
   const { campaign, loading } = useCampaign(id);
   const [pledgeAmount, setPledgeAmount] = useState("");
-  const [isPledging, setIsPledging] = useState(false);
+  const [txStatus, setTxStatus] = useState<"idle" | "signing" | "submitting" | "success" | "error">("idle");
   const [successTxHash, setSuccessTxHash] = useState<string | null>(null);
 
   const handlePledge = async () => {
     if (!pledgeAmount || isNaN(Number(pledgeAmount))) return;
-    setIsPledging(true);
+    setTxStatus("signing");
 
     try {
       const { requestAccess, signTransaction } = await import("@stellar/freighter-api");
       const { address } = await requestAccess();
       if (!address) {
         alert("Please connect your Freighter wallet first.");
-        setIsPledging(false);
+        setTxStatus("idle");
         return;
       }
 
@@ -37,6 +37,7 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
         amount: amountInStroops,
       }, { publicKey: address });
 
+      setTxStatus("submitting");
       const sentTx = await tx.signAndSend({ signTransaction });
       console.log("Pledge successful!", sentTx);
       
@@ -47,6 +48,7 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
         alert("Pledge successful!");
         window.location.reload();
       }
+      setTxStatus("success");
     } catch (e: any) {
       const errorMessage = e?.message || String(e);
       
@@ -57,8 +59,7 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
       } else {
         alert(`Error pledging: ${errorMessage}`);
       }
-    } finally {
-      setIsPledging(false);
+      setTxStatus("error");
     }
   };
 
@@ -162,7 +163,7 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
 
                 <button
                   onClick={handlePledge}
-                  disabled={isPledging || !pledgeAmount || isEnded}
+                  disabled={txStatus === "signing" || txStatus === "submitting" || !pledgeAmount || isEnded}
                   className={`sticky-note-btn relative w-full flex items-center justify-center gap-2 py-3.5 rounded-md font-bold transition-all text-sm border-none group ${
                     isEnded 
                       ? "bg-gray-200 text-gray-500 cursor-not-allowed"
@@ -170,10 +171,16 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
                   }`}
                 >
                   <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-30 w-10 h-3.5 bg-white/50 border border-white/40 shadow-[0_1px_2px_rgba(0,0,0,0.05)] backdrop-blur-sm rotate-[-3deg]" />
-                  {isPledging ? (
+                  {txStatus === "signing" || txStatus === "submitting" ? (
                     <Loader2 size={18} className="animate-spin text-[#e88147]" />
                   ) : null}
-                  {isEnded ? "Campaign Ended" : isPledging ? "Pledging..." : "Pledge XLM"}
+                  {isEnded 
+                    ? "Campaign Ended" 
+                    : txStatus === "signing" 
+                      ? "Please Sign in Wallet..." 
+                      : txStatus === "submitting" 
+                        ? "Submitting to Network..." 
+                        : "Pledge XLM"}
                 </button>
                 {successTxHash && (
                   <motion.div 
