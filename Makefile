@@ -16,6 +16,8 @@ check-frontend:
 check-contracts:
 	@echo "Running Smart Contract Formatting Check..."
 	cd contracts && cargo fmt --all --check
+	@echo "Building Campaign wasm artifact (required for Factory)..."
+	cd contracts && cargo build -p campaign --target wasm32-unknown-unknown --release
 	@echo "Running Smart Contract Strict Linter (Clippy)..."
 	cd contracts && cargo clippy --all-targets --all-features -- -D warnings
 	@echo "Running Smart Contract Tests..."
