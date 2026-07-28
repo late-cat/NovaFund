@@ -3,6 +3,8 @@ import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FeedbackButton from "@/components/FeedbackButton";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
@@ -10,6 +12,18 @@ const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 export const metadata: Metadata = {
   title: "NovaFund | Decentralized Crowdfunding on Stellar",
   description: "Launch your visionary projects with trustless, decentralized crowdfunding powered by Soroban.",
+  openGraph: {
+    title: "NovaFund - Decentralized Crowdfunding",
+    description: "Launch your visionary projects with trustless, decentralized crowdfunding powered by Soroban on the Stellar Network.",
+    url: "https://nova-fund.vercel.app",
+    siteName: "NovaFund",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "NovaFund - Soroban Crowdfunding",
+    description: "The premier decentralized crowdfunding protocol built on Stellar.",
+  }
 };
 
 export default function RootLayout({
@@ -42,8 +56,10 @@ export default function RootLayout({
           <main className="flex-1 w-full max-w-5xl mx-auto py-12 px-6">
             {children}
           </main>
+          <FeedbackButton />
           <Footer />
         </div>
+        <Analytics />
       </body>
     </html>
   );
