@@ -22,7 +22,7 @@ export default function Error({
           Something went wrong!
         </h2>
         <p className="text-gray-600 mb-8 font-inter">
-          We've been notified about this error and are looking into it. Please try again.
+          We&apos;ve been notified about this error and are looking into it. Please try again.
         </p>
         <button
           onClick={() => reset()}
