@@ -7,12 +7,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Stellar](https://img.shields.io/badge/Network-Stellar_Testnet-black)](https://stellar.org/)
 [![Soroban](https://img.shields.io/badge/Smart_Contracts-Soroban-orange)](https://soroban.stellar.org/)
-[![CI/CD Pipeline Status](https://github.com/late-cat/NovaFund/actions/workflows/ci.yml/badge.svg)](https://github.com/late-cat/NovaFund/actions/workflows/ci.yml)
 
   <h3>🚀 Live Production Deployment: <a href="https://nova-fund.vercel.app/">https://nova-fund.vercel.app/</a></h3>
   <h3>🎥 Video Walkthrough: <a href="https://youtu.be/S9shZimBqp4">https://youtu.be/S9shZimBqp4</a></h3>
 
-<img src="demo-img/hero.png" alt="NovaFund Hero" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
+![Hero Dashboard](./demo-img/hero.png)
 
 *Launch your visionary projects with trustless, decentralized crowdfunding. Your backers securely pledge XLM natively on the Stellar Testnet with no middleman.*
 
@@ -162,52 +161,145 @@ stellar-crowdfund/
 └── package.json       # Project dependencies and scripts
 ```
 
-## 📜 Smart Contract Information
+---
 
-| Property | Value |
-| :--- | :--- |
-| **Network** | Stellar Testnet |
-| **Factory Contract Address** | `CBGNLTWENII3LYUUVFU7DKCXV4HQTEKJQEUWXJKVIMVNMQL7E2DP2MEM` |
-| **Environment** | Soroban Environment |
+## 🛡️ Contract Addresses & Verifiable Links
+
+*   **Verifiable Live App**: [https://nova-fund.vercel.app/](https://nova-fund.vercel.app/)
+*   **Factory Contract Address**: [`CBGNLTWENII3LYUUVFU7DKCXV4HQTEKJQEUWXJKVIMVNMQL7E2DP2MEM`](https://stellar.expert/explorer/testnet/contract/CBGNLTWENII3LYUUVFU7DKCXV4HQTEKJQEUWXJKVIMVNMQL7E2DP2MEM)
+*   **Network**: Stellar Testnet
 
 ---
 
-## 🛠️ Local Setup Instructions
+## 📸 Platform Previews
 
-To run this application locally, ensure you have Node.js (v18+) installed, then execute:
+### 🌟 Landing Page
+*A sleek, professional landing page showcasing the total raised funds and platform statistics.*
+<div align="center">
+  <img src="demo-img/hero.png" alt="Hero Dashboard" width="800"/>
+</div>
 
+### 📜 Exploring Ongoing Campaigns
+*Browse through all active crowdfunding campaigns dynamically deployed via the Factory contract.*
+<div align="center">
+  <img src="demo-img/all-ongoing-campaign.png" alt="Explore Campaigns" width="800"/>
+</div>
+
+### 🚀 Starting a New Campaign
+*An intuitive dashboard for creating a new campaign. Connect your Freighter wallet to deploy a bespoke campaign contract on-chain.*
+<div align="center">
+  <img src="demo-img/start a campagin.png" alt="Start Campaign" width="800"/>
+</div>
+
+### 💸 Pledging & Confirming Transactions
+*Backers can natively pledge XLM directly to the campaign contract, completely trustlessly.*
+<div align="center">
+  <img src="demo-img/confirm-transaction from user.png" alt="Confirm Transaction" width="800"/>
+</div>
+
+### 📊 Live Funding Progress
+*Real-time progress bars tracking XLM contributions towards the campaign target goal.*
+<div align="center">
+  <img src="demo-img/funding.png" alt="Funding Progress" width="800"/>
+</div>
+
+### ⚡ On-Chain Transaction Success
+*Every transaction is verified on the Stellar Expert Explorer, proving cryptographic immutability.*
+<div align="center">
+  <img src="demo-img/successfull-transac.png" alt="Transaction Success Explorer" width="800"/>
+</div>
+
+### 📱 Fully Mobile Responsive
+*The entire application, including complex grids and forms, is optimized for seamless mobile usage.*
+<div align="center">
+  <img src="demo-img/mobile-ui-1.png" alt="Mobile View 1" width="300"/>
+  <img src="demo-img/mobile-ui-2.png" alt="Mobile View 2" width="300"/>
+</div>
+
+### 🧪 Automated Testing Suite
+*Comprehensive frontend and Rust smart contract testing ensures platform stability and logic invariants.*
+<div align="center">
+  <img src="demo-img/final-tests.png" alt="Passing Test Suite" width="800"/>
+</div>
+
+---
+
+## 🚀 CI/CD & Deployment Steps
+
+### GitHub Actions (CI/CD)
+The repository includes automated CI/CD workflows (`.github/workflows/ci.yml`) that trigger on PRs and merges to `main`. It automatically:
+1. Compiles and tests the Rust Soroban contracts via Cargo.
+2. Runs frontend linting and unit tests via Jest.
+3. Builds the Next.js production bundle to ensure zero build errors.
+
+<div align="center">
+  <img src="demo-img/final-pipeline.png" alt="CI/CD Pipeline" width="800"/>
+</div>
+
+### Deploying Contracts to Testnet
+Use the provided Stellar CLI commands to deploy to Testnet:
+
+1. **Build the Contracts**
+   ```bash
+   cd contracts
+   cargo build -p campaign --target wasm32-unknown-unknown --release
+   cargo build -p factory --target wasm32-unknown-unknown --release
+   ```
+2. **Deploy Campaign Wasm Hash**
+   ```bash
+   stellar contract install --wasm target/wasm32-unknown-unknown/release/campaign.wasm --source YOUR_IDENTITY --network testnet
+   ```
+3. **Deploy Factory Contract**
+   ```bash
+   stellar contract deploy --wasm target/wasm32-unknown-unknown/release/factory.wasm --source YOUR_IDENTITY --network testnet
+   ```
+4. **Initialize Factory**
+   ```bash
+   stellar contract invoke --id [FACTORY_ID] --source YOUR_IDENTITY --network testnet -- init --wasm_hash [CAMPAIGN_WASM_HASH]
+   ```
+
+---
+
+## 💻 Local Development & Setup
+
+### Prerequisites
+- Node.js (v18+)
+- Rust & Cargo
+- Stellar CLI (`stellar-cli`)
+- Freighter Wallet browser extension
+
+### Environment Variables
+Create a `.env` file in the root directory:
+```env
+NEXT_PUBLIC_STELLAR_NETWORK="TESTNET"
+NEXT_PUBLIC_FACTORY_CONTRACT_ID="CBGNLTWENII3LYUUVFU7DKCXV4HQTEKJQEUWXJKVIMVNMQL7E2DP2MEM"
+NEXT_PUBLIC_SENTRY_DSN=""
+```
+
+### Running the Frontend
 ```bash
-# Install all dependencies
 npm install
-
-# Start the development server
 npm run dev
 ```
-Navigate to `http://localhost:3000` to interact with the application.
+
+### Running Tests
+```bash
+# Frontend Tests (Jest)
+npm run test
+
+# Smart Contract Tests
+cd contracts
+cargo test
+```
 
 ---
 
-## 📸 Visual Walkthrough
+## 🔒 Security Considerations
 
-### Exploring Ongoing Campaigns
-<img src="demo-img/all-ongoing-campaign.png" alt="Explore Campaigns" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
-
-### Starting a New Campaign
-<img src="demo-img/start a campagin.png" alt="Start Campaign" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
-
-### Pledging and Confirming Transaction
-<img src="demo-img/confirm-transaction from user.png" alt="Confirm Transaction" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
-<img src="demo-img/funding.png" alt="Funding Progress" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
-
-### On-Chain Transaction Success
-<img src="demo-img/successfull-transac.png" alt="Transaction Success Explorer" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
-
-### Mobile Responsive UI
-<img src="demo-img/mobile-respons.png" alt="Mobile Responsive Design" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
-
-### CI/CD Pipeline & Automated Testing
-<img src="demo-img/final-pipeline.png" alt="CI/CD Pipeline" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
-<img src="demo-img/final-tests.png" alt="Passing Tests" width="100%" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 20px;" />
+- **Factory Deployment**: Campaign contracts are strictly deployed through the Factory, ensuring verified code execution.
+- **Immutability Constraints**: Once a campaign is created, its core parameters (target, deadline) cannot be maliciously altered.
+- **Refund Guarantees**: If a campaign fails to meet its target by the deadline, backers are algorithmically guaranteed the ability to claim refunds.
+- **Wallet Security**: Uses Freighter API to ensure private keys never touch the DOM or React state. All signing is delegated entirely to the secure extension.
 
 ---
 
