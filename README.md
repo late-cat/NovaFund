@@ -175,5 +175,9 @@ The application has been engineered to handle critical edge cases gracefully:
 
 This project is optimized for deployment on Vercel. Since it operates entirely as a decentralized application interacting directly with the Stellar Testnet, the Next.js frontend can be deployed statically with zero backend infrastructure required.
 
- 
-  
+---
+
+<div align="center">
+  <b>Developed with ⚔️ by Bapi Mondal</b><br>
+  <a href="https://github.com/bapix-star">GitHub Profile</a>
+</div>
