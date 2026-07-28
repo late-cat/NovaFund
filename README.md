@@ -57,17 +57,17 @@
 *   **📊 Feedback Responses Sheet**: [View Responses](#) *(Add link here)*
 
 **Proof of 10+ Unique User Wallet Interactions:**
-*(Insert screenshot of 10+ user Google sheet here: `![10+ Users Proof](./demo-img/10-user-proof.png)`)*
+*(Insert screenshot of 10+ user Google sheet or wallet interaction here once you have it)*
 
 **Basic User Feedback Summary:**
 *(Insert summary of 10+ user responses here after collecting feedback)*
 
 #### 📈 Monitoring & Analytics
 **Vercel Analytics Dashboard:**
-*(Insert screenshot of Vercel Analytics here: `![Vercel Analytics](./demo-img/vercel-analytics.png)`)*
+*(Insert screenshot of your NovaFund Vercel Analytics here once it is deployed)*
 
 **Sentry Error Monitoring Dashboard:**
-*(Insert screenshot of Sentry Error tracking here: `![Sentry Dashboard](./demo-img/sentry-dashboard.png)`)*
+*(Insert screenshot of your NovaFund Sentry Error tracking dashboard here once an error is caught)*
 
 ---
 
