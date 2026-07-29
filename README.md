@@ -106,6 +106,7 @@ Comprehensive crash reporting and performance monitoring configured for the prod
 | **Global Error Boundary** | Custom React error boundaries to catch and recover from UI crashes |
 | **Skeleton Loaders** | Themed pulsing skeleton loaders for campaigns and dashboards |
 | **Responsive Mobile UI** | Dedicated mobile grid layouts ensuring 100% usability on phones |
+| **Multi-Wallet Support** | Seamless connection using preferred Stellar wallets via StellarWalletsKit (Freighter, Albedo, xBull, Rabet) |
 
 ---
 
