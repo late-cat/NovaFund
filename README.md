@@ -84,7 +84,7 @@ NovaFund solves this by introducing a fully decentralized, smart-contract-driven
 ![Spreadsheet Proof of 10+ Users](./demo-img/spread-sheet.png)
 
 **Basic User Feedback Summary:**
-Based on the responses from 11 beta testers, the platform was highly rated for its ease of wallet connection and overall usability (averaging a 4.5/5 ease-of-use score). Users praised the "super cool looking UI" and smooth interactions, while suggesting potential future features like centralized user dashboards and multi-currency support.
+Based on the responses from 11 beta testers, the platform was highly rated for its ease of wallet connection and overall usability (averaging a 4.5/5 ease-of-use score). Backers praised the "incredibly clean and intuitive" UI, noting that the "pledging process felt completely seamless" and "snappy". Users provided excellent constructive suggestions for future updates, including adding USDC support, implementing a centralized user dashboard to track past pledges, adding pre-transaction balance validation, and integrating a KYC verification layer for creators to boost backer confidence.
 
 #### 📈 Monitoring & Analytics
 
