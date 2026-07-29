@@ -15,8 +15,7 @@ export default function FeedbackButton() {
   }, []);
 
   const handleClick = () => {
-    // Placeholder Google Form URL - the user will replace this later
-    window.open("https://docs.google.com/forms/d/placeholder/viewform", "_blank");
+    window.open("https://docs.google.com/forms/d/e/1FAIpQLSfTpOUdr3LiZeptohHgR6_YX0gLMQhNB4Uup9u3NsegC8GVDQ/viewform?usp=header", "_blank");
   };
 
   if (!isVisible) return null;
@@ -24,7 +23,7 @@ export default function FeedbackButton() {
   return (
     <button
       onClick={handleClick}
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-5 py-3 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(59,130,246,0.3)] transition-all duration-300 hover:-translate-y-1 group"
+      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white px-5 py-3 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(249,115,22,0.3)] transition-all duration-300 hover:-translate-y-1 group"
       aria-label="Share Feedback"
     >
       <MessageSquarePlus className="w-5 h-5 group-hover:scale-110 transition-transform" />
