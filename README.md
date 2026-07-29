@@ -81,7 +81,7 @@ NovaFund solves this by introducing a fully decentralized, smart-contract-driven
 *   **📊 Feedback Responses Sheet**: [View Responses](#) *(Please update with your link)*
 
 **Proof of 10+ Unique User Wallet Interactions:**
-*(Please update with your screenshot of 10+ user wallet interactions)*
+*(Please update with your screenshot of 10+ user wallet interactions showcasing their public addresses and transaction hashes)*
 
 **Basic User Feedback Summary:**
 *(Please update with a summary of the 10+ user responses from your feedback form)*
@@ -89,7 +89,7 @@ NovaFund solves this by introducing a fully decentralized, smart-contract-driven
 #### 📈 Monitoring & Analytics
 
 **Vercel Analytics Dashboard:**
-Actively monitoring our production app. The screenshot below verifies active traffic, proving real-world usage and monitoring of core web vitals.
+Actively monitoring our production app. The screenshot below verifies active traffic with **26 Unique Visitors** and **34 Page Views**, proving real-world usage and monitoring of core web vitals.
 ![Vercel Analytics](./demo-img/vercel-analysis.png)
 
 #### 🔧 Level 4 Technical Additions
@@ -131,15 +131,15 @@ graph TD
 
 ---
 
-## 📸 Interface Showcase
+## 📸 Checkpoint Deliverables: Interface Showcase
 
-### 🧰 Exploring Ongoing Campaigns
+### 🧰 Product UI: Exploring Ongoing Campaigns
 *Browse through all active crowdfunding campaigns dynamically deployed via the Factory contract.*
 <div align="center">
   <img src="./demo-img/all-ongoing-campaign.png" alt="Explore Campaigns" width="800"/>
 </div>
 
-### 🚀 Starting a New Campaign
+### 🚀 Product UI: Starting a New Campaign
 *An intuitive dashboard for creating a new campaign. Connect your Freighter wallet to deploy a bespoke campaign contract on-chain.*
 <details open>
 <summary><b>Campaign Creation UI</b></summary>
@@ -148,7 +148,7 @@ graph TD
 ![Start Campaign](./demo-img/start a campagin.png)
 </details>
 
-### 💸 Pledging & Confirming Transactions
+### 💸 Product UI: Pledging & Confirming Transactions
 *Backers can natively pledge XLM directly to the campaign contract. Freighter prompts the user for a secure, trustless signature.*
 <details open>
 <summary><b>Transaction Confirmation</b></summary>
@@ -157,7 +157,7 @@ graph TD
 ![Confirm Transaction](./demo-img/confirm-transaction from user.png)
 </details>
 
-### 📊 Live Funding Progress
+### 📊 Product UI: Live Funding Progress
 *Real-time progress bars tracking XLM contributions towards the campaign target goal.*
 <details open>
 <summary><b>Funding Progress UI</b></summary>
@@ -166,13 +166,13 @@ graph TD
 ![Funding Progress](./demo-img/funding.png)
 </details>
 
-### ⚡ On-Chain Transaction Success
+### ⚡ Product UI: On-Chain Transaction Success
 *Every transaction is verified on the Stellar Expert Explorer, proving cryptographic immutability.*
 <div align="center">
   <img src="./demo-img/successfull-transac.png" alt="Transaction Success Explorer" width="800"/>
 </div>
 
-### 📱 Mobile Responsiveness
+### 📱 Mobile Responsive Design
 *Our interface seamlessly adapts to any mobile device, ensuring backers can pledge on the go.*
 <div style="display: flex; gap: 10px;">
   <img src="./demo-img/mobile-ui-1.png" alt="Mobile Dashboard" width="48%">
@@ -205,19 +205,23 @@ sequenceDiagram
 ```
 
 ### Verified Test Suite
-Running tests inside `contracts` successfully executes all edge cases and Soroban lifecycle validations perfectly:
+*Running tests inside `contracts` successfully executes all edge cases and Soroban lifecycle validations perfectly:*
 
 ![Smart Contract Test Passed](./demo-img/test-outp.png)
-
-*Additional testing validation ensures deep functional coverage of the Factory and Campaign instances:*
-![Final Tests](./demo-img/final-tests.png)
 
 ---
 
 ## ⚙️ Professional CI/CD Pipeline
+
 Our GitHub Actions workflow automatically builds the Next.js frontend, compiles the Rust contracts to WebAssembly, and runs cargo tests upon pushing commits to the main repository.
 
+### 🔄 Automated Workflow Pipeline
+*The full execution graph of our strict parameter evaluation:*
 ![CI/CD Pipeline Running Successfully](./demo-img/final-pipeline.png)
+
+### ✅ Frontend & Smart Contract CI Success
+*Detailed view of our CI pipeline successfully passing all checks:*
+![Final Tests](./demo-img/final-tests.png)
 
 ---
 
