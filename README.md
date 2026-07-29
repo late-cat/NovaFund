@@ -177,6 +177,12 @@ graph TD
   <img src="./demo-img/successfull-transac.png" alt="Transaction Success Explorer" width="800"/>
 </div>
 
+### 💼 Product UI: Multi-Wallet Support
+*Seamlessly connect using your preferred Stellar wallet via StellarWalletsKit. We support Freighter, Albedo, xBull, HOT Wallet, and more out of the box.*
+<div align="center">
+  <img src="./demo-img/multi-wallet.png" alt="Multi-Wallet Support" width="800"/>
+</div>
+
 ### 📱 Mobile Responsive Design
 *Our interface seamlessly adapts to any mobile device, ensuring backers can pledge on the go.*
 <div style="display: flex; gap: 10px;">
