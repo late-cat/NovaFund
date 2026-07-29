@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { isAllowed, setAllowed, requestAccess, getAddress } from "@stellar/freighter-api";
+import { getKit } from "@/lib/wallet";
 import { Wallet, Loader2 } from "lucide-react";
 import { Horizon } from "@stellar/stellar-sdk";
 
@@ -41,16 +41,7 @@ export default function WalletConnect() {
   }, [pubKey]);
 
   const checkConnection = async () => {
-    try {
-      if (await isAllowed()) {
-        const { address } = await getAddress();
-        if (address) {
-          setPubKey(address);
-        }
-      }
-    } catch (e) {
-      console.error("Error checking Freighter connection", e);
-    }
+    // StellarWalletsKit state is primarily restored via the saved pubkey in local storage
   };
 
   const handleConnectClick = async () => {
@@ -61,9 +52,19 @@ export default function WalletConnect() {
 
     setIsConnecting(true);
     try {
-      await setAllowed();
-      const { address } = await requestAccess();
-      if (address) setPubKey(address);
+      const kit = getKit();
+      if (!kit) return;
+      await kit.openModal({
+        onWalletSelected: async (option: any) => {
+          try {
+            kit.setWallet(option.id);
+            const { address } = await kit.getAddress();
+            if (address) setPubKey(address);
+          } catch (err) {
+            console.error("Wallet connection failed", err);
+          }
+        },
+      });
     } catch (e) {
       console.error(e);
     } finally {

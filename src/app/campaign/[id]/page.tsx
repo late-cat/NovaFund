@@ -21,13 +21,13 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
     setTxStatus("signing");
 
     try {
-      const { requestAccess, signTransaction } = await import("@stellar/freighter-api");
-      const { address } = await requestAccess();
+      const address = localStorage.getItem("connected_pubkey");
       if (!address) {
-        alert("Please connect your Freighter wallet first.");
+        alert("Please connect your wallet first via the top right button.");
         setTxStatus("idle");
         return;
       }
+      const { signTransactionWithKit } = await import("@/lib/wallet");
 
       const client = getCampaignClient(id);
       const amountInStroops = toStroops(pledgeAmount);
@@ -38,7 +38,7 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
       }, { publicKey: address });
 
       setTxStatus("submitting");
-      const sentTx = await tx.signAndSend({ signTransaction });
+      const sentTx = await tx.signAndSend({ signTransaction: signTransactionWithKit });
       console.log("Pledge successful!", sentTx);
       
       const txHash = (sentTx as any).sendTransactionResponse?.hash || (sentTx as any).getTransactionResponse?.hash;

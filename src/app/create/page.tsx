@@ -22,13 +22,13 @@ export default function CreateCampaign() {
     setTxStatus("signing");
 
     try {
-      const { requestAccess, signTransaction } = await import("@stellar/freighter-api");
-      const { address } = await requestAccess();
+      const address = localStorage.getItem("connected_pubkey");
       if (!address) {
-        alert("Please connect your Freighter wallet first.");
+        alert("Please connect your wallet first via the top right button.");
         setTxStatus("idle");
         return;
       }
+      const { signTransactionWithKit } = await import("@/lib/wallet");
 
       const { getFactoryClient } = await import("@/lib/soroban");
       const client = getFactoryClient();
@@ -52,7 +52,7 @@ export default function CreateCampaign() {
       }, { publicKey: address });
 
       setTxStatus("submitting");
-      const sentTx = await tx.signAndSend({ signTransaction });
+      const sentTx = await tx.signAndSend({ signTransaction: signTransactionWithKit });
       
       const newCampaignId = sentTx.result;
       console.log("Campaign created!", newCampaignId);
@@ -203,7 +203,7 @@ export default function CreateCampaign() {
                 )}
               </button>
               <p className="text-center text-[11px] text-gray-500 mt-3 font-medium">
-                Deploying this contract will require a signature from your Freighter wallet.
+                Deploying this contract will require a signature from your connected wallet.
               </p>
             </div>
           </form>
