@@ -17,11 +17,11 @@ check-contracts:
 	@echo "Running Smart Contract Formatting Check..."
 	cd contracts && cargo fmt --all --check
 	@echo "Building Campaign wasm artifact (required for Factory)..."
-	cd contracts && cargo build -p campaign --target wasm32-unknown-unknown --release
+	cd contracts && cargo build -p campaign --target wasm32v1-none --release
 	@echo "Running Smart Contract Strict Linter (Clippy)..."
 	cd contracts && cargo clippy --all-targets --all-features -- -D warnings
 	@echo "Running Smart Contract Tests..."
 	cd contracts && cargo test
 	@echo "Verifying Smart Contract Build..."
-	cd contracts && cargo build --target wasm32-unknown-unknown --release
+	cd contracts && cargo build --target wasm32v1-none --release
 	@echo "Smart Contract checks passed!"

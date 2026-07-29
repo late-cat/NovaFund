@@ -6,7 +6,7 @@ use soroban_sdk::{contract, contractimpl, contracttype, Address, BytesN, Env, Ve
 
 // We import the campaign client so we can easily call its init function
 mod campaign_contract {
-    soroban_sdk::contractimport!(file = "../target/wasm32-unknown-unknown/release/campaign.wasm");
+    soroban_sdk::contractimport!(file = "../target/wasm32v1-none/release/campaign.wasm");
 }
 
 #[contracttype]
