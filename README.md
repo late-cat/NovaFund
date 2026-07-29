@@ -84,7 +84,7 @@ NovaFund solves this by introducing a fully decentralized, smart-contract-driven
 ![Spreadsheet Proof of 10+ Users](./demo-img/spread-sheet.png)
 
 **Basic User Feedback Summary:**
-*(Please update with a summary of the 10+ user responses from your feedback form)*
+Based on the responses from 11 beta testers, the platform was highly rated for its ease of wallet connection and overall usability (averaging a 4.5/5 ease-of-use score). Users praised the "super cool looking UI" and smooth interactions, while suggesting potential future features like centralized user dashboards and multi-currency support.
 
 #### 📈 Monitoring & Analytics
 
@@ -130,8 +130,8 @@ graph TD
 *   **Verifiable Live App**: [https://nova-fund.vercel.app/](https://nova-fund.vercel.app/)
 *   **Factory Core Contract**: [`CBGNLTWENII3LYUUVFU7DKCXV4HQTEKJQEUWXJKVIMVNMQL7E2DP2MEM`](https://stellar.expert/explorer/testnet/contract/CBGNLTWENII3LYUUVFU7DKCXV4HQTEKJQEUWXJKVIMVNMQL7E2DP2MEM)
 *   **Network**: Stellar Testnet
-*   **Example Transaction Hash**: `[PLEASE ADD YOUR TX HASH HERE]`
-*   **Stellar Explorer Link**: [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/[PLEASE ADD YOUR TX HASH HERE])
+*   **Example Transaction Hash**: `0eb270765de3d79e0d1b5bb6f4c8868a88f5bf02b0186c309c5501c30ca078e6`
+*   **Stellar Explorer Link**: [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/0eb270765de3d79e0d1b5bb6f4c8868a88f5bf02b0186c309c5501c30ca078e6)
 
 ---
 
