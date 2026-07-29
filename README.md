@@ -81,7 +81,7 @@ NovaFund solves this by introducing a fully decentralized, smart-contract-driven
 *   **📊 Feedback Responses Sheet**: [View Responses](https://docs.google.com/spreadsheets/d/1NDniKpQd5IIiSAZ34QzRvUT7drhEgtL7Ve1rGuMKktY/edit?usp=sharing)
 
 **Proof of 10+ Unique User Wallet Interactions:**
-*(Please update with your screenshot of 10+ user wallet interactions showcasing their public addresses and transaction hashes)*
+![Spreadsheet Proof of 10+ Users](./demo-img/spread-sheet.png)
 
 **Basic User Feedback Summary:**
 *(Please update with a summary of the 10+ user responses from your feedback form)*
