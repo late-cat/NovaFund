@@ -36,14 +36,10 @@ export default function Home() {
       className="flex flex-col gap-12 pb-20 font-sans"
     >
       <section className="relative pt-16 pb-8 text-center max-w-3xl mx-auto flex flex-col items-center">
-        <motion.button 
-          variants={itemVariants} 
-          onClick={() => { throw new Error("Sentry Test Error from User!"); }}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-orange-600 font-medium text-xs tracking-wider mb-6 hover:bg-orange-200 transition-colors"
-        >
+        <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-orange-600 font-medium text-xs tracking-wider mb-6">
           <Sparkles size={14} />
           <span>Soroban Smart Contracts</span>
-        </motion.button>
+        </motion.div>
 
         <motion.h1 variants={itemVariants} className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-gray-800">
           Fund the future on <br /> Stellar
