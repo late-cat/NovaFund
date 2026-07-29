@@ -92,6 +92,10 @@ NovaFund solves this by introducing a fully decentralized, smart-contract-driven
 Actively monitoring our production app. The screenshot below verifies active traffic with **35 Unique Visitors** and **43 Page Views**, proving real-world usage and monitoring of core web vitals.
 ![Vercel Analytics](./demo-img/vercel-analysis-new.png)
 
+**Sentry Error Monitoring:**
+Comprehensive crash reporting and performance monitoring configured for the production Next.js application, satisfying the Level 4 monitoring requirement.
+![Sentry Dashboard](./demo-img/dashboard-sentinairy.png)
+
 #### 🔧 Level 4 Technical Additions
 
 | Feature | Implementation |
