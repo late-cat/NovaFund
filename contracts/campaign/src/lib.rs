@@ -1,3 +1,4 @@
+#![allow(deprecated)]
 #![no_std]
 #![allow(unexpected_cfgs)]
 
