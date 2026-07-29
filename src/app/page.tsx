@@ -7,6 +7,7 @@ import Link from "next/link";
 import { getFactoryClient, getCampaignClient } from "@/lib/soroban";
 import { fromStroops } from "@/lib/stellar/utils";
 import { motion, Variants } from "framer-motion";
+import * as Sentry from "@sentry/nextjs";
 
 import { useCampaigns } from "@/hooks/useCampaigns";
 
@@ -36,10 +37,14 @@ export default function Home() {
       className="flex flex-col gap-12 pb-20 font-sans"
     >
       <section className="relative pt-16 pb-8 text-center max-w-3xl mx-auto flex flex-col items-center">
-        <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-orange-600 font-medium text-xs tracking-wider mb-6">
+        <motion.button 
+          variants={itemVariants} 
+          onClick={() => { Sentry.captureException(new Error("Sentry Test Error from User!")); alert("Silent error sent to Sentry!"); }}
+          className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-orange-600 font-medium text-xs tracking-wider mb-6 hover:bg-orange-200 transition-colors"
+        >
           <Sparkles size={14} />
           <span>Soroban Smart Contracts</span>
-        </motion.div>
+        </motion.button>
 
         <motion.h1 variants={itemVariants} className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-gray-800">
           Fund the future on <br /> Stellar
