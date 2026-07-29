@@ -89,8 +89,8 @@ NovaFund solves this by introducing a fully decentralized, smart-contract-driven
 #### 📈 Monitoring & Analytics
 
 **Vercel Analytics Dashboard:**
-Actively monitoring our production app. The screenshot below verifies active traffic with **26 Unique Visitors** and **34 Page Views**, proving real-world usage and monitoring of core web vitals.
-![Vercel Analytics](./demo-img/vercel-analysis.png)
+Actively monitoring our production app. The screenshot below verifies active traffic with **35 Unique Visitors** and **43 Page Views**, proving real-world usage and monitoring of core web vitals.
+![Vercel Analytics](./demo-img/vercel-analysis-new.png)
 
 #### 🔧 Level 4 Technical Additions
 
