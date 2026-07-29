@@ -22,8 +22,8 @@
 *   **🌐 Live Production Link**: [https://nova-fund.vercel.app/](https://nova-fund.vercel.app/)
 *   **📹 Demo Video Presentation**: [https://youtu.be/S9shZimBqp4](https://youtu.be/S9shZimBqp4)
 *   **💻 GitHub Repository**: [https://github.com/late-cat/NovaFund](https://github.com/late-cat/NovaFund)
-*   **📝 User Feedback Google Form**: [Submit Feedback](#) *(Please update with your link)*
-*   **📊 Feedback Responses Sheet**: [View Responses](#) *(Please update with your link)*
+*   **📝 User Feedback Google Form**: [Submit Feedback](https://docs.google.com/forms/d/e/1FAIpQLSfTpOUdr3LiZeptohHgR6_YX0gLMQhNB4Uup9u3NsegC8GVDQ/viewform?usp=header)
+*   **📊 Feedback Responses Sheet**: [View Responses](https://docs.google.com/spreadsheets/d/1NDniKpQd5IIiSAZ34QzRvUT7drhEgtL7Ve1rGuMKktY/edit?usp=sharing)
 
 ---
 
@@ -77,8 +77,8 @@ NovaFund solves this by introducing a fully decentralized, smart-contract-driven
 
 #### 📋 User Feedback & Onboarding Proof
 
-*   **📝 User Feedback Google Form**: [Submit Feedback](#) *(Please update with your link)*
-*   **📊 Feedback Responses Sheet**: [View Responses](#) *(Please update with your link)*
+*   **📝 User Feedback Google Form**: [Submit Feedback](https://docs.google.com/forms/d/e/1FAIpQLSfTpOUdr3LiZeptohHgR6_YX0gLMQhNB4Uup9u3NsegC8GVDQ/viewform?usp=header)
+*   **📊 Feedback Responses Sheet**: [View Responses](https://docs.google.com/spreadsheets/d/1NDniKpQd5IIiSAZ34QzRvUT7drhEgtL7Ve1rGuMKktY/edit?usp=sharing)
 
 **Proof of 10+ Unique User Wallet Interactions:**
 *(Please update with your screenshot of 10+ user wallet interactions showcasing their public addresses and transaction hashes)*
