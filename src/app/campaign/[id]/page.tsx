@@ -349,7 +349,15 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
                       {backerId.slice(0, 2)}
                     </div>
                     <div className="overflow-hidden">
-                      <p className="text-xs font-semibold text-gray-900 truncate" title={backerId}>{backerId}</p>
+                      <a 
+                        href={`https://stellar.expert/explorer/testnet/account/${backerId}`} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-xs font-semibold text-gray-900 truncate hover:text-orange-500 hover:underline block" 
+                        title={backerId}
+                      >
+                        {backerId}
+                      </a>
                       <p className="text-[10px] text-gray-500 mt-0.5">Stellar Public Key</p>
                     </div>
                   </div>
