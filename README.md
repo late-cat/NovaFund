@@ -276,9 +276,13 @@ NovaFund/
 Create a `.env.local` file in the root directory:
 ```env
 NEXT_PUBLIC_STELLAR_NETWORK="TESTNET"
-NEXT_PUBLIC_FACTORY_CONTRACT_ID="CDDT7KFV7C6Z4ZGHAHGNJ6FFD3PAFFS7UJMNBL6I3MBJV5555QMRAGEN"
+NEXT_PUBLIC_FACTORY_CONTRACT_ID="CCKVQ2WO2KH6ZEDNMH35AXHGHMDZ7Z6VNUSHUMEL4X5DMJP2NN4DMG2H"
 NEXT_PUBLIC_SENTRY_DSN="YOUR_SENTRY_DSN"
+BLOB_STORE_ID="YOUR_VERCEL_BLOB_STORE_ID"
+BLOB_READ_WRITE_TOKEN="YOUR_VERCEL_BLOB_TOKEN"
 ```
+
+**Note on Image Uploads:** To enable the image file upload feature for campaigns, you must create a [Vercel Blob](https://vercel.com/docs/storage/vercel-blob) store via your Vercel Dashboard. Ensure the store is set to **Public** access, and copy the generated `BLOB_STORE_ID` and `BLOB_READ_WRITE_TOKEN` into your environment variables.
 
 ### 🛠️ Step-by-Step Setup
 
