@@ -145,6 +145,12 @@ impl Campaign {
         env.storage().instance().get(&DataKey::State).unwrap()
     }
 
+    /// Get the total amount pledged by a specific backer
+    pub fn get_pledge(env: Env, backer: Address) -> i128 {
+        let pledge_key = DataKey::Pledge(backer);
+        env.storage().persistent().get(&pledge_key).unwrap_or(0)
+    }
+
     /// Allows backers to prune their pledge record to free up storage after a successful campaign.
     pub fn prune(env: Env, backer: Address) {
         let state: CampaignState = env.storage().instance().get(&DataKey::State).unwrap();
