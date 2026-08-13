@@ -64,21 +64,35 @@ export function useCampaign(id: string) {
 
   useEffect(() => {
     if (!id) return;
+    
+    let isMounted = true;
+    
     const fetchCampaign = async () => {
       try {
         const client = getCampaignClient(id);
         const { result: stateResult } = await client.get_state();
-        if (stateResult) {
+        if (stateResult && isMounted) {
           setCampaign(formatCampaignData(id, stateResult));
         }
       } catch (err: any) {
         console.error("Failed to fetch campaign details", err);
-        setError(err);
+        if (isMounted) setError(err);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
+    
     fetchCampaign();
+    
+    // Poll every 10 seconds for real-time updates
+    const interval = setInterval(() => {
+      fetchCampaign();
+    }, 10000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
   }, [id]);
 
   return { campaign, loading, error };
