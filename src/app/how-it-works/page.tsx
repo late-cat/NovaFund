@@ -84,7 +84,7 @@ export default function HowItWorks() {
           <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
             <Zap className="text-gray-600 mb-4" size={28} />
             <h3 className="text-base font-bold text-gray-900 mb-2">Soroban Powered</h3>
-            <p className="text-sm text-gray-500">Built entirely on Stellar's new WebAssembly smart contract platform.</p>
+            <p className="text-sm text-gray-500">Built entirely on Stellar&apos;s new WebAssembly smart contract platform.</p>
           </div>
         </section>
 
