@@ -41,7 +41,8 @@ export default function CreateCampaign() {
       const deadlineSecs = Math.floor(deadlineDate.getTime() / 1000);
       const goalAmount = toStroops(formData.goal);
 
-      const tokenAddress = "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC";
+      const { NATIVE_XLM_TESTNET } = await import("@/lib/constants");
+      const tokenAddress = NATIVE_XLM_TESTNET;
 
       const tx = await client.create_campaign({
         creator: address,
