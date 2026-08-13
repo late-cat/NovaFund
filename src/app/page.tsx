@@ -1,34 +1,14 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import CampaignCard from "@/components/CampaignCard";
 import { Sparkles, ArrowRight, Loader2, Link2 } from "lucide-react";
 import Link from "next/link";
 import { getFactoryClient, getCampaignClient } from "@/lib/soroban";
 import { fromStroops } from "@/lib/stellar/utils";
-import { motion, Variants, animate } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 import { useCampaigns } from "@/hooks/useCampaigns";
-
-function AnimatedNumber({ value }: { value: number }) {
-  const nodeRef = useRef<HTMLSpanElement>(null);
-  
-  useEffect(() => {
-    const node = nodeRef.current;
-    if (node) {
-      const controls = animate(0, value, {
-        duration: 2,
-        ease: "easeOut",
-        onUpdate(v) {
-          node.textContent = Math.floor(v).toLocaleString();
-        }
-      });
-      return () => controls.stop();
-    }
-  }, [value]);
-  
-  return <span ref={nodeRef}>0</span>;
-}
 
 export default function Home() {
   const { campaigns, loading } = useCampaigns(100);
@@ -47,8 +27,6 @@ export default function Home() {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
   };
-
-  const totalVolume = campaigns.reduce((acc, c) => acc + Number(c.raised), 0);
 
   return (
     <motion.div 
@@ -98,17 +76,45 @@ export default function Home() {
           {/* Subtle inner bevel to make it look thick */}
           <div className="absolute inset-0 rounded-[2rem] shadow-[inset_0_2px_4px_rgba(255,255,255,1),inset_0_-1px_3px_rgba(0,0,0,0.04)] pointer-events-none z-0" />
           
-          <div className="text-center px-4 relative z-10 w-40">
-             <p className="text-3xl md:text-4xl font-bold text-gray-800 drop-shadow-sm font-mono tracking-tight">
-               {loading ? "-" : <AnimatedNumber value={campaigns.length} />}
-             </p>
+          {/* Left Screw (Hyper-realistic Phillips) */}
+          <div className="absolute left-5 md:left-8 top-1/2 -translate-y-1/2 w-[22px] h-[22px] rounded-full z-10 flex items-center justify-center shadow-[0_3px_5px_rgba(0,0,0,0.25),inset_0_-2px_4px_rgba(0,0,0,0.5),inset_0_2px_4px_rgba(255,255,255,0.9)] border border-[#888]"
+               style={{
+                 background: "conic-gradient(from 180deg at 50% 50%, #9ca3af 0deg, #f3f4f6 60deg, #9ca3af 120deg, #4b5563 180deg, #9ca3af 240deg, #f3f4f6 300deg, #9ca3af 360deg)",
+                 transform: "rotate(25deg)"
+               }}>
+             <div className="absolute inset-0 rounded-full" style={{ background: "radial-gradient(circle at 35% 35%, rgba(255,255,255,0.8) 0%, transparent 40%, rgba(0,0,0,0.3) 100%)" }} />
+             {/* Phillips cross recess */}
+             <div className="relative w-[11px] h-[11px] z-10 rotate-45">
+                <div className="absolute top-1/2 left-0 right-0 h-[2.5px] -translate-y-1/2 bg-[#1a1a1a] shadow-[0_1px_1px_rgba(255,255,255,0.8)] rounded-[1px]" />
+                <div className="absolute left-1/2 top-0 bottom-0 w-[2.5px] -translate-x-1/2 bg-[#1a1a1a] shadow-[1px_0_1px_rgba(255,255,255,0.8)] rounded-[1px]" />
+                <div className="absolute left-1/2 top-1/2 w-2 h-2 -translate-x-1/2 -translate-y-1/2 bg-[#111] rounded-full shadow-[inset_0_2px_3px_rgba(0,0,0,1)]" />
+             </div>
+          </div>
+
+          {/* Right Screw (Hyper-realistic Phillips) */}
+          <div className="absolute right-5 md:right-8 top-1/2 -translate-y-1/2 w-[22px] h-[22px] rounded-full z-10 flex items-center justify-center shadow-[0_3px_5px_rgba(0,0,0,0.25),inset_0_-2px_4px_rgba(0,0,0,0.5),inset_0_2px_4px_rgba(255,255,255,0.9)] border border-[#888]"
+               style={{
+                 background: "conic-gradient(from 180deg at 50% 50%, #9ca3af 0deg, #f3f4f6 60deg, #9ca3af 120deg, #4b5563 180deg, #9ca3af 240deg, #f3f4f6 300deg, #9ca3af 360deg)",
+                 transform: "rotate(-15deg)"
+               }}>
+             <div className="absolute inset-0 rounded-full" style={{ background: "radial-gradient(circle at 35% 35%, rgba(255,255,255,0.8) 0%, transparent 40%, rgba(0,0,0,0.3) 100%)" }} />
+             {/* Phillips cross recess */}
+             <div className="relative w-[11px] h-[11px] z-10 rotate-45">
+                <div className="absolute top-1/2 left-0 right-0 h-[2.5px] -translate-y-1/2 bg-[#1a1a1a] shadow-[0_1px_1px_rgba(255,255,255,0.8)] rounded-[1px]" />
+                <div className="absolute left-1/2 top-0 bottom-0 w-[2.5px] -translate-x-1/2 bg-[#1a1a1a] shadow-[1px_0_1px_rgba(255,255,255,0.8)] rounded-[1px]" />
+                <div className="absolute left-1/2 top-1/2 w-2 h-2 -translate-x-1/2 -translate-y-1/2 bg-[#111] rounded-full shadow-[inset_0_2px_3px_rgba(0,0,0,1)]" />
+             </div>
+          </div>
+          
+          <div className="text-center px-4 relative z-10">
+             <p className="text-3xl md:text-4xl font-bold text-gray-800 drop-shadow-sm">{loading ? "-" : campaigns.length}</p>
              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Projects Launched</p>
           </div>
           <div className="w-px h-16 bg-gradient-to-b from-transparent via-gray-200 to-transparent relative z-10" />
-          <div className="text-center px-4 relative z-10 w-48">
-             <p className="text-3xl md:text-4xl font-bold text-gray-800 drop-shadow-sm font-mono tracking-tight">
-               {loading ? "-" : <AnimatedNumber value={totalVolume} />} 
-               <span className="text-lg md:text-xl text-gray-400 ml-1 font-sans font-bold">XLM</span>
+          <div className="text-center px-4 relative z-10">
+             <p className="text-3xl md:text-4xl font-bold text-gray-800 drop-shadow-sm">
+               {loading ? "-" : campaigns.reduce((acc, c) => acc + Number(c.raised), 0).toLocaleString()} 
+               <span className="text-lg md:text-xl text-gray-400 ml-1">XLM</span>
              </p>
              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Total Volume Pledged</p>
           </div>
