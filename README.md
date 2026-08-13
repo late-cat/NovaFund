@@ -47,6 +47,28 @@ NovaFund solves this by introducing a fully decentralized, smart-contract-driven
 
 ## 🏆 Stellar Belt Challenge Submission Checklist
 
+### ⚪ Level 1 - White Belt Submission
+
+| Requirement | Status & Implementation Details |
+| :--- | :--- |
+| **Wallet Setup** | ✅ Integrated Freighter Wallet targeting Stellar Testnet |
+| **Wallet Connection** | ✅ Implemented Connect / Disconnect logic with persistent state |
+| **Balance Handling** | ✅ Fetches and displays native XLM balance dynamically in the navbar |
+| **Transaction Flow** | ✅ Full flow: Sign, Submit, and view success/failure with Explorer links |
+| **Required Screenshots** | ✅ Included in README: Wallet connected, Balance, Tx success, Tx result |
+
+### 🟡 Level 2 - Yellow Belt Submission
+
+| Requirement | Status & Implementation Details |
+| :--- | :--- |
+| **Error Handling (3 Types)** | ✅ Handled: Insufficient XLM Balance, User Rejection, Contract Assertion Errors |
+| **Contract Deployed** | ✅ Factory and Campaign contracts fully deployed on Stellar Testnet |
+| **Frontend Contract Calls** | ✅ Frontend directly invokes `create_campaign`, `pledge`, and `claim` |
+| **Transaction Status** | ✅ UI strictly tracks and displays `signing`, `submitting`, `success`, and `error` states |
+| **Minimum 2+ Commits** | ✅ 40+ meaningful, semantic Git commits |
+| **Multi-Wallet & Events** | ✅ Integrated StellarWalletsKit + RPC-based live state fetching |
+| **README Requirements** | ✅ Live demo link, contract address, Tx hashes, and wallet option screenshots included |
+
 ### 🟠 Level 3 - Orange Belt Submission
 
 | Requirement | Status & Implementation Details |
