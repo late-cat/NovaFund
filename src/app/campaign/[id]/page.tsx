@@ -335,34 +335,34 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
           </div>
           
           {/* Backers Section */}
-          <div className="mt-12 bg-[#0f1115] p-6 md:p-8 rounded-[2rem] border border-[#1f2228] shadow-xl">
+          <div className="mt-12 bg-white p-6 md:p-8 rounded-[2rem] border border-gray-100 shadow-sm">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-white flex items-center gap-2 tracking-tight">
-                <User className="text-blue-400" size={20} /> 
+              <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2 tracking-tight">
+                <User className="text-orange-400" size={20} /> 
                 Contributors 
-                <span className="text-sm font-medium text-gray-400 ml-2 bg-[#1a1d24] px-3 py-1 rounded-full">
+                <span className="text-sm font-medium text-orange-600 ml-2 bg-orange-50 px-3 py-1 rounded-full border border-orange-100/50">
                   {campaign.backers.length} Total
                 </span>
               </h3>
             </div>
             
             {campaign.backers.length === 0 ? (
-              <p className="text-sm text-gray-400 italic bg-[#16181d] p-6 rounded-2xl border border-[#2a2d35] text-center">
+              <p className="text-sm text-gray-500 italic bg-gray-50 p-6 rounded-2xl border border-gray-100 text-center">
                 No backers yet. Be the first to support this campaign!
               </p>
             ) : (
-              <div className="bg-[#16181d] rounded-2xl border border-[#2a2d35] overflow-hidden">
-                <div className="max-h-[400px] overflow-y-auto" style={{ scrollbarWidth: 'thin', scrollbarColor: '#2a2d35 transparent' }}>
+              <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+                <div className="max-h-[400px] overflow-y-auto" style={{ scrollbarWidth: 'thin', scrollbarColor: '#f3f4f6 transparent' }}>
                   <table className="w-full text-left border-collapse">
-                    <thead className="sticky top-0 bg-[#1a1d24] z-10 border-b border-[#2a2d35] shadow-sm">
+                    <thead className="sticky top-0 bg-gray-50 z-10 border-b border-gray-100">
                       <tr>
-                        <th className="py-4 px-6 text-xs font-bold text-gray-400 uppercase tracking-wider w-16">Rank</th>
-                        <th className="py-4 px-6 text-xs font-bold text-gray-400 uppercase tracking-wider">Contributor</th>
-                        <th className="py-4 px-6 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">Share</th>
-                        <th className="py-4 px-6 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">Pledged</th>
+                        <th className="py-4 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider w-16">Rank</th>
+                        <th className="py-4 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider">Contributor</th>
+                        <th className="py-4 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Share</th>
+                        <th className="py-4 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Pledged</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#2a2d35]/50">
+                    <tbody className="divide-y divide-gray-50">
                       {[...campaign.backers]
                         .sort((a, b) => Number(b.amount) - Number(a.amount))
                         .map((backer, index) => {
@@ -371,8 +371,8 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
                             : "0.0";
                             
                           return (
-                            <tr key={index} className="hover:bg-[#1c1f26] transition-colors group">
-                              <td className="py-4 px-6 text-sm font-bold text-gray-500">
+                            <tr key={index} className="hover:bg-orange-50/30 transition-colors group">
+                              <td className="py-4 px-6 text-sm font-bold text-gray-400 group-hover:text-orange-400 transition-colors">
                                 {index + 1}
                               </td>
                               <td className="py-4 px-6">
@@ -380,17 +380,17 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
                                   href={`https://stellar.expert/explorer/testnet/account/${backer.address}`} 
                                   target="_blank" 
                                   rel="noopener noreferrer" 
-                                  className="text-sm font-mono text-gray-300 group-hover:text-blue-400 transition-colors inline-flex items-center gap-2"
+                                  className="text-sm font-mono text-gray-700 group-hover:text-orange-500 transition-colors inline-flex items-center gap-2"
                                   title={backer.address}
                                 >
                                   {backer.address.slice(0, 5)}...{backer.address.slice(-4)}
                                 </a>
                               </td>
-                              <td className="py-4 px-6 text-sm font-medium text-gray-400 text-right">
-                                {percentage}%
+                              <td className="py-4 px-6 text-sm font-medium text-gray-500 text-right">
+                                <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded-md text-xs">{percentage}%</span>
                               </td>
-                              <td className="py-4 px-6 text-sm font-bold text-white text-right">
-                                {backer.amount} <span className="text-xs text-gray-500 font-normal ml-1">XLM</span>
+                              <td className="py-4 px-6 text-sm font-bold text-gray-900 text-right">
+                                {backer.amount} <span className="text-xs text-gray-400 font-normal ml-1">XLM</span>
                               </td>
                             </tr>
                           );
