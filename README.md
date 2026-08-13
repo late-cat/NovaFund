@@ -51,23 +51,23 @@ NovaFund solves this by introducing a fully decentralized, smart-contract-driven
 
 | Requirement | Status & Implementation Details |
 | :--- | :--- |
-| **Wallet Setup** | ✅ Integrated Freighter Wallet targeting Stellar Testnet |
-| **Wallet Connection** | ✅ Implemented Connect / Disconnect logic with persistent state |
-| **Balance Handling** | ✅ Fetches and displays native XLM balance dynamically in the navbar |
-| **Transaction Flow** | ✅ Full flow: Sign, Submit, and view success/failure with Explorer links |
-| **Required Screenshots** | ✅ Included in README: Wallet connected, Balance, Tx success, Tx result |
+| **Wallet Setup** | ✅ Integrated `@creit.tech/stellar-wallets-kit` targeting the Stellar Testnet with Freighter wallet support |
+| **Wallet Connection** | ✅ Implemented `WalletConnect.tsx` with persistent `localStorage` connection state and UI disconnect logic |
+| **Balance Handling** | ✅ `fetchBalance` utility asynchronously calls the Horizon API `/accounts/{pubkey}` to parse and display the `native` XLM asset balance dynamically in the navbar |
+| **Transaction Flow** | ✅ Full signing lifecycle implemented via `@stellar/stellar-sdk`, submitting XDR to the network and generating clickable Stellar Expert Explorer links |
+| **Required Screenshots** | ✅ Provided detailed markdown screenshots covering all wallet states, balance tracking, transaction hashes, and UI updates |
 
 ### 🟡 Level 2 - Yellow Belt Submission
 
 | Requirement | Status & Implementation Details |
 | :--- | :--- |
-| **Error Handling (3 Types)** | ✅ Handled: Insufficient XLM Balance, User Rejection, Contract Assertion Errors |
-| **Contract Deployed** | ✅ Factory and Campaign contracts fully deployed on Stellar Testnet |
-| **Frontend Contract Calls** | ✅ Frontend directly invokes `create_campaign`, `pledge`, and `claim` |
-| **Transaction Status** | ✅ UI strictly tracks and displays `signing`, `submitting`, `success`, and `error` states |
-| **Minimum 2+ Commits** | ✅ 40+ meaningful, semantic Git commits |
-| **Multi-Wallet & Events** | ✅ Integrated StellarWalletsKit + RPC-based live state fetching |
-| **README Requirements** | ✅ Live demo link, contract address, Tx hashes, and wallet option screenshots included |
+| **Error Handling (3 Types)** | ✅ Handled: (1) Horizon API insufficient XLM reserves (verifying `pledge + 2 XLM`), (2) Wallet signature rejection trapping, (3) On-chain smart contract assertions (`Error(Contract, #10)` deadline failures) |
+| **Contract Deployed** | ✅ Bespoke `Factory` and `Campaign` Rust smart contracts compiled to `wasm32v1-none` and fully deployed to the Testnet |
+| **Frontend Contract Calls** | ✅ Next.js frontend uses auto-generated TS bindings (`stellar contract bindings typescript`) to directly invoke `create_campaign`, `pledge`, and `claim` mutators |
+| **Transaction Status** | ✅ React state strictly manages and displays UI loaders for `signing` (awaiting Freighter), `submitting` (network consensus), `success`, and `error` |
+| **Minimum 2+ Commits** | ✅ Exceeded with 40+ semantic commits detailing architectural decisions, file uploads, and state migrations |
+| **Multi-Wallet & Events** | ✅ Multi-wallet support via `StellarWalletsKit`. Real-time state syncing achieved by querying the contract's `get_state` and `get_campaigns` RPC endpoints |
+| **README Requirements** | ✅ Comprehensive documentation includes the Vercel live demo, Factory contract hash (`CCKVQ2WO2KH6...`), verifiable Tx hashes, and Multi-Wallet UI screenshots |
 
 ### 🟠 Level 3 - Orange Belt Submission
 
