@@ -46,7 +46,7 @@ export default function Dashboard() {
               // Otherwise we default to 0 for backwards compatibility with old factory deployments.
               let myPledge = "0";
               try {
-                const { result: pledgeAmount } = await client.get_pledge({ backer: address });
+                const { result: pledgeAmount } = await (client as any).get_pledge({ backer: address });
                 if (pledgeAmount) {
                    myPledge = fromStroops(pledgeAmount);
                 }
