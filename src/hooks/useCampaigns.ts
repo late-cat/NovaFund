@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import { getFactoryClient, getCampaignClient } from "@/lib/soroban";
 import { fromStroops } from "@/lib/stellar/utils";
 
+export interface BackerInfo {
+  address: string;
+  amount: string;
+}
+
 export interface CampaignData {
   id: string;
   title: string;
@@ -14,7 +19,7 @@ export interface CampaignData {
   image: string;
   isClaimed: boolean;
   isCancelled: boolean;
-  backers: string[];
+  backers: BackerInfo[];
 }
 
 export function useCampaigns(limit = 100) {
@@ -34,7 +39,10 @@ export function useCampaigns(limit = 100) {
             try {
               const { result: stateResult } = await campaignClient.get_state();
               if (stateResult) {
-                return formatCampaignData(id, stateResult);
+                // For explore page, we don't strictly need backers amounts, just public keys is fine
+                // But we'll format it as BackerInfo with "0" to satisfy the interface
+                const backers = (stateResult.backers || []).map((addr: string) => ({ address: addr, amount: "0" }));
+                return formatCampaignData(id, stateResult, backers);
               }
             } catch (err) {
               console.error("Error fetching state for campaign", id, err);
@@ -75,7 +83,19 @@ export function useCampaign(id: string) {
         const client = getCampaignClient(id);
         const { result: stateResult } = await client.get_state();
         if (stateResult && isMounted) {
-          setCampaign(formatCampaignData(id, stateResult));
+          
+          // Fetch exact pledge amounts for each backer asynchronously!
+          const backerPromises = (stateResult.backers || []).map(async (address: string) => {
+             try {
+                 const { result: pledgeAmount } = await (client as any).get_pledge({ backer: address });
+                 return { address, amount: pledgeAmount ? fromStroops(pledgeAmount) : "0" };
+             } catch(e) {
+                 return { address, amount: "0" };
+             }
+          });
+          
+          const enrichedBackers = await Promise.all(backerPromises);
+          setCampaign(formatCampaignData(id, stateResult, enrichedBackers));
         }
       } catch (err: any) {
         console.error("Failed to fetch campaign details", err);
@@ -101,7 +121,7 @@ export function useCampaign(id: string) {
   return { campaign, loading, error };
 }
 
-function formatCampaignData(id: string, state: any): CampaignData {
+function formatCampaignData(id: string, state: any, backers: BackerInfo[] = []): CampaignData {
   const goalNum = fromStroops(state.goal);
   const raisedNum = fromStroops(state.current_amount);
   
@@ -133,6 +153,6 @@ function formatCampaignData(id: string, state: any): CampaignData {
     image: metaImage,
     isClaimed: state.is_claimed,
     isCancelled: state.is_cancelled,
-    backers: state.backers || [],
+    backers: backers,
   };
 }
