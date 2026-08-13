@@ -137,9 +137,9 @@ function formatCampaignData(id: string, state: any, backers: BackerInfo[] = []):
   const charCode = id.charCodeAt(0) || 0;
   const mockImage = mockImages[charCode % mockImages.length];
   
-  let metaTitle = state.name || `Campaign ${id.slice(0, 6)}`;
-  let metaImage = state.image_url || mockImage;
-  let metaDesc = state.description || "";
+  const metaTitle = state.name || `Campaign ${id.slice(0, 6)}`;
+  const metaImage = state.image_url || mockImage;
+  const metaDesc = state.description || "";
 
   return {
     id,
