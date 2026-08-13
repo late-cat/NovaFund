@@ -107,6 +107,14 @@
                         "map": [
                           {
                             "key": {
+                              "symbol": "backers"
+                            },
+                            "val": {
+                              "vec": []
+                            }
+                          },
+                          {
+                            "key": {
                               "symbol": "creator"
                             },
                             "val": {
@@ -151,6 +159,14 @@
                             },
                             "val": {
                               "string": "https://example.com/image.png"
+                            }
+                          },
+                          {
+                            "key": {
+                              "symbol": "is_cancelled"
+                            },
+                            "val": {
+                              "bool": false
                             }
                           },
                           {

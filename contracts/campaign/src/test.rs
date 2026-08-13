@@ -59,6 +59,8 @@ fn test_init() {
     assert_eq!(state.deadline, deadline);
     assert_eq!(state.current_amount, 0);
     assert!(!state.is_claimed);
+    assert!(!state.is_cancelled);
+    assert_eq!(state.backers.len(), 0);
 }
 
 // Negative path tests omitted due to Soroban test environment panic handling limitations
@@ -134,6 +136,45 @@ fn test_refund() {
     });
 
     // Refund
+    client.refund(&backer);
+
+    assert_eq!(token.balance(&client.address), 0);
+    assert_eq!(token.balance(&backer), 2000);
+}
+
+#[test]
+fn test_cancel() {
+    let (env, client, creator, token, token_admin) = setup_test();
+    let goal = 1000;
+    let deadline = env.ledger().timestamp() + 100;
+    let name = soroban_sdk::String::from_str(&env, "Test Campaign");
+    let desc = soroban_sdk::String::from_str(&env, "A test campaign description");
+    let image_url = soroban_sdk::String::from_str(&env, "https://example.com/image.png");
+    
+    client.init(
+        &creator,
+        &token.address,
+        &goal,
+        &deadline,
+        &name,
+        &desc,
+        &image_url,
+    );
+
+    let backer = Address::generate(&env);
+    token_admin.mint(&backer, &2000);
+
+    // Pledge
+    client.pledge(&backer, &1000);
+
+    // Cancel the campaign
+    client.cancel();
+
+    let state = client.get_state();
+    assert_eq!(state.is_cancelled, true);
+
+    // Refund immediately (bypassing deadline)
+    assert_eq!(env.ledger().timestamp() <= deadline, true);
     client.refund(&backer);
 
     assert_eq!(token.balance(&client.address), 0);

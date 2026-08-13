@@ -12,6 +12,9 @@ export interface CampaignData {
   deadline: string;
   deadlineSecs: number;
   image: string;
+  isClaimed: boolean;
+  isCancelled: boolean;
+  backers: string[];
 }
 
 export function useCampaigns(limit = 100) {
@@ -128,5 +131,8 @@ function formatCampaignData(id: string, state: any): CampaignData {
     deadline: deadlineDate.toISOString().split("T")[0],
     deadlineSecs: Number(state.deadline),
     image: metaImage,
+    isClaimed: state.is_claimed,
+    isCancelled: state.is_cancelled,
+    backers: state.backers || [],
   };
 }

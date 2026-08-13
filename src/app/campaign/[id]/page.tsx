@@ -72,6 +72,52 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
     }
   };
 
+  const [isCreator, setIsCreator] = useState(false);
+
+  useEffect(() => {
+    const address = localStorage.getItem("connected_pubkey");
+    if (address && campaign && address === campaign.creator) {
+      setIsCreator(true);
+    }
+  }, [campaign]);
+
+  const handleCancel = async () => {
+    if (!window.confirm("Are you sure you want to cancel this campaign? This action cannot be undone.")) return;
+    setTxStatus("signing");
+    try {
+      const address = localStorage.getItem("connected_pubkey");
+      if (!address) {
+        alert("Please connect your wallet first.");
+        setTxStatus("idle");
+        return;
+      }
+      const { signTransactionWithKit } = await import("@/lib/wallet");
+      const client = getCampaignClient(id);
+      
+      const tx = await client.cancel({ publicKey: address });
+
+      setTxStatus("submitting");
+      const sentTx = await tx.signAndSend({ signTransaction: signTransactionWithKit });
+      
+      const txHash = (sentTx as any).sendTransactionResponse?.hash || (sentTx as any).getTransactionResponse?.hash;
+      if (txHash) {
+        setSuccessTxHash(txHash);
+      } else {
+        alert("Campaign successfully cancelled!");
+        window.location.reload();
+      }
+      setTxStatus("success");
+    } catch (e: any) {
+      const errorMessage = e?.message || String(e);
+      if (errorMessage.includes("User declined")) {
+        alert("Transaction was rejected in the wallet.");
+      } else {
+        alert(`Error cancelling: ${errorMessage}`);
+      }
+      setTxStatus("error");
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-32">
@@ -104,7 +150,14 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
       
       <div className="bg-white/90 rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden backdrop-blur-sm">
         <div className="w-full h-48 md:h-80 relative">
-          <img src={campaign.image} alt={campaign.title} className="w-full h-full object-cover" />
+          <img 
+            src={campaign.image} 
+            alt={campaign.title} 
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80";
+            }}
+            className="w-full h-full object-cover" 
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent" />
         </div>
 
@@ -171,27 +224,94 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
                   />
                 </div>
 
-                <button
-                  onClick={handlePledge}
-                  disabled={txStatus === "signing" || txStatus === "submitting" || !pledgeAmount || isEnded}
-                  className={`sticky-note-btn relative w-full flex items-center justify-center gap-2 py-3.5 rounded-md font-bold transition-all text-sm border-none group ${
-                    isEnded 
-                      ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                      : "bg-[#fdf5c9] text-[#e88147] hover:bg-[#fbf1bb] hover:-rotate-1 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
-                  }`}
-                >
-                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-30 w-10 h-3.5 bg-white/50 border border-white/40 shadow-[0_1px_2px_rgba(0,0,0,0.05)] backdrop-blur-sm rotate-[-3deg]" />
-                  {txStatus === "signing" || txStatus === "submitting" ? (
-                    <Loader2 size={18} className="animate-spin text-[#e88147]" />
-                  ) : null}
-                  {isEnded 
-                    ? "Campaign Ended" 
-                    : txStatus === "signing" 
-                      ? "Please Sign in Wallet..." 
-                      : txStatus === "submitting" 
-                        ? "Submitting to Network..." 
-                        : "Pledge XLM"}
-                </button>
+                {campaign.isCancelled ? (
+                  <button
+                    disabled
+                    className="w-full flex items-center justify-center py-3.5 rounded-xl font-bold bg-red-100 text-red-500 cursor-not-allowed text-sm"
+                  >
+                    Campaign Cancelled
+                  </button>
+                ) : (
+                  <button
+                    onClick={handlePledge}
+                    disabled={txStatus === "signing" || txStatus === "submitting" || !pledgeAmount || isEnded}
+                    className={`sticky-note-btn relative w-full flex items-center justify-center gap-2 py-3.5 rounded-md font-bold transition-all text-sm border-none group ${
+                      isEnded 
+                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                        : "bg-[#fdf5c9] text-[#e88147] hover:bg-[#fbf1bb] hover:-rotate-1 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                    }`}
+                  >
+                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-30 w-10 h-3.5 bg-white/50 border border-white/40 shadow-[0_1px_2px_rgba(0,0,0,0.05)] backdrop-blur-sm rotate-[-3deg]" />
+                    {txStatus === "signing" || txStatus === "submitting" ? (
+                      <Loader2 size={18} className="animate-spin text-[#e88147]" />
+                    ) : null}
+                    {isEnded 
+                      ? "Campaign Ended" 
+                      : txStatus === "signing" 
+                        ? "Please Sign in Wallet..." 
+                        : txStatus === "submitting" 
+                          ? "Submitting to Network..." 
+                          : "Pledge XLM"}
+                  </button>
+                )}
+
+                {/* Creator Controls */}
+                {isCreator && !campaign.isCancelled && !campaign.isClaimed && !isEnded && (
+                  <button
+                    onClick={handleCancel}
+                    disabled={txStatus === "signing" || txStatus === "submitting"}
+                    className="w-full flex items-center justify-center py-3 mt-4 rounded-xl font-bold bg-red-50 text-red-500 hover:bg-red-100 transition-colors text-sm border border-red-100"
+                  >
+                    Cancel Campaign (Creator Only)
+                  </button>
+                )}
+
+                {/* Refund Control */}
+                {(campaign.isCancelled || (isEnded && Number(campaign.raised) < Number(campaign.goal))) && (
+                  <button
+                    onClick={async () => {
+                      setTxStatus("signing");
+                      try {
+                        const address = localStorage.getItem("connected_pubkey");
+                        if (!address) {
+                          alert("Please connect your wallet first.");
+                          setTxStatus("idle");
+                          return;
+                        }
+                        const { signTransactionWithKit } = await import("@/lib/wallet");
+                        const client = getCampaignClient(id);
+                        
+                        const tx = await client.refund({ backer: address }, { publicKey: address });
+                        
+                        setTxStatus("submitting");
+                        const sentTx = await tx.signAndSend({ signTransaction: signTransactionWithKit });
+                        
+                        const txHash = (sentTx as any).sendTransactionResponse?.hash || (sentTx as any).getTransactionResponse?.hash;
+                        if (txHash) {
+                          setSuccessTxHash(txHash);
+                        } else {
+                          alert("Refund successful!");
+                          window.location.reload();
+                        }
+                        setTxStatus("success");
+                      } catch (e: any) {
+                        const errorMessage = e?.message || String(e);
+                        if (errorMessage.includes("no pledge found")) {
+                          alert("You do not have an active pledge to refund.");
+                        } else if (errorMessage.includes("User declined")) {
+                          alert("Transaction was rejected in the wallet.");
+                        } else {
+                          alert(`Error refunding: ${errorMessage}`);
+                        }
+                        setTxStatus("error");
+                      }
+                    }}
+                    disabled={txStatus === "signing" || txStatus === "submitting"}
+                    className="w-full flex items-center justify-center py-3 mt-4 rounded-xl font-bold bg-blue-50 text-blue-500 hover:bg-blue-100 transition-colors text-sm border border-blue-100"
+                  >
+                    Claim Refund
+                  </button>
+                )}
                 {successTxHash && (
                   <motion.div 
                     initial={{ opacity: 0, y: -10, rotate: -5 }}
@@ -212,6 +332,30 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
                 )}
               </div>
             </div>
+          </div>
+          
+          {/* Backers Section */}
+          <div className="mt-12 bg-gray-50 p-6 md:p-8 rounded-[2rem] border border-gray-100">
+            <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+              <User className="text-orange-400" /> Backers Transparency ({campaign.backers.length})
+            </h3>
+            {campaign.backers.length === 0 ? (
+              <p className="text-sm text-gray-500 italic bg-white p-4 rounded-xl border border-gray-100 text-center">No backers yet. Be the first to support this campaign!</p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {campaign.backers.map((backerId: string, index: number) => (
+                  <div key={index} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-sm flex-shrink-0">
+                      {backerId.slice(0, 2)}
+                    </div>
+                    <div className="overflow-hidden">
+                      <p className="text-xs font-semibold text-gray-900 truncate" title={backerId}>{backerId}</p>
+                      <p className="text-[10px] text-gray-500 mt-0.5">Stellar Public Key</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

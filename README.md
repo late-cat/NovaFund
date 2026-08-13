@@ -93,7 +93,7 @@ NovaFund solves this by introducing a fully decentralized, smart-contract-driven
 | **Monitoring & Analytics** | ✅ `@vercel/analytics` natively integrated for Core Web Vitals tracking, supplemented by Sentry SDK for client-side crash reporting |
 | **Optimized UX** | ✅ High-performance Framer Motion animations and fluid transitions |
 | **Project Structure & Docs** | ✅ Clean monorepo structure with comprehensive README documentation |
-| **Smart Contracts on Testnet** | ✅ Factory deployed at `CBGNLTWENII3LYUUVFU7DKCXV4HQTEKJQEUWXJKVIMVNMQL7E2DP2MEM` |
+| **Smart Contracts on Testnet** | ✅ Factory deployed at `CBPZXCKCLDUM24BHNINPWQBEVJ5NFUTOQWIWMUJOE4SELLZF4UI4YEG6` |
 | **15+ Meaningful Commits** | ✅ 40+ meaningful semantic commits |
 | **Demo Video** | ✅ [Watch Demo](https://youtu.be/S9shZimBqp4) |
 
@@ -298,7 +298,7 @@ NovaFund/
 Create a `.env.local` file in the root directory:
 ```env
 NEXT_PUBLIC_STELLAR_NETWORK="TESTNET"
-NEXT_PUBLIC_FACTORY_CONTRACT_ID="CCKVQ2WO2KH6ZEDNMH35AXHGHMDZ7Z6VNUSHUMEL4X5DMJP2NN4DMG2H"
+NEXT_PUBLIC_FACTORY_CONTRACT_ID="CBPZXCKCLDUM24BHNINPWQBEVJ5NFUTOQWIWMUJOE4SELLZF4UI4YEG6"
 NEXT_PUBLIC_SENTRY_DSN="YOUR_SENTRY_DSN"
 BLOB_STORE_ID="YOUR_VERCEL_BLOB_STORE_ID"
 BLOB_READ_WRITE_TOKEN="YOUR_VERCEL_BLOB_TOKEN"

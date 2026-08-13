@@ -24,6 +24,8 @@ pub struct CampaignState {
     pub name: soroban_sdk::String,
     pub description: soroban_sdk::String,
     pub image_url: soroban_sdk::String,
+    pub is_cancelled: bool,
+    pub backers: soroban_sdk::Vec<Address>,
 }
 
 #[contract]
@@ -62,6 +64,8 @@ impl Campaign {
             name,
             description,
             image_url,
+            is_cancelled: false,
+            backers: soroban_sdk::Vec::new(&env),
         };
 
         env.storage().instance().set(&DataKey::State, &state);
@@ -73,6 +77,9 @@ impl Campaign {
 
         let mut state: CampaignState = env.storage().instance().get(&DataKey::State).unwrap();
 
+        if state.is_cancelled {
+            panic!("campaign is cancelled");
+        }
         if env.ledger().timestamp() > state.deadline {
             panic!("campaign deadline has passed");
         }
@@ -91,8 +98,15 @@ impl Campaign {
         // Update individual pledge
         let pledge_key = DataKey::Pledge(backer.clone());
         let mut current_pledge: i128 = env.storage().persistent().get(&pledge_key).unwrap_or(0);
+        
+        if current_pledge == 0 {
+            // First time backing, add to array
+            state.backers.push_back(backer.clone());
+        }
+        
         current_pledge += amount;
         env.storage().persistent().set(&pledge_key, &current_pledge);
+        env.storage().instance().set(&DataKey::State, &state);
 
         // Publish event
         env.events().publish(("pledge", backer), amount);
@@ -104,6 +118,9 @@ impl Campaign {
 
         state.creator.require_auth();
 
+        if state.is_cancelled {
+            panic!("campaign is cancelled");
+        }
         if env.ledger().timestamp() <= state.deadline {
             panic!("campaign still active");
         }
@@ -132,10 +149,10 @@ impl Campaign {
     pub fn refund(env: Env, backer: Address) {
         let state: CampaignState = env.storage().instance().get(&DataKey::State).unwrap();
 
-        if env.ledger().timestamp() <= state.deadline {
+        if env.ledger().timestamp() <= state.deadline && !state.is_cancelled {
             panic!("campaign still active");
         }
-        if state.current_amount >= state.goal {
+        if state.current_amount >= state.goal && !state.is_cancelled {
             panic!("campaign succeeded, no refunds");
         }
 
@@ -169,11 +186,30 @@ impl Campaign {
     /// Allows backers to prune their pledge record to free up storage after a successful campaign.
     pub fn prune(env: Env, backer: Address) {
         let state: CampaignState = env.storage().instance().get(&DataKey::State).unwrap();
-        if !state.is_claimed {
+        if !state.is_claimed && !state.is_cancelled {
             panic!("campaign not yet claimed, cannot prune");
         }
         let pledge_key = DataKey::Pledge(backer.clone());
         env.storage().persistent().remove(&pledge_key);
+    }
+
+    /// Cancels the campaign and enables immediate refunds for backers.
+    pub fn cancel(env: Env) {
+        let mut state: CampaignState = env.storage().instance().get(&DataKey::State).unwrap();
+
+        state.creator.require_auth();
+
+        if state.is_cancelled {
+            panic!("campaign already cancelled");
+        }
+        if state.is_claimed {
+            panic!("funds already claimed");
+        }
+
+        state.is_cancelled = true;
+        env.storage().instance().set(&DataKey::State, &state);
+
+        env.events().publish(("cancel", state.creator.clone()), ());
     }
 }
 

@@ -37,12 +37,14 @@ export type DataKey = {tag: "State", values: void} | {tag: "Pledge", values: rea
 
 
 export interface CampaignState {
+  backers: Array<string>;
   creator: string;
   current_amount: i128;
   deadline: u64;
   description: string;
   goal: i128;
   image_url: string;
+  is_cancelled: boolean;
   is_claimed: boolean;
   name: string;
   token: string;
@@ -66,6 +68,12 @@ export interface Client {
    * Allows backers to prune their pledge record to free up storage after a successful campaign.
    */
   prune: ({backer}: {backer: string}, options?: MethodOptions) => Promise<AssembledTransaction<null>>
+
+  /**
+   * Construct and simulate a cancel transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
+   * Cancels the campaign and enables immediate refunds for backers.
+   */
+  cancel: (options?: MethodOptions) => Promise<AssembledTransaction<null>>
 
   /**
    * Construct and simulate a pledge transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
@@ -113,11 +121,12 @@ export class Client extends ContractClient {
         "AAAAAAAAAEBJZiB0aGUgY2FtcGFpZ24gc3VjY2VlZHMsIHRoZSBjcmVhdG9yIGNhbGxzIHRoaXMgdG8gY2xhaW0gZnVuZHMuAAAABWNsYWltAAAAAAAAAAAAAAA=",
         "AAAAAAAAAFtBbGxvd3MgYmFja2VycyB0byBwcnVuZSB0aGVpciBwbGVkZ2UgcmVjb3JkIHRvIGZyZWUgdXAgc3RvcmFnZSBhZnRlciBhIHN1Y2Nlc3NmdWwgY2FtcGFpZ24uAAAAAAVwcnVuZQAAAAAAAAEAAAAAAAAABmJhY2tlcgAAAAAAEwAAAAA=",
         "AAAAAgAAAAAAAAAAAAAAB0RhdGFLZXkAAAAAAgAAAAAAAAAAAAAABVN0YXRlAAAAAAAAAQAAAAAAAAAGUGxlZGdlAAAAAAABAAAAEw==",
+        "AAAAAAAAAD9DYW5jZWxzIHRoZSBjYW1wYWlnbiBhbmQgZW5hYmxlcyBpbW1lZGlhdGUgcmVmdW5kcyBmb3IgYmFja2Vycy4AAAAABmNhbmNlbAAAAAAAAAAAAAA=",
         "AAAAAAAAADNCYWNrZXJzIGNhbGwgdGhpcyB0byBwbGVkZ2UgdG9rZW5zIHRvIHRoZSBjYW1wYWlnbi4AAAAABnBsZWRnZQAAAAAAAgAAAAAAAAAGYmFja2VyAAAAAAATAAAAAAAAAAZhbW91bnQAAAAAAAsAAAAA",
         "AAAAAAAAAEFJZiB0aGUgY2FtcGFpZ24gZmFpbHMsIGJhY2tlcnMgY2FsbCB0aGlzIHRvIHJlZnVuZCB0aGVpciBwbGVkZ2VzLgAAAAAAAAZyZWZ1bmQAAAAAAAEAAAAAAAAABmJhY2tlcgAAAAAAEwAAAAA=",
         "AAAAAAAAACFHZXQgY3VycmVudCBzdGF0ZSBvZiB0aGUgY2FtcGFpZ24AAAAAAAAJZ2V0X3N0YXRlAAAAAAAAAAAAAAEAAAfQAAAADUNhbXBhaWduU3RhdGUAAAA=",
         "AAAAAAAAADFHZXQgdGhlIHRvdGFsIGFtb3VudCBwbGVkZ2VkIGJ5IGEgc3BlY2lmaWMgYmFja2VyAAAAAAAACmdldF9wbGVkZ2UAAAAAAAEAAAAAAAAABmJhY2tlcgAAAAAAEwAAAAEAAAAL",
-        "AAAAAQAAAAAAAAAAAAAADUNhbXBhaWduU3RhdGUAAAAAAAAJAAAAAAAAAAdjcmVhdG9yAAAAABMAAAAAAAAADmN1cnJlbnRfYW1vdW50AAAAAAALAAAAAAAAAAhkZWFkbGluZQAAAAYAAAAAAAAAC2Rlc2NyaXB0aW9uAAAAABAAAAAAAAAABGdvYWwAAAALAAAAAAAAAAlpbWFnZV91cmwAAAAAAAAQAAAAAAAAAAppc19jbGFpbWVkAAAAAAABAAAAAAAAAARuYW1lAAAAEAAAAAAAAAAFdG9rZW4AAAAAAAAT" ]),
+        "AAAAAQAAAAAAAAAAAAAADUNhbXBhaWduU3RhdGUAAAAAAAALAAAAAAAAAAdiYWNrZXJzAAAAA+oAAAATAAAAAAAAAAdjcmVhdG9yAAAAABMAAAAAAAAADmN1cnJlbnRfYW1vdW50AAAAAAALAAAAAAAAAAhkZWFkbGluZQAAAAYAAAAAAAAAC2Rlc2NyaXB0aW9uAAAAABAAAAAAAAAABGdvYWwAAAALAAAAAAAAAAlpbWFnZV91cmwAAAAAAAAQAAAAAAAAAAxpc19jYW5jZWxsZWQAAAABAAAAAAAAAAppc19jbGFpbWVkAAAAAAABAAAAAAAAAARuYW1lAAAAEAAAAAAAAAAFdG9rZW4AAAAAAAAT" ]),
       options
     )
   }
@@ -125,6 +134,7 @@ export class Client extends ContractClient {
     init: this.txFromJSON<null>,
         claim: this.txFromJSON<null>,
         prune: this.txFromJSON<null>,
+        cancel: this.txFromJSON<null>,
         pledge: this.txFromJSON<null>,
         refund: this.txFromJSON<null>,
         get_state: this.txFromJSON<CampaignState>,

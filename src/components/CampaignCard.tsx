@@ -35,6 +35,9 @@ export default function CampaignCard({
            <img 
              src={image} 
              alt={title}
+             onError={(e) => {
+               (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80";
+             }}
              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
            />
         </div>
