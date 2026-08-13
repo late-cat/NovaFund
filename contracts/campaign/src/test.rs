@@ -38,7 +38,19 @@ fn test_init() {
     let goal = 1000;
     let deadline = env.ledger().timestamp() + 100;
 
-    client.init(&creator, &token.address, &goal, &deadline);
+    let name = soroban_sdk::String::from_str(&env, "Test Campaign");
+    let desc = soroban_sdk::String::from_str(&env, "A test campaign description");
+    let image_url = soroban_sdk::String::from_str(&env, "https://example.com/image.png");
+
+    client.init(
+        &creator,
+        &token.address,
+        &goal,
+        &deadline,
+        &name,
+        &desc,
+        &image_url,
+    );
 
     let state = client.get_state();
     assert_eq!(state.creator, creator);
@@ -56,7 +68,18 @@ fn test_pledge_and_claim() {
     let (env, client, creator, token, token_admin) = setup_test();
     let goal = 1000;
     let deadline = env.ledger().timestamp() + 100;
-    client.init(&creator, &token.address, &goal, &deadline);
+    let name = soroban_sdk::String::from_str(&env, "Test Campaign");
+    let desc = soroban_sdk::String::from_str(&env, "A test campaign description");
+    let image_url = soroban_sdk::String::from_str(&env, "https://example.com/image.png");
+    client.init(
+        &creator,
+        &token.address,
+        &goal,
+        &deadline,
+        &name,
+        &desc,
+        &image_url,
+    );
 
     let backer = Address::generate(&env);
     token_admin.mint(&backer, &2000);
@@ -86,7 +109,18 @@ fn test_refund() {
     let (env, client, creator, token, token_admin) = setup_test();
     let goal = 1000;
     let deadline = env.ledger().timestamp() + 100;
-    client.init(&creator, &token.address, &goal, &deadline);
+    let name = soroban_sdk::String::from_str(&env, "Test Campaign");
+    let desc = soroban_sdk::String::from_str(&env, "A test campaign description");
+    let image_url = soroban_sdk::String::from_str(&env, "https://example.com/image.png");
+    client.init(
+        &creator,
+        &token.address,
+        &goal,
+        &deadline,
+        &name,
+        &desc,
+        &image_url,
+    );
 
     let backer = Address::generate(&env);
     token_admin.mint(&backer, &2000);

@@ -21,6 +21,9 @@ pub struct CampaignState {
     pub deadline: u64,
     pub current_amount: i128,
     pub is_claimed: bool,
+    pub name: soroban_sdk::String,
+    pub description: soroban_sdk::String,
+    pub image_url: soroban_sdk::String,
 }
 
 #[contract]
@@ -29,7 +32,16 @@ pub struct Campaign;
 #[contractimpl]
 impl Campaign {
     /// Initializes the campaign. Can only be called once.
-    pub fn init(env: Env, creator: Address, token: Address, goal: i128, deadline: u64) {
+    pub fn init(
+        env: Env,
+        creator: Address,
+        token: Address,
+        goal: i128,
+        deadline: u64,
+        name: soroban_sdk::String,
+        description: soroban_sdk::String,
+        image_url: soroban_sdk::String,
+    ) {
         if env.storage().instance().has(&DataKey::State) {
             panic!("already initialized");
         }
@@ -47,6 +59,9 @@ impl Campaign {
             deadline,
             current_amount: 0,
             is_claimed: false,
+            name,
+            description,
+            image_url,
         };
 
         env.storage().instance().set(&DataKey::State, &state);

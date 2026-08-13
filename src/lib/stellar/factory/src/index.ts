@@ -31,7 +31,12 @@ if (typeof window !== "undefined") {
 }
 
 
-
+export const networks = {
+  testnet: {
+    networkPassphrase: "Test SDF Network ; September 2015",
+    contractId: "CCKVQ2WO2KH6ZEDNMH35AXHGHMDZ7Z6VNUSHUMEL4X5DMJP2NN4DMG2H",
+  }
+} as const
 
 export type DataKey = {tag: "WasmHash", values: void} | {tag: "CampaignCount", values: void} | {tag: "Campaign", values: readonly [u32]};
 
@@ -52,7 +57,7 @@ export interface Client {
    * Construct and simulate a create_campaign transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
    * Deploys a new Campaign contract and initializes it.
    */
-  create_campaign: ({creator, token, goal, deadline, salt}: {creator: string, token: string, goal: i128, deadline: u64, salt: Buffer}, options?: MethodOptions) => Promise<AssembledTransaction<string>>
+  create_campaign: ({creator, token, goal, deadline, salt, name, description, image_url}: {creator: string, token: string, goal: i128, deadline: u64, salt: Buffer, name: string, description: string, image_url: string}, options?: MethodOptions) => Promise<AssembledTransaction<string>>
 
 }
 export class Client extends ContractClient {
@@ -72,10 +77,10 @@ export class Client extends ContractClient {
   }
   constructor(public readonly options: ContractClientOptions) {
     super(
-      new ContractSpec([ "AAAAAAAAAENJbml0aWFsaXplIHRoZSBmYWN0b3J5IHdpdGggdGhlIFdBU00gaGFzaCBvZiB0aGUgQ2FtcGFpZ24gY29udHJhY3QuAAAAAARpbml0AAAAAQAAAAAAAAAJd2FzbV9oYXNoAAAAAAAD7gAAACAAAAAA",
-        "AAAAAgAAAAAAAAAAAAAAB0RhdGFLZXkAAAAAAwAAAAAAAAAAAAAACFdhc21IYXNoAAAAAAAAAAAAAAANQ2FtcGFpZ25Db3VudAAAAAAAAAEAAAAAAAAACENhbXBhaWduAAAAAQAAAAQ=",
+      new ContractSpec([ "AAAAAgAAAAAAAAAAAAAAB0RhdGFLZXkAAAAAAwAAAAAAAAAAAAAACFdhc21IYXNoAAAAAAAAAAAAAAANQ2FtcGFpZ25Db3VudAAAAAAAAAEAAAAAAAAACENhbXBhaWduAAAAAQAAAAQ=",
+        "AAAAAAAAAENJbml0aWFsaXplIHRoZSBmYWN0b3J5IHdpdGggdGhlIFdBU00gaGFzaCBvZiB0aGUgQ2FtcGFpZ24gY29udHJhY3QuAAAAAARpbml0AAAAAQAAAAAAAAAJd2FzbV9oYXNoAAAAAAAD7gAAACAAAAAA",
         "AAAAAAAAAC9SZXR1cm5zIGEgcGFnaW5hdGVkIGxpc3Qgb2YgZGVwbG95ZWQgY2FtcGFpZ25zLgAAAAANZ2V0X2NhbXBhaWducwAAAAAAAAIAAAAAAAAABXN0YXJ0AAAAAAAABAAAAAAAAAAFbGltaXQAAAAAAAAEAAAAAQAAA+oAAAAT",
-        "AAAAAAAAADNEZXBsb3lzIGEgbmV3IENhbXBhaWduIGNvbnRyYWN0IGFuZCBpbml0aWFsaXplcyBpdC4AAAAAD2NyZWF0ZV9jYW1wYWlnbgAAAAAFAAAAAAAAAAdjcmVhdG9yAAAAABMAAAAAAAAABXRva2VuAAAAAAAAEwAAAAAAAAAEZ29hbAAAAAsAAAAAAAAACGRlYWRsaW5lAAAABgAAAAAAAAAEc2FsdAAAA+4AAAAgAAAAAQAAABM=" ]),
+        "AAAAAAAAADNEZXBsb3lzIGEgbmV3IENhbXBhaWduIGNvbnRyYWN0IGFuZCBpbml0aWFsaXplcyBpdC4AAAAAD2NyZWF0ZV9jYW1wYWlnbgAAAAAIAAAAAAAAAAdjcmVhdG9yAAAAABMAAAAAAAAABXRva2VuAAAAAAAAEwAAAAAAAAAEZ29hbAAAAAsAAAAAAAAACGRlYWRsaW5lAAAABgAAAAAAAAAEc2FsdAAAA+4AAAAgAAAAAAAAAARuYW1lAAAAEAAAAAAAAAALZGVzY3JpcHRpb24AAAAAEAAAAAAAAAAJaW1hZ2VfdXJsAAAAAAAAEAAAAAEAAAAT" ]),
       options
     )
   }

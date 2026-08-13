@@ -41,6 +41,9 @@ impl CampaignFactory {
         goal: i128,
         deadline: u64,
         salt: BytesN<32>,
+        name: soroban_sdk::String,
+        description: soroban_sdk::String,
+        image_url: soroban_sdk::String,
     ) -> Address {
         creator.require_auth();
 
@@ -58,7 +61,15 @@ impl CampaignFactory {
 
         // Initialize the new contract
         let campaign_client = campaign_contract::Client::new(&env, &deployed_address);
-        campaign_client.init(&creator, &token, &goal, &deadline);
+        campaign_client.init(
+            &creator,
+            &token,
+            &goal,
+            &deadline,
+            &name,
+            &description,
+            &image_url,
+        );
 
         // Store the new campaign address in our list
         let count: u32 = env

@@ -243,6 +243,14 @@
                           },
                           {
                             "key": {
+                              "symbol": "description"
+                            },
+                            "val": {
+                              "string": "A test campaign description"
+                            }
+                          },
+                          {
+                            "key": {
                               "symbol": "goal"
                             },
                             "val": {
@@ -251,10 +259,26 @@
                           },
                           {
                             "key": {
+                              "symbol": "image_url"
+                            },
+                            "val": {
+                              "string": "https://example.com/image.png"
+                            }
+                          },
+                          {
+                            "key": {
                               "symbol": "is_claimed"
                             },
                             "val": {
                               "bool": true
+                            }
+                          },
+                          {
+                            "key": {
+                              "symbol": "name"
+                            },
+                            "val": {
+                              "string": "Test Campaign"
                             }
                           },
                           {
