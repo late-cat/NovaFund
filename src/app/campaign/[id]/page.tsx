@@ -251,7 +251,12 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
                         ? "Please Sign in Wallet..." 
                         : txStatus === "submitting" 
                           ? "Submitting to Network..." 
-                          : "Pledge XLM"}
+                          : (
+                            <span className="flex items-center gap-2">
+                              <span className="w-2 h-2 rounded-full bg-current animate-pulse shadow-[0_0_8px_currentColor]" />
+                              Fund this project
+                            </span>
+                          )}
                   </button>
                 )}
 
