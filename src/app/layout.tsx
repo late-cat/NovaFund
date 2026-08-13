@@ -4,7 +4,6 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FeedbackButton from "@/components/FeedbackButton";
-import Ticker from "@/components/Ticker";
 import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -53,7 +52,6 @@ export default function RootLayout({
         </div>
         
         <div className="relative z-10 flex flex-col min-h-screen">
-          <Ticker />
           <Navbar />
           <main className="flex-1 w-full max-w-5xl mx-auto py-12 px-6">
             {children}

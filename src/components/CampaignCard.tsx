@@ -59,20 +59,21 @@ export default function CampaignCard({
                <span>{progress.toFixed(0)}%</span>
              </div>
           </div>
-          <div className="flex items-center justify-between mt-4 pt-4 border-t border-dashed border-[#d4c6a0] text-xs font-medium">
-             <div className="flex flex-col gap-0.5">
-               <div className="flex items-center gap-1.5 text-gray-600">
-                 <Clock size={12} className="text-gray-500" />
-                 <span>{deadline}</span>
-               </div>
-               <span className="text-[10px] text-gray-400">Ends soon</span>
-             </div>
+          <div className="mt-4 pt-4 relative text-xs font-medium">
+             {/* Animated marching ants top border */}
+             <div className="absolute top-0 left-0 w-full h-[1px] animate-marching-ants" />
              
-             <div className="relative group/btn">
-               <div className="absolute inset-0 bg-[#e88147] opacity-20 blur-sm rounded-full group-hover/btn:opacity-40 transition-opacity duration-300" />
-               <div className="relative bg-white text-[#e88147] border border-[#e88147]/30 px-3 py-1.5 rounded-full text-[10px] font-bold tracking-wide uppercase flex items-center gap-2 group-hover/btn:bg-[#e88147] group-hover/btn:text-white transition-colors duration-300">
-                  <div className="w-1.5 h-1.5 rounded-full bg-current animate-pulse shadow-[0_0_8px_currentColor]" />
-                  Fund this project
+             <div className="flex items-center justify-between">
+               <div className="flex flex-col gap-0.5">
+                 <div className="flex items-center gap-1.5 text-gray-600">
+                   <Clock size={12} className="text-gray-500" />
+                   <span>{deadline}</span>
+                 </div>
+                 <span className="text-[10px] text-gray-400">Ends soon</span>
+               </div>
+               
+               <div className="bg-white text-[#e88147] border border-[#e88147]/30 px-3 py-1.5 rounded-full text-[10px] font-bold tracking-wide uppercase flex items-center group-hover:bg-[#e88147] group-hover:text-white transition-colors duration-300">
+                  Fund this campaign
                </div>
              </div>
           </div>
