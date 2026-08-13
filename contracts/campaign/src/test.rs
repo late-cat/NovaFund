@@ -150,7 +150,7 @@ fn test_cancel() {
     let name = soroban_sdk::String::from_str(&env, "Test Campaign");
     let desc = soroban_sdk::String::from_str(&env, "A test campaign description");
     let image_url = soroban_sdk::String::from_str(&env, "https://example.com/image.png");
-    
+
     client.init(
         &creator,
         &token.address,

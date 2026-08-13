@@ -98,12 +98,12 @@ impl Campaign {
         // Update individual pledge
         let pledge_key = DataKey::Pledge(backer.clone());
         let mut current_pledge: i128 = env.storage().persistent().get(&pledge_key).unwrap_or(0);
-        
+
         if current_pledge == 0 {
             // First time backing, add to array
             state.backers.push_back(backer.clone());
         }
-        
+
         current_pledge += amount;
         env.storage().persistent().set(&pledge_key, &current_pledge);
         env.storage().instance().set(&DataKey::State, &state);
