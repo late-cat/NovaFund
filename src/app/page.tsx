@@ -61,6 +61,24 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* Platform Statistics */}
+      <motion.section variants={itemVariants} className="w-full flex justify-center mt-2 mb-4">
+        <div className="bg-white/90 backdrop-blur-sm border border-gray-100 p-6 rounded-[2rem] shadow-sm flex items-center justify-around w-full max-w-2xl">
+          <div className="text-center px-4">
+             <p className="text-3xl md:text-4xl font-bold text-gray-900">{loading ? "-" : campaigns.length}</p>
+             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Projects Launched</p>
+          </div>
+          <div className="w-px h-16 bg-gray-100" />
+          <div className="text-center px-4">
+             <p className="text-3xl md:text-4xl font-bold text-gray-900">
+               {loading ? "-" : campaigns.reduce((acc, c) => acc + Number(c.raised), 0).toLocaleString()} 
+               <span className="text-lg md:text-xl text-gray-400 ml-1">XLM</span>
+             </p>
+             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Total Volume Pledged</p>
+          </div>
+        </div>
+      </motion.section>
+
       {/* Featured Campaigns */}
       <motion.section variants={itemVariants} className="mt-8 w-full">
         <div className="flex justify-between items-center mb-6">

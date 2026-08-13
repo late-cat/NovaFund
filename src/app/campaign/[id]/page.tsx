@@ -364,12 +364,14 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-50">
-                      {[...campaign.backers]
+                      {campaign.backers
+                        .map((b, i) => ({ ...b, originalIndex: i }))
                         .sort((a, b) => Number(b.amount) - Number(a.amount))
                         .map((backer, index) => {
                           const percentage = Number(campaign.goal) > 0 
                             ? ((Number(backer.amount) / Number(campaign.goal)) * 100).toFixed(1) 
                             : "0.0";
+                          const isEarlySupporter = backer.originalIndex < 3;
                             
                           return (
                             <tr key={index} className="hover:bg-orange-50/30 transition-colors group">
@@ -377,15 +379,25 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
                                 {index + 1}
                               </td>
                               <td className="py-4 px-6">
-                                <a 
-                                  href={`https://stellar.expert/explorer/testnet/account/${backer.address}`} 
-                                  target="_blank" 
-                                  rel="noopener noreferrer" 
-                                  className="text-sm font-mono text-gray-700 group-hover:text-orange-500 transition-colors inline-flex items-center gap-2"
-                                  title={backer.address}
-                                >
-                                  {backer.address.slice(0, 5)}...{backer.address.slice(-4)}
-                                </a>
+                                <div className="flex items-center gap-2">
+                                  <a 
+                                    href={`https://stellar.expert/explorer/testnet/account/${backer.address}`} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className="text-sm font-mono text-gray-700 group-hover:text-orange-500 transition-colors inline-flex items-center gap-2"
+                                    title={backer.address}
+                                  >
+                                    {backer.address.slice(0, 5)}...{backer.address.slice(-4)}
+                                  </a>
+                                  {isEarlySupporter && (
+                                    <span 
+                                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-orange-100 text-orange-600 border border-orange-200"
+                                      title="One of the first 3 backers to support this project!"
+                                    >
+                                      Early Supporter
+                                    </span>
+                                  )}
+                                </div>
                               </td>
                               <td className="py-4 px-6 text-sm font-medium text-gray-500 text-right">
                                 <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded-md text-xs">{percentage}%</span>
