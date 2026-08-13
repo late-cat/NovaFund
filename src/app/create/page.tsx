@@ -14,8 +14,10 @@ export default function CreateCampaign() {
     description: "",
     goal: "",
     deadline: "",
-    image: "",
+    imageLink: "",
   });
+  const [imageType, setImageType] = useState<"link" | "upload">("link");
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,8 +30,43 @@ export default function CreateCampaign() {
         setTxStatus("idle");
         return;
       }
-      const { signTransactionWithKit } = await import("@/lib/wallet");
+      
+      let finalImageUrl = formData.imageLink;
+      
+      // Handle file upload if that option is selected
+      if (imageType === "upload" && imageFile) {
+        setTxStatus("submitting"); // Show uploading state
+        try {
+          const response = await fetch(
+            `/api/upload?filename=${encodeURIComponent(imageFile.name)}`,
+            {
+              method: 'POST',
+              body: imageFile,
+            },
+          );
+          
+          if (!response.ok) {
+            throw new Error(`Upload failed: ${response.statusText}`);
+          }
+          
+          const blob = await response.json();
+          finalImageUrl = blob.url;
+          setTxStatus("signing"); // Back to signing state
+        } catch (err) {
+          console.error("Error uploading image:", err);
+          alert("Failed to upload image. Please try using a link instead.");
+          setTxStatus("error");
+          return;
+        }
+      }
 
+      if (!finalImageUrl) {
+        alert("Please provide a cover image URL or upload a file.");
+        setTxStatus("idle");
+        return;
+      }
+
+      const { signTransactionWithKit } = await import("@/lib/wallet");
       const { getFactoryClient } = await import("@/lib/soroban");
       const client = getFactoryClient();
 
@@ -50,6 +87,9 @@ export default function CreateCampaign() {
         goal: goalAmount,
         deadline: BigInt(deadlineSecs),
         salt: Buffer.from(salt),
+        name: formData.title,
+        description: formData.description,
+        image_url: finalImageUrl,
       }, { publicKey: address });
 
       setTxStatus("submitting");
@@ -58,15 +98,6 @@ export default function CreateCampaign() {
       const newCampaignId = sentTx.result;
       console.log("Campaign created!", newCampaignId);
       
-      if (typeof newCampaignId === 'string') {
-        const metadata = {
-          title: formData.title,
-          description: formData.description,
-          image: formData.image,
-        };
-        localStorage.setItem(`campaign_meta_${newCampaignId}`, JSON.stringify(metadata));
-      }
-
       setTimeout(() => {
         setTxStatus("success");
         router.push("/");
@@ -171,17 +202,47 @@ export default function CreateCampaign() {
               </div>
             </div>
 
-            <div className="space-y-1.5">
-              <label htmlFor="image" className="text-xs font-bold text-gray-600 uppercase tracking-wider ml-1">Cover Image URL</label>
-              <input
-                id="image"
-                required
-                type="url"
-                placeholder="https://images.unsplash.com/..."
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
-                value={formData.image}
-                onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-              />
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-bold text-gray-600 uppercase tracking-wider ml-1">Cover Image</label>
+                <div className="flex gap-2">
+                  <button 
+                    type="button" 
+                    onClick={() => setImageType("link")}
+                    className={`text-xs px-3 py-1 rounded-full font-medium transition-colors ${imageType === "link" ? "bg-orange-100 text-orange-600" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}
+                  >
+                    Paste Link
+                  </button>
+                  <button 
+                    type="button"
+                    onClick={() => setImageType("upload")}
+                    className={`text-xs px-3 py-1 rounded-full font-medium transition-colors ${imageType === "upload" ? "bg-orange-100 text-orange-600" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}
+                  >
+                    Upload File
+                  </button>
+                </div>
+              </div>
+              
+              {imageType === "link" ? (
+                <input
+                  id="imageLink"
+                  required
+                  type="url"
+                  placeholder="https://images.unsplash.com/..."
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
+                  value={formData.imageLink}
+                  onChange={(e) => setFormData({ ...formData, imageLink: e.target.value })}
+                />
+              ) : (
+                <input
+                  id="imageUpload"
+                  required
+                  type="file"
+                  accept="image/png, image/jpeg, image/webp"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-600 hover:file:bg-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all text-sm shadow-inner"
+                  onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+                />
+              )}
             </div>
 
             <div className="pt-4">

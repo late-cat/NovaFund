@@ -58,17 +58,8 @@ export default function Dashboard() {
               const isCreator = stateResult.creator === address;
 
               if (isCreator || Number(myPledge) > 0) {
-                let metaTitle = `Campaign ${id.slice(0, 6)}`;
-                let metaImage = "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80";
-                
-                try {
-                  const stored = localStorage.getItem(`campaign_meta_${id}`);
-                  if (stored) {
-                    const parsed = JSON.parse(stored);
-                    if (parsed.title) metaTitle = parsed.title;
-                    if (parsed.image) metaImage = parsed.image;
-                  }
-                } catch (e) {}
+                let metaTitle = stateResult.name || `Campaign ${id.slice(0, 6)}`;
+                let metaImage = stateResult.image_url || "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80";
 
                 return {
                   id,

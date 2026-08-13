@@ -102,7 +102,6 @@ function formatCampaignData(id: string, state: any): CampaignData {
   const goalNum = fromStroops(state.goal);
   const raisedNum = fromStroops(state.current_amount);
   
-  // Keep original UI formatting for dates in campaign page, but use date-only format for cards
   // The campaign card only needs YYYY-MM-DD which can be extracted from Date object
   const deadlineDate = new Date(Number(state.deadline) * 1000);
   
@@ -115,21 +114,9 @@ function formatCampaignData(id: string, state: any): CampaignData {
   const charCode = id.charCodeAt(0) || 0;
   const mockImage = mockImages[charCode % mockImages.length];
   
-  let metaTitle = `Campaign ${id.slice(0, 6)}`;
-  let metaImage = mockImage;
-  let metaDesc = "";
-  
-  try {
-    const stored = localStorage.getItem(`campaign_meta_${id}`);
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      if (parsed.title) metaTitle = parsed.title;
-      if (parsed.image) metaImage = parsed.image;
-      if (parsed.description) metaDesc = parsed.description;
-    }
-  } catch (e) {
-    console.error("Failed to parse metadata", e);
-  }
+  let metaTitle = state.name || `Campaign ${id.slice(0, 6)}`;
+  let metaImage = state.image_url || mockImage;
+  let metaDesc = state.description || "";
 
   return {
     id,
