@@ -63,14 +63,24 @@ export default function Home() {
 
       {/* Platform Statistics */}
       <motion.section variants={itemVariants} className="w-full flex justify-center mt-2 mb-4">
-        <div className="bg-white/90 backdrop-blur-sm border border-gray-100 p-6 rounded-[2rem] shadow-sm flex items-center justify-around w-full max-w-2xl">
-          <div className="text-center px-4">
-             <p className="text-3xl md:text-4xl font-bold text-gray-900">{loading ? "-" : campaigns.length}</p>
+        <div 
+          className="relative p-6 rounded-[2rem] shadow-[0_8px_30px_rgba(0,0,0,0.04),0_2px_8px_rgba(0,0,0,0.02)] flex items-center justify-around w-full max-w-2xl border border-gray-200/50 overflow-hidden"
+          style={{
+            backgroundImage: `
+              linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(249,250,251,0.9) 100%),
+              url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E")
+            `,
+          }}
+        >
+          <div className="absolute inset-0 rounded-[2rem] shadow-[inset_0_2px_4px_rgba(255,255,255,0.9),inset_0_-2px_4px_rgba(0,0,0,0.02)] pointer-events-none z-0" />
+          
+          <div className="text-center px-4 relative z-10">
+             <p className="text-3xl md:text-4xl font-bold text-gray-900 drop-shadow-sm">{loading ? "-" : campaigns.length}</p>
              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Projects Launched</p>
           </div>
-          <div className="w-px h-16 bg-gray-100" />
-          <div className="text-center px-4">
-             <p className="text-3xl md:text-4xl font-bold text-gray-900">
+          <div className="w-px h-16 bg-gradient-to-b from-transparent via-gray-200 to-transparent relative z-10" />
+          <div className="text-center px-4 relative z-10">
+             <p className="text-3xl md:text-4xl font-bold text-gray-900 drop-shadow-sm">
                {loading ? "-" : campaigns.reduce((acc, c) => acc + Number(c.raised), 0).toLocaleString()} 
                <span className="text-lg md:text-xl text-gray-400 ml-1">XLM</span>
              </p>
