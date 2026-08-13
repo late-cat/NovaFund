@@ -139,7 +139,7 @@ export default function Dashboard() {
           </div>
           {createdCampaigns.length === 0 ? (
              <div className="bg-gray-50 p-8 rounded-[2rem] border border-gray-100 text-center">
-               <p className="text-gray-500 mb-4">You haven't created any campaigns yet.</p>
+               <p className="text-gray-500 mb-4">You haven&apos;t created any campaigns yet.</p>
                <Link href="/create" className="text-orange-500 hover:underline font-medium">Start a Campaign</Link>
              </div>
           ) : (
@@ -194,7 +194,7 @@ export default function Dashboard() {
           </div>
           {backedCampaigns.length === 0 ? (
              <div className="bg-gray-50 p-8 rounded-[2rem] border border-gray-100 text-center">
-               <p className="text-gray-500 mb-4">You haven't backed any campaigns yet.</p>
+               <p className="text-gray-500 mb-4">You haven&apos;t backed any campaigns yet.</p>
                <Link href="/" className="text-orange-500 hover:underline font-medium">Explore Projects</Link>
              </div>
           ) : (
