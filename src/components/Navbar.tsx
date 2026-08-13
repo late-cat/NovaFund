@@ -42,6 +42,12 @@ export default function Navbar() {
               >
                 Start Campaign
               </Link>
+              <Link
+                href="/dashboard"
+                className="text-sm font-medium text-gray-600 hover:text-orange-500 transition-colors"
+              >
+                Dashboard
+              </Link>
             </div>
             
             <WalletConnect />
@@ -81,6 +87,13 @@ export default function Navbar() {
                 className="text-base font-medium text-gray-700 hover:text-orange-500 transition-colors px-4 py-2 bg-gray-50 rounded-lg"
               >
                 Start Campaign
+              </Link>
+              <Link
+                href="/dashboard"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-base font-medium text-gray-700 hover:text-orange-500 transition-colors px-4 py-2 bg-gray-50 rounded-lg"
+              >
+                Dashboard
               </Link>
             </div>
           </motion.div>
