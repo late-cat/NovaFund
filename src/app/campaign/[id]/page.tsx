@@ -2,7 +2,7 @@
 
 import { useEffect, useState, use } from "react";
 import { getCampaignClient } from "@/lib/soroban";
-import { fromStroops, toStroops } from "@/lib/stellar/utils";
+import { fromStroops, toStroops, fetchBalance } from "@/lib/stellar/utils";
 import { Loader2, ArrowLeft, ArrowRight, Target, Clock, User, Coins } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -27,6 +27,15 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
         setTxStatus("idle");
         return;
       }
+
+      const balance = await fetchBalance(address);
+      // We add a ~2 XLM buffer for network reserves and transaction fees
+      if (balance < Number(pledgeAmount) + 2) {
+        alert("Pledge failed: Insufficient liquid XLM balance. You need at least " + (Number(pledgeAmount) + 2) + " XLM available (including network reserves).");
+        setTxStatus("idle");
+        return;
+      }
+
       const { signTransactionWithKit } = await import("@/lib/wallet");
 
       const client = getCampaignClient(id);
