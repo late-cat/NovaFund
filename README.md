@@ -73,24 +73,24 @@ NovaFund solves this by introducing a fully decentralized, smart-contract-driven
 
 | Requirement | Status & Implementation Details |
 | :--- | :--- |
-| **Advanced Contracts** | ✅ Built bespoke `Factory` and `Campaign` contracts using Rust |
-| **Inter-Contract Comm** | ✅ `Factory` securely cross-calls `Campaign` to deploy and index instances |
-| **Event Streaming** | ✅ Frontend subscribes to Soroban RPC for real-time campaign states |
-| **Production transaction UI** | ✅ Optimized UX for fetching data, pledging XLM, and claiming funds |
-| **Wallet Integration** | ✅ Implemented robust wallet connectivity via Freighter API |
-| **Feature-based architecture** | ✅ Strictly separated Vite/Next.js frontend, components, and contract bindings |
+| **Advanced Contracts** | ✅ Developed `Factory` (registry) and `Campaign` (escrow logic) in Rust (Soroban SDK `v27.0.0`), storing metadata (`name`, `description`, `image_url`) directly on-chain |
+| **Inter-Contract Comm** | ✅ Factory invokes `deployer.with_current_contract(salt).deploy(wasm_hash)` to spawn independent Campaign instances and proxies initialization arguments |
+| **Event Streaming** | ✅ Next.js client seamlessly queries the Soroban RPC via auto-generated TS bindings, keeping campaign state hydrated without manual refreshes |
+| **Production transaction UI** | ✅ Integrated `@vercel/blob` for native image hosting, with a polished React form handling strict XDR payload generation and transaction signing |
+| **Wallet Integration** | ✅ Fully integrated `@creit.tech/stellar-wallets-kit`, abstracting raw API calls to support cross-wallet compatibility (Freighter, Albedo, xBull, etc.) |
+| **Feature-based architecture** | ✅ Clean Next.js 14 App Router monorepo, cleanly isolating `src/app` (pages), `src/components`, and `src/lib/stellar` (Soroban XDR utilities) |
 
 ### 🟢 Level 4 - Green Belt Submission
 
 | Requirement | Status & Implementation Details |
 | :--- | :--- |
-| **Production MVP** | ✅ Fully functional production-ready crowdfunding platform |
-| **Mobile Responsive UI** | ✅ Complete mobile-first responsive design with Tailwind utilities |
-| **Loading States & Error Handling** | ✅ Global `loading.tsx` splash screens, skeleton loaders, and Sentry integration |
-| **User Onboarding** | ✅ 10+ real users onboarded with verifiable wallet interactions |
-| **User Feedback Collection** | ✅ In-app feedback system and Google Form integration |
-| **Production Deployment** | ✅ Deployed flawlessly on Vercel |
-| **Monitoring & Analytics** | ✅ Vercel Analytics for usage tracking + Sentry for error monitoring |
+| **Production MVP** | ✅ Deployed a fully functional, trustless escrow crowdfunding platform with Vercel Blob integration and on-chain metadata immutability |
+| **Mobile Responsive UI** | ✅ Built with Tailwind CSS utilities featuring custom components, flex-based mobile layouts, and Framer Motion micro-animations |
+| **Loading States & Error Handling** | ✅ Implemented Next.js global `loading.tsx` boundaries, pulsing skeleton cards, and global try-catch transaction wrappers for RPC timeouts |
+| **User Onboarding** | ✅ Verifiable wallet interactions generated on Testnet across 10+ unique testers using Freighter and Albedo |
+| **User Feedback Collection** | ✅ Integrated an omnipresent floating feedback button linked to Google Forms to capture UX sentiment and bug reports |
+| **Production Deployment** | ✅ Deployed as a serverless Next.js edge application on Vercel (`nova-fund.vercel.app`), strictly utilizing `.env.local` for production configuration |
+| **Monitoring & Analytics** | ✅ `@vercel/analytics` natively integrated for Core Web Vitals tracking, supplemented by Sentry SDK for client-side crash reporting |
 | **Optimized UX** | ✅ High-performance Framer Motion animations and fluid transitions |
 | **Project Structure & Docs** | ✅ Clean monorepo structure with comprehensive README documentation |
 | **Smart Contracts on Testnet** | ✅ Factory deployed at `CBGNLTWENII3LYUUVFU7DKCXV4HQTEKJQEUWXJKVIMVNMQL7E2DP2MEM` |
