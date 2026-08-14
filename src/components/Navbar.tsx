@@ -71,27 +71,28 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="fixed inset-x-0 top-16 z-40 bg-white border-b border-gray-100 shadow-lg md:hidden"
+            className="fixed inset-x-0 top-16 z-40 bg-white/90 backdrop-blur-md border-b border-gray-200/60 shadow-[0_8px_30px_rgba(0,0,0,0.04)] md:hidden relative overflow-hidden"
           >
-            <div className="flex flex-col p-4 space-y-4">
+            <div className="absolute inset-0 z-0 opacity-10 mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }} />
+            <div className="flex flex-col p-4 space-y-4 relative z-10">
               <Link
                 href="/explore"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-base font-medium text-gray-700 hover:text-orange-500 transition-colors px-4 py-2 bg-gray-50 rounded-lg"
+                className="text-base font-bold text-gray-700 hover:text-[#e88147] hover:bg-orange-50/50 transition-colors px-4 py-3 bg-gray-50/50 rounded-xl border border-gray-200/50"
               >
                 Explore Campaigns
               </Link>
               <Link
                 href="/create"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-base font-medium text-gray-700 hover:text-orange-500 transition-colors px-4 py-2 bg-gray-50 rounded-lg"
+                className="text-base font-bold text-gray-700 hover:text-[#e88147] hover:bg-orange-50/50 transition-colors px-4 py-3 bg-gray-50/50 rounded-xl border border-gray-200/50"
               >
                 Start Campaign
               </Link>
               <Link
                 href="/dashboard"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-base font-medium text-gray-700 hover:text-orange-500 transition-colors px-4 py-2 bg-gray-50 rounded-lg"
+                className="text-base font-bold text-gray-700 hover:text-[#e88147] hover:bg-orange-50/50 transition-colors px-4 py-3 bg-gray-50/50 rounded-xl border border-gray-200/50"
               >
                 Dashboard
               </Link>
