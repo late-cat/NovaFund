@@ -55,7 +55,7 @@ export default function CampaignCard({
         {/* Tape */}
         <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-30 w-14 h-4 bg-white/40 border border-white/50 shadow-[0_1px_3px_rgba(0,0,0,0.08)] backdrop-blur-[2px] rotate-[-2deg] rounded-sm group-hover:shadow-[0_2px_5px_rgba(0,0,0,0.12)] transition-shadow duration-500" />
         
-        <div className="relative w-full h-36 rounded-sm bg-gray-200 overflow-hidden mb-4 border border-gray-300 shadow-[inset_0_1px_4px_rgba(0,0,0,0.1)] mt-2">
+        <div className="relative w-full h-24 sm:h-36 rounded-sm bg-gray-200 overflow-hidden mb-2 sm:mb-4 border border-gray-300 shadow-[inset_0_1px_4px_rgba(0,0,0,0.1)] mt-2">
            <img 
              src={image} 
              alt={title}
@@ -68,20 +68,20 @@ export default function CampaignCard({
         
         <div className="flex flex-col flex-grow justify-between relative z-20">
           <div>
-            <h3 className="text-lg font-bold line-clamp-1 leading-tight group-hover:text-[#e88147] transition-colors font-serif mb-0.5">
+            <h3 className="text-sm sm:text-lg font-bold line-clamp-2 sm:line-clamp-1 leading-tight group-hover:text-[#e88147] transition-colors font-serif mb-0.5">
               {title}
             </h3>
-            <span className="text-[11px] text-gray-500 font-medium">By {creator}</span>
+            <span className="text-[9px] sm:text-[11px] text-gray-500 font-medium line-clamp-1">By {creator}</span>
           </div>
           
-          <div className="mt-4 relative">
+          <div className="mt-2 sm:mt-4 relative">
              <style>{`
                @keyframes fireFlow {
                  0% { background-position: 200% 0; }
                  100% { background-position: 0% 0; }
                }
              `}</style>
-             <div className="w-full h-2 bg-[#e8ddb0]/80 rounded-full mt-3 shadow-[inset_0_1px_3px_rgba(0,0,0,0.15)] relative overflow-hidden">
+             <div className="w-full h-1.5 sm:h-2 bg-[#e8ddb0]/80 rounded-full mt-2 sm:mt-3 shadow-[inset_0_1px_3px_rgba(0,0,0,0.15)] relative overflow-hidden">
                {/* Fiery Magic Fluid */}
                <div 
                  className="absolute top-0 left-0 bottom-0 transition-all duration-1000 ease-out rounded-r-full shadow-[0_0_10px_rgba(255,78,0,0.8)]" 
@@ -97,23 +97,24 @@ export default function CampaignCard({
                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white rounded-full blur-[0.5px] shadow-[0_0_8px_3px_rgba(255,255,255,0.9)] translate-x-1/2" />
                </div>
              </div>
-             <div className="flex justify-between text-[11px] font-bold text-gray-700 mt-1.5">
-               <span>{raised} / {goal} XLM</span>
-               <span className="text-[#ff4e00] drop-shadow-sm">{progress.toFixed(0)}%</span>
+             <div className="flex justify-between items-end text-[9px] sm:text-[11px] font-bold text-gray-700 mt-1 sm:mt-1.5">
+               <span className="truncate pr-1">{raised} <span className="hidden sm:inline">/ {goal}</span> XLM</span>
+               <span className="text-[#ff4e00] text-[8px] sm:text-[10px] shrink-0">{progress.toFixed(0)}%</span>
              </div>
           </div>
-          <div className="mt-4 pt-4 relative text-xs font-medium">
-             <div className="flex items-center justify-between">
+          
+          <div className="mt-3 md:mt-4 pt-3 md:pt-4 relative text-xs font-medium">
+             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-0">
                <div className="flex flex-col gap-0.5">
-                 <div className="flex items-center gap-1.5 text-gray-600">
-                   <Clock size={12} className="text-gray-500" />
-                   <span>{deadline}</span>
+                 <div className="flex items-center gap-1 md:gap-1.5 text-gray-600">
+                   <Clock size={10} className="md:w-3 md:h-3 text-gray-500" />
+                   <span className="text-[10px] md:text-xs">{deadline}</span>
                  </div>
-                 <span className="text-[10px] text-gray-400">Ends soon</span>
+                 <span className="text-[9px] md:text-[10px] text-gray-400">Ends soon</span>
                </div>
                
-               <div className="bg-white/80 text-[#e88147] border border-[#e88147]/20 shadow-sm px-3 py-1.5 rounded-full text-[10px] font-bold tracking-wide uppercase flex items-center group-hover:bg-[#e88147] group-hover:text-white transition-colors duration-300">
-                  Fund this campaign
+               <div className="w-full md:w-auto justify-center bg-white/80 text-[#e88147] border border-[#e88147]/20 shadow-sm px-3 py-1.5 rounded-full text-[9px] md:text-[10px] font-bold tracking-wide uppercase flex items-center group-hover:bg-[#e88147] group-hover:text-white transition-colors duration-300">
+                  Fund <span className="hidden md:inline">&nbsp;this campaign</span>
                </div>
              </div>
           </div>
