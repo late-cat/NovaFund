@@ -52,11 +52,24 @@ export default function Home() {
         <motion.div variants={itemVariants} className="flex gap-4">
           <Link
             href="/create"
-            className="sticky-note-btn relative px-8 py-3 bg-[#fdf5c9] text-[#e88147] hover:bg-[#fbf1bb] font-bold transition-all flex items-center gap-2 text-sm hover:-rotate-2 group"
+            className="group relative inline-flex items-center gap-2 px-8 py-4 bg-[#fdf5c9] text-[#b85c27] hover:text-[#d35400] font-bold transition-all text-[13px] hover:-rotate-2 shadow-[0_4px_15px_rgba(0,0,0,0.08),inset_0_1px_2px_rgba(255,255,255,0.8)] hover:shadow-[0_15px_25px_-5px_rgba(0,0,0,0.15),0_8px_10px_-5px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.9)] rounded-[2px]"
           >
-            <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-30 w-8 h-3 bg-white/50 border border-white/40 shadow-[0_1px_2px_rgba(0,0,0,0.05)] backdrop-blur-sm rotate-[-4deg]" />
-            Start a Campaign
-            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            {/* Subtle Paper Texture Overlay */}
+            <div className="absolute inset-0 z-0 opacity-50 mix-blend-multiply pointer-events-none rounded-[2px]" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }} />
+            
+            {/* Realistic Tape on top */}
+            <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 z-30 w-10 h-3.5 bg-white/40 border border-white/60 shadow-[0_1px_3px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-md rotate-[-3deg] rounded-[1px]" />
+            
+            {/* Bottom shadow curl for 3D depth */}
+            <div className="absolute bottom-1 left-4 right-4 h-3 -z-10 shadow-[0_6px_10px_rgba(0,0,0,0.18)] rounded-full group-hover:shadow-[0_12px_15px_rgba(0,0,0,0.15)] transition-shadow duration-300" />
+            
+            <span 
+              className="relative z-10 tracking-widest uppercase"
+              style={{ textShadow: "0 1px 1px rgba(255,255,255,0.8), 0 -1px 1px rgba(0,0,0,0.25)" }}
+            >
+              Start a Campaign
+            </span>
+            <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform duration-300" style={{ filter: "drop-shadow(0 1px 1px rgba(255,255,255,0.8)) drop-shadow(0 -1px 1px rgba(0,0,0,0.25))" }} />
           </Link>
         </motion.div>
       </section>
@@ -107,16 +120,34 @@ export default function Home() {
           </div>
           
           <div className="text-center px-4 relative z-10">
-             <p className="text-3xl md:text-4xl font-bold text-gray-800 drop-shadow-sm">{loading ? "-" : campaigns.length}</p>
-             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Projects Launched</p>
-          </div>
-          <div className="w-px h-16 bg-gradient-to-b from-transparent via-gray-200 to-transparent relative z-10" />
-          <div className="text-center px-4 relative z-10">
-             <p className="text-3xl md:text-4xl font-bold text-gray-800 drop-shadow-sm">
-               {loading ? "-" : campaigns.reduce((acc, c) => acc + Number(c.raised), 0).toLocaleString()} 
-               <span className="text-lg md:text-xl text-gray-400 ml-1">XLM</span>
+             <p 
+               className="text-3xl md:text-4xl font-bold text-gray-800"
+               style={{ textShadow: "0 1px 1px rgba(255,255,255,0.8), 0 -1px 1px rgba(0,0,0,0.25)" }}
+             >
+               {loading ? "-" : campaigns.length}
              </p>
-             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Total Volume Pledged</p>
+             <p 
+               className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1"
+               style={{ textShadow: "0 1px 1px rgba(255,255,255,0.8), 0 -1px 1px rgba(0,0,0,0.25)" }}
+             >
+               Projects Launched
+             </p>
+          </div>
+          <div className="w-px h-16 bg-gradient-to-b from-transparent via-gray-300 to-transparent relative z-10" />
+          <div className="text-center px-4 relative z-10">
+             <p 
+               className="text-3xl md:text-4xl font-bold text-gray-800"
+               style={{ textShadow: "0 1px 1px rgba(255,255,255,0.8), 0 -1px 1px rgba(0,0,0,0.25)" }}
+             >
+               {loading ? "-" : campaigns.reduce((acc, c) => acc + Number(c.raised), 0).toLocaleString()} 
+               <span className="text-lg md:text-xl text-gray-500 ml-1">XLM</span>
+             </p>
+             <p 
+               className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1"
+               style={{ textShadow: "0 1px 1px rgba(255,255,255,0.8), 0 -1px 1px rgba(0,0,0,0.25)" }}
+             >
+               Total Volume Pledged
+             </p>
           </div>
         </div>
       </motion.section>
@@ -130,8 +161,8 @@ export default function Home() {
               <span className="text-sm font-bold tracking-wide">Latest Projects</span>
             </div>
           </div>
-          <Link href="/explore" className="text-gray-500 hover:text-orange-500 font-medium flex items-center gap-1 transition-colors text-xs">
-            View All <ArrowRight size={14} />
+          <Link href="/explore" className="group flex items-center gap-1.5 text-[11px] font-bold text-gray-500 hover:text-orange-500 transition-all uppercase tracking-widest bg-white/80 backdrop-blur hover:bg-orange-50 px-4 py-1.5 rounded-full border border-gray-200 hover:border-orange-200 shadow-sm hover:shadow">
+            View All <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
           </Link>
         </div>
 

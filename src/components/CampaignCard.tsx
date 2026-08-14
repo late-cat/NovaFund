@@ -26,6 +26,12 @@ export default function CampaignCard({
     <Link href={`/campaign/${id}`} className="block group h-full perspective-[1000px]">
       <div className="relative h-full w-full p-4 pt-6 transition-all duration-500 ease-out origin-top group-hover:-translate-y-2 group-hover:rotate-[-2deg] group-hover:scale-[1.02] bg-[#fdf5c9] text-[#4c4e67] shadow-[0_2px_10px_rgba(0,0,0,0.05),inset_0_1px_1px_rgba(255,255,255,0.4)] group-hover:shadow-[0_20px_35px_-5px_rgba(0,0,0,0.1),0_10px_15px_-5px_rgba(0,0,0,0.05),inset_0_1px_1px_rgba(255,255,255,0.6)] rounded-[3px]">
         
+        {/* Subtle Paper Texture Overlay */}
+        <div 
+          className="absolute inset-0 z-0 opacity-40 mix-blend-multiply rounded-[3px] pointer-events-none" 
+          style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }} 
+        />
+        
         {/* Clean Minimalist Folded Corner */}
         <div 
           className="absolute top-0 right-0 w-0 h-0 z-20"
@@ -68,13 +74,32 @@ export default function CampaignCard({
             <span className="text-[11px] text-gray-500 font-medium">By {creator}</span>
           </div>
           
-          <div className="mt-4">
-             <div className="w-full h-1.5 bg-[#e8ddb0] rounded-full overflow-hidden mt-3 shadow-[inset_0_1px_2px_rgba(0,0,0,0.08)]">
-               <div className="h-full bg-[#e88147] transition-all duration-700 ease-out" style={{ width: `${progress}%` }} />
+          <div className="mt-4 relative">
+             <style>{`
+               @keyframes fireFlow {
+                 0% { background-position: 200% 0; }
+                 100% { background-position: 0% 0; }
+               }
+             `}</style>
+             <div className="w-full h-2 bg-[#e8ddb0]/80 rounded-full mt-3 shadow-[inset_0_1px_3px_rgba(0,0,0,0.15)] relative overflow-hidden">
+               {/* Fiery Magic Fluid */}
+               <div 
+                 className="absolute top-0 left-0 bottom-0 transition-all duration-1000 ease-out rounded-r-full shadow-[0_0_10px_rgba(255,78,0,0.8)]" 
+                 style={{ 
+                   width: `${progress}%`,
+                   background: "linear-gradient(90deg, #ff4e00, #ff8c00, #ffcc00, #ff8c00, #ff4e00)",
+                   backgroundSize: "200% 100%",
+                   animation: "fireFlow 2s linear infinite"
+                 }}
+               >
+                 {/* Bright leading edge flare */}
+                 <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-4 bg-white/60 blur-[1px] mix-blend-overlay" />
+                 <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white rounded-full blur-[0.5px] shadow-[0_0_8px_3px_rgba(255,255,255,0.9)] translate-x-1/2" />
+               </div>
              </div>
-             <div className="flex justify-between text-[11px] font-bold text-gray-700 mt-1">
+             <div className="flex justify-between text-[11px] font-bold text-gray-700 mt-1.5">
                <span>{raised} / {goal} XLM</span>
-               <span>{progress.toFixed(0)}%</span>
+               <span className="text-[#ff4e00] drop-shadow-sm">{progress.toFixed(0)}%</span>
              </div>
           </div>
           <div className="mt-4 pt-4 relative text-xs font-medium">
