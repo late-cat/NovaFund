@@ -141,33 +141,35 @@ export default function Dashboard() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                   key={`created-${campaign.id}`}
-                  className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 group flex flex-col"
+                  className="bg-white/60 backdrop-blur-md rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03),inset_0_1px_1px_rgba(255,255,255,1)] hover:shadow-[0_8px_30px_rgba(232,129,71,0.1),inset_0_1px_1px_rgba(255,255,255,1)] transition-all border border-gray-200/60 hover:border-[#e88147]/30 group flex flex-col relative"
                 >
-                  <Link href={`/campaign/${campaign.id}`} className="block relative h-40 overflow-hidden">
+                  <div className="absolute inset-0 z-0 opacity-10 mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }} />
+                  
+                  <Link href={`/campaign/${campaign.id}`} className="block relative h-40 overflow-hidden z-10">
                     <img 
                       src={campaign.image} 
                       alt={campaign.title} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
                     <div className="absolute bottom-4 left-4 right-4">
                       <h3 className="text-white font-bold text-lg truncate drop-shadow-md">{campaign.title}</h3>
                     </div>
                   </Link>
-                  <div className="p-5 flex-1 flex flex-col justify-between">
+                  <div className="p-5 flex-1 flex flex-col justify-between relative z-10">
                     <div className="mb-4">
-                      <div className="flex justify-between text-sm mb-1.5">
-                        <span className="text-gray-500 font-medium">Raised</span>
-                        <span className="font-bold text-gray-900">{campaign.raised} / {campaign.goal} XLM</span>
+                      <div className="flex justify-between text-xs mb-1.5 font-bold uppercase tracking-wider">
+                        <span className="text-gray-500">Raised</span>
+                        <span className="text-gray-800">{campaign.raised} / {campaign.goal} XLM</span>
                       </div>
-                      <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="w-full h-1.5 bg-gray-200/60 rounded-full overflow-hidden shadow-[inset_0_1px_2px_rgba(0,0,0,0.1)]">
                         <div 
-                          className="h-full bg-orange-400 rounded-full" 
+                          className="h-full bg-gradient-to-r from-[#e88147] to-amber-500 rounded-full" 
                           style={{ width: `${Math.min((Number(campaign.raised) / Number(campaign.goal)) * 100, 100)}%` }}
                         />
                       </div>
                     </div>
-                    <Link href={`/campaign/${campaign.id}`} className="block w-full py-2.5 text-center text-sm font-bold text-orange-500 bg-orange-50 hover:bg-orange-100 rounded-xl transition-colors">
+                    <Link href={`/campaign/${campaign.id}`} className="block w-full py-2.5 text-center text-xs font-bold text-[#e88147] border border-[#e88147]/20 bg-orange-50/50 hover:bg-orange-50 hover:border-[#e88147]/40 rounded-xl transition-all uppercase tracking-wider shadow-sm">
                       Manage Campaign
                     </Link>
                   </div>
@@ -180,13 +182,14 @@ export default function Dashboard() {
         {/* Backed Campaigns */}
         <section>
           <div className="flex items-center gap-2 mb-6">
-            <Activity className="text-green-500" size={24} />
+            <Activity className="text-[#e88147]" size={24} />
             <h2 className="text-2xl font-bold text-gray-800">My Pledges</h2>
           </div>
           {backedCampaigns.length === 0 ? (
-             <div className="bg-gray-50 p-8 rounded-[2rem] border border-gray-100 text-center">
-               <p className="text-gray-500 mb-4">You haven&apos;t backed any campaigns yet.</p>
-               <Link href="/" className="text-orange-500 hover:underline font-medium">Explore Projects</Link>
+             <div className="bg-white/60 backdrop-blur-md p-8 rounded-[2rem] border border-gray-200/60 shadow-sm text-center relative overflow-hidden">
+               <div className="absolute inset-0 z-0 opacity-10 mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }} />
+               <p className="text-gray-500 mb-4 relative z-10 font-medium">You haven&apos;t backed any campaigns yet.</p>
+               <Link href="/explore" className="text-[#e88147] hover:underline font-bold tracking-wide relative z-10">Explore Projects</Link>
              </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -196,35 +199,41 @@ export default function Dashboard() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                   key={`backed-${campaign.id}`}
-                  className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 group flex flex-col"
+                  className="bg-white/60 backdrop-blur-md rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03),inset_0_1px_1px_rgba(255,255,255,1)] hover:shadow-[0_8px_30px_rgba(232,129,71,0.1),inset_0_1px_1px_rgba(255,255,255,1)] transition-all border border-gray-200/60 hover:border-[#e88147]/30 group flex flex-col relative"
                 >
-                  <Link href={`/campaign/${campaign.id}`} className="block relative h-32 overflow-hidden">
+                  <div className="absolute inset-0 z-0 opacity-10 mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }} />
+
+                  <Link href={`/campaign/${campaign.id}`} className="block relative h-40 overflow-hidden z-10">
                     <img 
                       src={campaign.image} 
                       alt={campaign.title} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <div className="absolute bottom-3 left-4 right-4">
-                      <h3 className="text-white font-bold text-base truncate drop-shadow-md">{campaign.title}</h3>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+                      <h3 className="text-white font-bold text-lg truncate drop-shadow-md">{campaign.title}</h3>
                     </div>
                   </Link>
-                  <div className="p-5 flex-1 bg-gradient-to-b from-gray-50/50 to-white">
-                    <div className="flex items-center justify-between mb-4 bg-green-50/80 px-4 py-3 rounded-2xl border border-green-100/50">
-                      <span className="text-sm font-medium text-green-700">My Pledge</span>
-                      <span className="text-lg font-bold text-green-700">{campaign.myPledge} XLM</span>
+                  <div className="p-5 flex-1 flex flex-col justify-between relative z-10">
+                    <div className="mb-4">
+                      <div className="flex justify-between text-xs mb-1.5 font-bold uppercase tracking-wider">
+                        <span className="text-[#e88147]">My Pledge</span>
+                        <span className="text-gray-800">{campaign.myPledge} XLM</span>
+                      </div>
+                      <div className="flex justify-between text-xs mb-1.5 font-bold uppercase tracking-wider mt-3">
+                        <span className="text-gray-500">Campaign Progress</span>
+                        <span className="text-gray-800">{Math.min((Number(campaign.raised) / Number(campaign.goal)) * 100, 100).toFixed(0)}%</span>
+                      </div>
+                      <div className="w-full h-1.5 bg-gray-200/60 rounded-full overflow-hidden shadow-[inset_0_1px_2px_rgba(0,0,0,0.1)]">
+                        <div 
+                          className="h-full bg-gradient-to-r from-gray-400 to-gray-500 rounded-full" 
+                          style={{ width: `${Math.min((Number(campaign.raised) / Number(campaign.goal)) * 100, 100)}%` }}
+                        />
+                      </div>
                     </div>
-                    
-                    <div className="flex justify-between text-xs mb-1.5 px-1">
-                      <span className="text-gray-500 font-medium">Total Raised</span>
-                      <span className="font-bold text-gray-700">{campaign.raised} / {campaign.goal} XLM</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-green-400 rounded-full" 
-                        style={{ width: `${Math.min((Number(campaign.raised) / Number(campaign.goal)) * 100, 100)}%` }}
-                      />
-                    </div>
+                    <Link href={`/campaign/${campaign.id}`} className="block w-full py-2.5 text-center text-xs font-bold text-gray-600 border border-gray-200 bg-gray-50 hover:bg-white hover:border-gray-300 hover:text-gray-800 rounded-xl transition-all uppercase tracking-wider shadow-sm">
+                      View Campaign
+                    </Link>
                   </div>
                 </motion.div>
               ))}
