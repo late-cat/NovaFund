@@ -8,6 +8,7 @@ interface CampaignProps {
   goal: string;
   raised: string;
   deadline: string;
+  deadlineSecs?: number;
   image?: string;
 }
 
@@ -18,9 +19,39 @@ export default function CampaignCard({
   goal,
   raised,
   deadline,
+  deadlineSecs,
   image = "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80",
 }: CampaignProps) {
   const progress = Math.min((Number(raised) / Number(goal)) * 100, 100);
+
+  // Logical time remaining calculation
+  let timeRemainingText = "Ends soon";
+  let timeColor = "text-gray-400";
+  let isEndingSoon = false;
+
+  if (deadlineSecs) {
+    const now = Math.floor(Date.now() / 1000);
+    const diffSecs = deadlineSecs - now;
+    const diffDays = Math.ceil(diffSecs / (60 * 60 * 24));
+
+    if (diffDays < 0) {
+      timeRemainingText = "Ended";
+      timeColor = "text-red-400 font-bold";
+    } else if (diffDays === 0) {
+      timeRemainingText = "Ends today";
+      timeColor = "text-orange-500 font-bold";
+      isEndingSoon = true;
+    } else if (diffDays <= 3) {
+      timeRemainingText = `Ends in ${diffDays} days`;
+      timeColor = "text-orange-500 font-bold";
+      isEndingSoon = true;
+    } else if (diffDays < 30) {
+      timeRemainingText = `Ends in ${diffDays} days`;
+    } else {
+      const diffMonths = Math.floor(diffDays / 30);
+      timeRemainingText = `Ends in ${diffMonths} month${diffMonths > 1 ? 's' : ''}`;
+    }
+  }
 
   return (
     <Link href={`/campaign/${id}`} className="block group h-full perspective-[1000px]">
@@ -106,11 +137,11 @@ export default function CampaignCard({
           <div className="mt-3 md:mt-4 pt-3 md:pt-4 relative text-xs font-medium">
              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-0">
                <div className="flex flex-col gap-0.5">
-                 <div className="flex items-center gap-1 md:gap-1.5 text-gray-600">
-                   <Clock size={10} className="md:w-3 md:h-3 text-gray-500" />
+                 <div className={`flex items-center gap-1 md:gap-1.5 ${isEndingSoon ? 'text-orange-500' : 'text-gray-600'}`}>
+                   <Clock size={10} className={`md:w-3 md:h-3 ${isEndingSoon ? 'text-orange-500' : 'text-gray-500'}`} />
                    <span className="text-[10px] md:text-xs">{deadline}</span>
                  </div>
-                 <span className="text-[9px] md:text-[10px] text-gray-400">Ends soon</span>
+                 <span className={`text-[9px] md:text-[10px] ${timeColor}`}>{timeRemainingText}</span>
                </div>
                
                <div className="w-full md:w-auto justify-center bg-white/80 text-[#e88147] border border-[#e88147]/20 shadow-sm px-3 py-1.5 rounded-full text-[9px] md:text-[10px] font-bold tracking-wide uppercase flex items-center group-hover:bg-[#e88147] group-hover:text-white transition-colors duration-300">
