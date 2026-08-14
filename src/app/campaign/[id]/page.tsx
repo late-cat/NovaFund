@@ -148,8 +148,11 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
         <ArrowLeft size={16} /> Back to Projects
       </Link>
       
-      <div className="bg-white/90 rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden backdrop-blur-sm">
-        <div className="w-full h-48 md:h-80 relative">
+      <div className="bg-white/60 backdrop-blur-md rounded-[2rem] shadow-[0_8px_30px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,1)] border border-gray-200/60 overflow-hidden relative">
+        {/* Subtle Paper Texture Overlay */}
+        <div className="absolute inset-0 z-0 opacity-10 mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }} />
+        
+        <div className="w-full h-48 md:h-80 relative z-10">
           <img 
             src={campaign.image} 
             alt={campaign.title} 
@@ -158,61 +161,67 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
             }}
             className="w-full h-full object-cover" 
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-transparent to-transparent" />
         </div>
 
-        <div className="px-5 md:px-8 pb-8 md:pb-10 relative -mt-12 md:-mt-16">
-          <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2 tracking-tight">{campaign.title}</h1>
+        <div className="px-5 md:px-8 pb-8 md:pb-10 relative z-10 -mt-12 md:-mt-16">
+          <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2 tracking-tight drop-shadow-sm">{campaign.title}</h1>
           {campaign.description && (
-            <p className="text-gray-600 mb-4 max-w-2xl text-sm md:text-base">{campaign.description}</p>
+            <p className="text-gray-600 mb-4 max-w-2xl text-sm md:text-base font-medium">{campaign.description}</p>
           )}
           
-          <div className="flex items-center gap-2 text-gray-500 text-xs md:text-sm mb-6 md:mb-8 bg-gray-50 inline-flex px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-gray-100">
-            <User size={14} className="text-orange-400" />
-            <span>By <span className="font-medium text-gray-700">{campaign.creator.slice(0, 8)}...{campaign.creator.slice(-8)}</span></span>
+          <div className="flex items-center gap-2 text-gray-500 text-xs md:text-sm mb-6 md:mb-8 bg-white/80 backdrop-blur-sm inline-flex px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-gray-200/60 shadow-sm">
+            <User size={14} className="text-[#e88147]" />
+            <span>By <span className="font-bold text-gray-700">{campaign.creator.slice(0, 8)}...{campaign.creator.slice(-8)}</span></span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
             <div className="space-y-4 md:space-y-6">
-              <div className="bg-gray-50 p-5 md:p-6 rounded-[2rem] border border-gray-100">
-                <div className="flex justify-between items-end mb-2">
-                  <div className="text-2xl md:text-3xl font-bold text-gray-900">{campaign.raised} <span className="text-base md:text-lg text-gray-500 font-medium">XLM</span></div>
-                  <div className="text-orange-500 font-bold">{progress.toFixed(1)}%</div>
-                </div>
-                
-                <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden my-3 md:my-4">
-                  <div
-                    className="h-full bg-orange-400 rounded-full transition-all duration-1000 ease-out"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
+              <div className="bg-white/80 backdrop-blur-sm p-5 md:p-6 rounded-[2rem] border border-gray-200/60 shadow-sm relative overflow-hidden">
+                <div className="absolute inset-0 z-0 opacity-10 mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }} />
+                <div className="relative z-10">
+                  <div className="flex justify-between items-end mb-2">
+                    <div className="text-2xl md:text-3xl font-bold text-gray-900">{campaign.raised} <span className="text-base md:text-lg text-gray-500 font-medium">XLM</span></div>
+                    <div className="text-[#e88147] font-bold text-lg">{progress.toFixed(1)}%</div>
+                  </div>
+                  
+                  <div className="w-full h-2 bg-gray-200/80 rounded-full overflow-hidden my-3 md:my-4 shadow-[inset_0_1px_2px_rgba(0,0,0,0.1)]">
+                    <div
+                      className="h-full bg-gradient-to-r from-[#e88147] to-amber-500 rounded-full transition-all duration-1000 ease-out"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
 
-                <div className="flex items-center gap-2 text-gray-500 text-xs md:text-sm font-medium">
-                  <Target size={16} />
-                  <span>Goal: {campaign.goal} XLM</span>
+                  <div className="flex items-center gap-2 text-gray-500 text-xs md:text-sm font-bold uppercase tracking-wider">
+                    <Target size={16} className="text-[#e88147]" />
+                    <span>Goal: {campaign.goal} XLM</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="bg-orange-50/50 p-4 md:p-6 rounded-3xl border border-orange-100/50 flex items-center gap-4">
-                <div className="bg-white p-3 rounded-2xl shadow-sm text-orange-500">
+              <div className="bg-orange-50/80 backdrop-blur-sm p-4 md:p-6 rounded-3xl border border-[#e88147]/20 shadow-sm flex items-center gap-4 relative overflow-hidden">
+                <div className="absolute inset-0 z-0 opacity-10 mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }} />
+                <div className="bg-white p-3 rounded-2xl shadow-[0_2px_8px_rgba(232,129,71,0.15)] text-[#e88147] relative z-10">
                   <Clock size={20} className="md:w-6 md:h-6" />
                 </div>
-                <div>
-                  <p className="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-wider">Deadline</p>
-                  <p className="text-sm md:text-base text-gray-900 font-medium">{campaign.deadline}</p>
+                <div className="relative z-10">
+                  <p className="text-[10px] md:text-xs font-bold text-[#e88147] uppercase tracking-wider">Deadline</p>
+                  <p className="text-sm md:text-base text-gray-900 font-bold">{campaign.deadline}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gray-50 p-5 md:p-8 rounded-[2rem] border border-gray-100 flex flex-col justify-center">
-              <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Support this project</h3>
-              <p className="text-sm text-gray-500 mb-6">Enter an amount in XLM to pledge towards the campaign goal.</p>
-              
-              <div className="space-y-4">
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <Coins size={18} className="text-gray-500" />
-                  </div>
+            <div className="bg-white/80 backdrop-blur-sm p-5 md:p-8 rounded-[2rem] border border-gray-200/60 shadow-sm flex flex-col justify-center relative overflow-hidden">
+              <div className="absolute inset-0 z-0 opacity-10 mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }} />
+              <div className="relative z-10">
+                <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Support this project</h3>
+                <p className="text-sm text-gray-500 mb-6 font-medium">Enter an amount in XLM to pledge towards the campaign goal.</p>
+                
+                <div className="space-y-4">
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <Coins size={18} className="text-gray-400" />
+                    </div>
                   <input
                     type="number"
                     min="1"
@@ -332,38 +341,41 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
                   </motion.div>
                 )}
               </div>
+              </div>
             </div>
           </div>
           
           {/* Backers Section */}
-          <div className="mt-12 bg-white p-6 md:p-8 rounded-[2rem] border border-gray-100 shadow-sm">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2 tracking-tight">
-                <User className="text-orange-400" size={20} /> 
-                Contributors 
-                <span className="text-sm font-medium text-orange-600 ml-2 bg-orange-50 px-3 py-1 rounded-full border border-orange-100/50">
-                  {campaign.backers.length} Total
-                </span>
-              </h3>
-            </div>
-            
-            {campaign.backers.length === 0 ? (
-              <p className="text-sm text-gray-500 italic bg-gray-50 p-6 rounded-2xl border border-gray-100 text-center">
-                No backers yet. Be the first to support this campaign!
-              </p>
-            ) : (
-              <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
-                <div className="max-h-[400px] overflow-y-auto" style={{ scrollbarWidth: 'thin', scrollbarColor: '#f3f4f6 transparent' }}>
-                  <table className="w-full text-left border-collapse">
-                    <thead className="sticky top-0 bg-gray-50 z-10 border-b border-gray-100">
-                      <tr>
-                        <th className="py-4 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider w-16">Rank</th>
-                        <th className="py-4 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider">Contributor</th>
-                        <th className="py-4 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Share</th>
-                        <th className="py-4 px-6 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Pledged</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-50">
+          <div className="mt-12 bg-white/80 backdrop-blur-sm p-6 md:p-8 rounded-[2rem] border border-gray-200/60 shadow-sm relative overflow-hidden">
+            <div className="absolute inset-0 z-0 opacity-10 mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }} />
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2 tracking-tight">
+                  <User className="text-[#e88147]" size={20} /> 
+                  Contributors 
+                  <span className="text-sm font-bold text-[#e88147] ml-2 bg-orange-50 px-3 py-1 rounded-full border border-[#e88147]/20">
+                    {campaign.backers.length} Total
+                  </span>
+                </h3>
+              </div>
+              
+              {campaign.backers.length === 0 ? (
+                <p className="text-sm text-gray-500 italic bg-white/50 p-6 rounded-2xl border border-gray-200/60 text-center font-medium shadow-[inset_0_1px_2px_rgba(0,0,0,0.02)]">
+                  No backers yet. Be the first to support this campaign!
+                </p>
+              ) : (
+                <div className="bg-white/80 rounded-2xl border border-gray-200/60 overflow-hidden shadow-sm">
+                  <div className="max-h-[400px] overflow-y-auto" style={{ scrollbarWidth: 'thin', scrollbarColor: '#f3f4f6 transparent' }}>
+                    <table className="w-full text-left border-collapse">
+                      <thead className="sticky top-0 bg-white/90 backdrop-blur-sm z-10 border-b border-gray-200/60">
+                        <tr>
+                          <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-widest w-16">Rank</th>
+                          <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Contributor</th>
+                          <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-widest text-right">Share</th>
+                          <th className="py-4 px-6 text-[10px] font-bold text-gray-500 uppercase tracking-widest text-right">Pledged</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-100/60">
                       {campaign.backers
                         .map((b, i) => ({ ...b, originalIndex: i }))
                         .sort((a, b) => Number(b.amount) - Number(a.amount))
@@ -413,6 +425,7 @@ export default function CampaignDetails({ params }: { params: Promise<{ id: stri
                 </div>
               </div>
             )}
+            </div>
           </div>
         </div>
       </div>
