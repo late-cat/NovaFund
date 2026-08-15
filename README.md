@@ -208,8 +208,8 @@ graph TD
 ### 📱 Mobile Responsive Design
 *Our interface seamlessly adapts to any mobile device, ensuring backers can pledge on the go.*
 <div style="display: flex; gap: 10px;">
-  <img src="./demo-img/mobile-ui-1.png" alt="Mobile Dashboard" width="48%">
-  <img src="./demo-img/mobile-ui-2.png" alt="Mobile Campaigns" width="48%">
+  <img src="./demo-img/mobile-ui-1-new.png" alt="Mobile Dashboard" width="48%">
+  <img src="./demo-img/mobile-ui-2-new.png" alt="Mobile Campaigns" width="48%">
 </div>
 
 ---
