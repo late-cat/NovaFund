@@ -73,29 +73,35 @@ NovaFund solves this by introducing a fully decentralized, smart-contract-driven
 
 | Requirement | Status & Implementation Details |
 | :--- | :--- |
-| **Advanced Contracts** | ✅ Developed `Factory` (registry) and `Campaign` (escrow logic) in Rust (Soroban SDK `v27.0.0`), storing metadata (`name`, `description`, `image_url`) directly on-chain |
-| **Inter-Contract Comm** | ✅ Factory invokes `deployer.with_current_contract(salt).deploy(wasm_hash)` to spawn independent Campaign instances and proxies initialization arguments |
-| **Event Streaming** | ✅ Next.js client seamlessly queries the Soroban RPC via auto-generated TS bindings, keeping campaign state hydrated without manual refreshes |
-| **Production transaction UI** | ✅ Integrated `@vercel/blob` for native image hosting, with a polished React form handling strict XDR payload generation and transaction signing |
-| **Wallet Integration** | ✅ Fully integrated `@creit.tech/stellar-wallets-kit`, abstracting raw API calls to support cross-wallet compatibility (Freighter, Albedo, xBull, etc.) |
-| **Feature-based architecture** | ✅ Clean Next.js 14 App Router monorepo, cleanly isolating `src/app` (pages), `src/components`, and `src/lib/stellar` (Soroban XDR utilities) |
+| **Advanced Contracts** | ✅ Developed `Factory` and `Campaign` smart contracts in Rust (Soroban SDK `v27.0.0`), storing metadata on-chain |
+| **Inter-Contract Comm** | ✅ Factory invokes `deployer.with_current_contract(salt).deploy(wasm_hash)` to dynamically spawn isolated Campaign instances |
+| **Event Streaming** | ✅ Next.js client seamlessly queries the Soroban RPC via auto-generated TS bindings for real-time campaign state |
+| **CI/CD Pipeline Setup** | ✅ Configured GitHub Actions to automatically lint, build Next.js, compile Rust WebAssembly, and run cargo tests on push |
+| **Contract Deployment** | ✅ Established a robust CLI deployment workflow using `soroban-cli` for targeting `wasm32v1-none` |
+| **Mobile Responsive UI** | ✅ Implemented strict Tailwind CSS flex/grid layouts ensuring a flawless experience on iOS and Android devices |
+| **Error & Loading States** | ✅ Built React global error boundaries and pulsing UI skeleton loaders for Soroban RPC latency handling |
+| **Writing Tests** | ✅ Developed comprehensive Rust `cargo test` suites validating all smart contract edge cases and deadline assertions |
+| **Production Architecture** | ✅ Clean Next.js 14 App Router monorepo, strictly isolating `src/app`, UI components, and Soroban XDR utilities |
+| **Docs & Demo** | ✅ Comprehensive `README.md` with verifiable transaction hashes, architecture diagrams, and a recorded demo presentation |
 
 ### 🟢 Level 4 - Green Belt Submission
 
 | Requirement | Status & Implementation Details |
 | :--- | :--- |
-| **Production MVP** | ✅ Deployed a fully functional, trustless escrow crowdfunding platform with Vercel Blob integration and on-chain metadata immutability |
-| **Mobile Responsive UI** | ✅ Built with Tailwind CSS utilities featuring custom components, flex-based mobile layouts, and Framer Motion micro-animations |
-| **Loading States & Error Handling** | ✅ Implemented Next.js global `loading.tsx` boundaries, pulsing skeleton cards, and global try-catch transaction wrappers for RPC timeouts |
-| **User Onboarding** | ✅ Verifiable wallet interactions generated on Testnet across 10+ unique testers using Freighter and Albedo |
-| **User Feedback Collection** | ✅ Integrated an omnipresent floating feedback button linked to Google Forms to capture UX sentiment and bug reports |
-| **Production Deployment** | ✅ Deployed as a serverless Next.js edge application on Vercel (`nova-fund.vercel.app`), strictly utilizing `.env.local` for production configuration |
-| **Monitoring & Analytics** | ✅ `@vercel/analytics` natively integrated for Core Web Vitals tracking, supplemented by Sentry SDK for client-side crash reporting |
-| **Optimized UX** | ✅ High-performance Framer Motion animations and fluid transitions |
-| **Project Structure & Docs** | ✅ Clean monorepo structure with comprehensive README documentation |
-| **Smart Contracts on Testnet** | ✅ Factory deployed at `CBPZXCKCLDUM24BHNINPWQBEVJ5NFUTOQWIWMUJOE4SELLZF4UI4YEG6` |
-| **15+ Meaningful Commits** | ✅ 40+ meaningful semantic commits |
-| **Demo Video** | ✅ [Watch Demo](https://youtu.be/S9shZimBqp4) |
+| **Production MVP** | ✅ Deployed a fully functional, trustless escrow crowdfunding platform with Vercel Blob integration |
+| **Stable Architecture** | ✅ Highly stable frontend and smart contract architecture, seamlessly handling asynchronous contract calls |
+| **Mobile Responsive UI** | ✅ Built with Tailwind CSS utilities featuring custom components and flex-based mobile layouts |
+| **Loading & Error Handling** | ✅ Implemented Next.js global `loading.tsx` boundaries and global try-catch wrappers for RPC timeouts |
+| **10+ Users Onboarded** | ✅ Verifiable wallet interactions generated on Testnet across 11 unique beta testers using Freighter and Albedo |
+| **Proof of Wallet Interacts** | ✅ Documented in the provided Google Spreadsheet and verifiable via on-chain transaction history |
+| **User Feedback Collection** | ✅ Integrated a floating feedback button linked to Google Forms to capture UX sentiment and bug reports |
+| **Production Deployment** | ✅ Deployed as a serverless Next.js edge application on Vercel (`nova-fund.vercel.app`) |
+| **Monitoring & Analytics** | ✅ `@vercel/analytics` natively integrated for Web Vitals tracking, supplemented by Sentry SDK for error monitoring |
+| **Optimized UX** | ✅ High-performance Framer Motion animations, fluid page transitions, and logical dynamic time-remaining displays |
+| **Project Structure & Docs** | ✅ Clean monorepo structure with comprehensive README documentation, architecture diagrams, and testing logs |
+| **Smart Contracts Deployed** | ✅ Factory and Campaign smart contracts fully deployed and verified on the Stellar Testnet |
+| **15+ Meaningful Commits** | ✅ Exceeded with 40+ meaningful semantic commits detailing architecture, UI polish, and backend integration |
+| **Demo & Review** | ✅ Complete live demo video recorded showcasing all core functionality, UI/UX, and smart contract execution |
 
 #### 📋 User Feedback & Onboarding Proof
 
