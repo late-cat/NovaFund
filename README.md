@@ -9,7 +9,7 @@
 [![Stellar](https://img.shields.io/badge/Network-Stellar_Testnet-black)](https://stellar.org/)
 [![Soroban](https://img.shields.io/badge/Smart_Contracts-Soroban-orange)](https://soroban.stellar.org/)
 
-![Hero Dashboard](./demo-img/hero.png)
+![Hero Dashboard](./demo-img/hero-new.png)
 
 *Launch your visionary projects with trustless, decentralized crowdfunding. Your backers securely pledge XLM natively on the Stellar Testnet with no middleman.*
 
@@ -111,8 +111,8 @@ Based on the responses from 11 beta testers, the platform was highly rated for i
 #### 📈 Monitoring & Analytics
 
 **Vercel Analytics Dashboard:**
-Actively monitoring our production app. The screenshot below verifies active traffic with **35 Unique Visitors** and **43 Page Views**, proving real-world usage and monitoring of core web vitals.
-![Vercel Analytics](./demo-img/vercel-analysis-new.png)
+Actively monitoring our production app. The screenshot below verifies active traffic with **13 Unique Visitors** and **219 Page Views**, proving real-world usage and monitoring of core web vitals.
+![Vercel Analytics](./demo-img/vercel-analytics-new.png)
 
 **Sentry Error Monitoring:**
 Comprehensive crash reporting and performance monitoring configured for the production Next.js application, satisfying the Level 4 monitoring requirement.
@@ -163,7 +163,7 @@ graph TD
 ### 🧰 Product UI: Exploring Ongoing Campaigns
 *Browse through all active crowdfunding campaigns dynamically deployed via the Factory contract.*
 <div align="center">
-  <img src="./demo-img/all-ongoing-campaign.png" alt="Explore Campaigns" width="800"/>
+  <img src="./demo-img/all-campaign.png" alt="Explore Campaigns" width="800"/>
 </div>
 
 ### 🚀 Product UI: Starting a New Campaign
@@ -190,13 +190,13 @@ graph TD
 <summary><b>Funding Progress UI</b></summary>
 <br>
 
-![Funding Progress](./demo-img/funding.png)
+![Funding Progress](./demo-img/fund-a-campiagn.png)
 </details>
 
 ### ⚡ Product UI: On-Chain Transaction Success
 *Every transaction is verified on the Stellar Expert Explorer, proving cryptographic immutability.*
 <div align="center">
-  <img src="./demo-img/successfull-transac.png" alt="Transaction Success Explorer" width="800"/>
+  <img src="./demo-img/sucessfull-transaction-on-stellartest.png" alt="Transaction Success Explorer" width="800"/>
 </div>
 
 ### 💼 Product UI: Multi-Wallet Support
