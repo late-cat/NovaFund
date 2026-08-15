@@ -244,23 +244,19 @@ sequenceDiagram
 ```
 
 ### Verified Test Suite
-*Running tests inside `contracts` successfully executes all edge cases and Soroban lifecycle validations perfectly:*
+*Running frontend Jest tests and smart contract Cargo tests successfully executes all edge cases perfectly:*
 
-![Smart Contract Test Passed](./demo-img/test-outp.png)
+![Verified Test Suite](./demo-img/new-test.png)
 
 ---
 
 ## ⚙️ Professional CI/CD Pipeline
 
-Our GitHub Actions workflow automatically builds the Next.js frontend, compiles the Rust contracts to WebAssembly, and runs cargo tests upon pushing commits to the main repository.
-
-### 🔄 Automated Workflow Pipeline
-*The full execution graph of our strict parameter evaluation:*
-![CI/CD Pipeline Running Successfully](./demo-img/final-pipeline.png)
+Our GitHub Actions workflow automatically builds the Next.js frontend, compiles the Rust contracts to WebAssembly, and runs tests upon pushing commits to the main repository.
 
 ### ✅ Frontend & Smart Contract CI Success
 *Detailed view of our CI pipeline successfully passing all checks:*
-![Final Tests](./demo-img/final-tests.png)
+![CI/CD Pipeline Running Successfully](./demo-img/ci-cd-pipeline-new.png)
 
 ---
 
