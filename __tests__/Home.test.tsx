@@ -2,11 +2,14 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import Home from '../src/app/page';
 
-// Mock the dependencies to avoid Soroban network calls during testing
-jest.mock('../src/lib/soroban', () => ({
-  getFactoryClient: jest.fn(() => ({
-    get_campaigns: jest.fn().mockResolvedValue({ result: [] })
-  }))
+// Mock the custom hook to avoid async state updates during testing
+jest.mock('../src/hooks/useCampaigns', () => ({
+  useCampaigns: () => ({
+    campaigns: [],
+    loading: false,
+    error: null,
+    fetchCampaigns: jest.fn(),
+  })
 }));
 
 describe('Home Page', () => {
