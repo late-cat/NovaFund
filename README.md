@@ -178,7 +178,7 @@ graph TD
 <summary><b>Campaign Creation UI</b></summary>
 <br>
 
-![Start Campaign](./demo-img/start a campagin.png)
+![Start Campaign](./demo-img/start-a-campaign.png)
 </details>
 
 ### 💸 Product UI: Pledging & Confirming Transactions
