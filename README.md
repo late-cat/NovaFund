@@ -153,7 +153,7 @@ graph TD
 *   **Verifiable Live App**: [https://nova-fund.vercel.app/](https://nova-fund.vercel.app/)
 *   **Factory Core Contract**: [`CBGNLTWENII3LYUUVFU7DKCXV4HQTEKJQEUWXJKVIMVNMQL7E2DP2MEM`](https://stellar.expert/explorer/testnet/contract/CBGNLTWENII3LYUUVFU7DKCXV4HQTEKJQEUWXJKVIMVNMQL7E2DP2MEM)
 *   **Network**: Stellar Testnet
-*   **Example Transaction Hash**: `bc1af24298ffecf1b7d1d6367765570dba21c0e25e3b0531353485b61ce712ff48`
+*   **Example Transaction Hash**: [`bc1af24298ffecf1b7d1d6367765570dba21c0e25e3b0531353485b61ce712ff48`](https://stellar.expert/explorer/testnet/tx/bc1af24298ffecf1b7d1d6367765570dba21c0e25e3b0531353485b61ce712ff48)
 *   **Stellar Explorer Link**: [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/bc1af24298ffecf1b7d1d6367765570dba21c0e25e3b0531353485b61ce712ff48)
 
 ---
