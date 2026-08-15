@@ -153,8 +153,8 @@ graph TD
 *   **Verifiable Live App**: [https://nova-fund.vercel.app/](https://nova-fund.vercel.app/)
 *   **Factory Core Contract**: [`CBGNLTWENII3LYUUVFU7DKCXV4HQTEKJQEUWXJKVIMVNMQL7E2DP2MEM`](https://stellar.expert/explorer/testnet/contract/CBGNLTWENII3LYUUVFU7DKCXV4HQTEKJQEUWXJKVIMVNMQL7E2DP2MEM)
 *   **Network**: Stellar Testnet
-*   **Example Transaction Hash**: `0eb270765de3d79e0d1b5bb6f4c8868a88f5bf02b0186c309c5501c30ca078e6`
-*   **Stellar Explorer Link**: [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/0eb270765de3d79e0d1b5bb6f4c8868a88f5bf02b0186c309c5501c30ca078e6)
+*   **Example Transaction Hash**: `bc1af24298ffecf1b7d1d6367765570dba21c0e25e3b0531353485b61ce712ff48`
+*   **Stellar Explorer Link**: [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/bc1af24298ffecf1b7d1d6367765570dba21c0e25e3b0531353485b61ce712ff48)
 
 ---
 
@@ -181,7 +181,7 @@ graph TD
 <summary><b>Transaction Confirmation</b></summary>
 <br>
 
-![Confirm Transaction](./demo-img/confirm-transaction from user.png)
+![Confirm Transaction](./demo-img/transaction-new.png)
 </details>
 
 ### 📊 Product UI: Live Funding Progress
